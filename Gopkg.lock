@@ -18,6 +18,14 @@
   version = "v1.4.2"
 
 [[projects]]
+  digest = "1:f438d91be142877c3ad83157992c91de787ddfbddcc2a7da1ef6ef61606cadc4"
+  name = "github.com/cheekybits/genny"
+  packages = ["generic"]
+  pruneopts = "UT"
+  revision = "d2cf3cdd35ce0d789056c4bc02a4d6349c947caf"
+  version = "v1.0.0"
+
+[[projects]]
   branch = "master"
   digest = "1:a965e93173d9b30de4cc01c4a2aaaaa0478ece976f56dabb6e662800abf21011"
   name = "github.com/cloudfoundry-community/go-cfclient"
@@ -289,11 +297,13 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/cheekybits/genny/generic",
     "github.com/cloudfoundry-community/go-cfclient",
     "github.com/google/logger",
     "github.com/maxbrunsfeld/counterfeiter",
     "github.com/onsi/ginkgo",
     "github.com/onsi/gomega",
+    "github.com/pkg/errors",
     "github.com/spf13/afero",
     "github.com/vburenin/ifacemaker",
   ]
