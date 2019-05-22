@@ -34,6 +34,14 @@
   version = "v1.3.1"
 
 [[projects]]
+  digest = "1:ebdeb808fe6861df1eaa262006a879bdbed826dd51c343bd5e681045e194997c"
+  name = "github.com/google/logger"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "7047ffcb7339f3f59be32de74a92217cb17cb40c"
+  version = "v1.0.1"
+
+[[projects]]
   digest = "1:a1038ef593beb4771c8f0f9c26e8b00410acd800af5c6864651d9bf160ea1813"
   name = "github.com/hpcloud/tail"
   packages = [
@@ -142,9 +150,14 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:6ed9319f79a63e30779042ef237f81770df4091866e43f84a643257384b0aefc"
+  digest = "1:a7b0a7438464295ee9d4c420867c1d39bf01c2fd4230f56a1d22fcee3580cf71"
   name = "golang.org/x/sys"
-  packages = ["unix"]
+  packages = [
+    "unix",
+    "windows",
+    "windows/registry",
+    "windows/svc/eventlog",
+  ]
   pruneopts = "UT"
   revision = "8097e1b27ff5e40620836729a9584e91b094b062"
 
@@ -225,6 +238,7 @@
   analyzer-version = 1
   input-imports = [
     "github.com/cloudfoundry-community/go-cfclient",
+    "github.com/google/logger",
     "github.com/onsi/ginkgo",
     "github.com/onsi/gomega",
     "github.com/spf13/afero",
