@@ -56,6 +56,26 @@
   version = "v1.0.0"
 
 [[projects]]
+  digest = "1:a2cff208d4759f6ba1b1cd228587b0a1869f95f22542ec9cd17fff64430113c7"
+  name = "github.com/jessevdk/go-flags"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "c6ca198ec95c841fdb89fc0de7496fed11ab854e"
+  version = "v1.4.0"
+
+[[projects]]
+  digest = "1:849231d3eaf77c59143b2a49d6b80dae4e1b3ef45ca5730898aedae7b92c10ca"
+  name = "github.com/maxbrunsfeld/counterfeiter"
+  packages = [
+    ".",
+    "arguments",
+    "generator",
+  ]
+  pruneopts = "UT"
+  revision = "2d74a219416bffff638e30a3775c76715f1968a7"
+  version = "v6.0.1"
+
+[[projects]]
   digest = "1:e9c3bb68a6c9470302b8046d4647e0612a2ea6037b9c6a47de60c0a90db504f8"
   name = "github.com/onsi/ginkgo"
   packages = [
@@ -121,6 +141,17 @@
   pruneopts = "UT"
   revision = "588a75ec4f32903aa5e39a2619ba6a4631e28424"
   version = "v1.2.2"
+
+[[projects]]
+  digest = "1:6eb97ee6b0184576d3441f149f8d6cd2c85fd4d3c6401e8b6b186e43ee717325"
+  name = "github.com/vburenin/ifacemaker"
+  packages = [
+    ".",
+    "maker",
+  ]
+  pruneopts = "UT"
+  revision = "08359b16cd0c5c5b47040b2eb33425ada1c520e8"
+  version = "v1.0.0"
 
 [[projects]]
   branch = "master"
@@ -193,6 +224,27 @@
   version = "v0.3.2"
 
 [[projects]]
+  branch = "master"
+  digest = "1:e2d233dba4d02cc0873ddee0880952c411134006cfaaf3844daa31af4246a0bc"
+  name = "golang.org/x/tools"
+  packages = [
+    "go/ast/astutil",
+    "go/gcexportdata",
+    "go/internal/gcimporter",
+    "go/internal/packagesdriver",
+    "go/packages",
+    "go/types/typeutil",
+    "imports",
+    "internal/fastwalk",
+    "internal/gopathwalk",
+    "internal/imports",
+    "internal/module",
+    "internal/semver",
+  ]
+  pruneopts = "UT"
+  revision = "521d6ed310dd2348b2d3c64b91c55df233c52860"
+
+[[projects]]
   digest = "1:6eb6e3b6d9fffb62958cf7f7d88dbbe1dd6839436b0802e194c590667a40412a"
   name = "google.golang.org/appengine"
   packages = [
@@ -239,9 +291,11 @@
   input-imports = [
     "github.com/cloudfoundry-community/go-cfclient",
     "github.com/google/logger",
+    "github.com/maxbrunsfeld/counterfeiter",
     "github.com/onsi/ginkgo",
     "github.com/onsi/gomega",
     "github.com/spf13/afero",
+    "github.com/vburenin/ifacemaker",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
