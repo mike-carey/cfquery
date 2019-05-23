@@ -28,6 +28,28 @@ func AppGroupBy(items []cfclient.App, getKey func(cfclient.App) (string, error))
 		pool[key] = append(pool[key], item)
 	}
 
-	logger.Infof("Returning %d two groups", len(pool))
+	logger.Infof("Returning %d groups in slice", len(pool))
+	return pool, nil
+}
+
+func AppGroupMapBy(items map[string]cfclient.App, getKey func(cfclient.App) (string, error)) (map[string]map[string]cfclient.App, error) {
+	pool := make(map[string]map[string]cfclient.App, 0)
+
+	for origKey, item := range items {
+		key, err := getKey(item)
+		if err != nil {
+			logger.Errorf("Could not get key from item: %v", item)
+			return nil, errors.Wrap(err, "Could not get key for item")
+		}
+
+		if _, ok := pool[key]; !ok {
+			pool[key] = make(map[string]cfclient.App, 0)
+		}
+
+		logger.Infof("Adding %s item to %s entry", origKey, key)
+		pool[key][origKey] = item
+	}
+
+	logger.Infof("Returning %d groups in map", len(pool))
 	return pool, nil
 }

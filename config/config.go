@@ -4,10 +4,10 @@
 package config
 
 import (
-	"io/ioutil"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io/ioutil"
 
 	cfclient "github.com/cloudfoundry-community/go-cfclient"
 )

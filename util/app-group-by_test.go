@@ -7,7 +7,6 @@ import (
 	. "github.com/mike-carey/cfquery/util"
 
 	"github.com/cloudfoundry-community/go-cfclient"
-
 )
 
 var _ = Describe("AppGroupBy", func() {
@@ -17,25 +16,25 @@ var _ = Describe("AppGroupBy", func() {
 	)
 
 	BeforeEach(func() {
-		apps = []cfclient.App {
+		apps = []cfclient.App{
 			cfclient.App{
-				Guid: "app1",
-				Name: "app-1",
+				Guid:      "app1",
+				Name:      "app-1",
 				SpaceGuid: "space1",
 			},
 			cfclient.App{
-				Guid: "app2",
-				Name: "app-2",
+				Guid:      "app2",
+				Name:      "app-2",
 				SpaceGuid: "space1",
 			},
 			cfclient.App{
-				Guid: "app3",
-				Name: "app-3",
+				Guid:      "app3",
+				Name:      "app-3",
 				SpaceGuid: "space2",
 			},
 			cfclient.App{
-				Guid: "app4",
-				Name: "app-4",
+				Guid:      "app4",
+				Name:      "app-4",
 				SpaceGuid: "space2",
 			},
 		}

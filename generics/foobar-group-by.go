@@ -27,6 +27,28 @@ func FooGroupBy(items []Foo, getKey func(Foo) (string, error)) (map[string][]Foo
 		pool[key] = append(pool[key], item)
 	}
 
-	logger.Infof("Returning %d two groups", len(pool))
+	logger.Infof("Returning %d groups in slice", len(pool))
+	return pool, nil
+}
+
+func FooGroupMapBy(items map[string]Foo, getKey func(Foo) (string, error)) (map[string]map[string]Foo, error) {
+	pool := make(map[string]map[string]Foo, 0)
+
+	for origKey, item := range items {
+		key, err := getKey(item)
+		if err != nil {
+			logger.Errorf("Could not get key from item: %v", item)
+			return nil, errors.Wrap(err, "Could not get key for item")
+		}
+
+		if _, ok := pool[key]; !ok {
+			pool[key] = make(map[string]Foo, 0)
+		}
+
+		logger.Infof("Adding %s item to %s entry", origKey, key)
+		pool[key][origKey] = item
+	}
+
+	logger.Infof("Returning %d groups in map", len(pool))
 	return pool, nil
 }

@@ -2,8 +2,10 @@ package logger
 
 import (
 	"io/ioutil"
-	"sync"
 	"log"
+	"os"
+	"strconv"
+	"sync"
 
 	"github.com/google/logger"
 )
@@ -13,7 +15,15 @@ var once sync.Once
 
 func getInstance() *logger.Logger {
 	once.Do(func() {
-		instance = logger.Init("", true, false, ioutil.Discard)
+		v := os.Getenv("CFQUERY_VERBOSE")
+		if v == "" {
+			v = "false"
+		}
+		verbose, err := strconv.ParseBool(v)
+		if err != nil {
+			panic(err)
+		}
+		instance = logger.Init("", verbose, false, ioutil.Discard)
 		logger.SetFlags(log.LstdFlags)
 	})
 

@@ -28,3 +28,23 @@ func FooFilterBy(items []Foo, check func(Foo) (bool, error)) ([]Foo, error) {
 	logger.Infof("Returning filtered slice of size %d", len(pool))
 	return pool, nil
 }
+
+func FooFilterMapBy(items map[string]Foo, check func(Foo) (bool, error)) (map[string]Foo, error) {
+	pool := make(map[string]Foo, 0)
+
+	for key, item := range items {
+		ok, err := check(item)
+		if err != nil {
+			logger.Errorf("Could not check filter on: %v", item)
+			return nil, errors.Wrap(err, "Could not check filter for item")
+		}
+
+		if ok {
+			logger.Infof("Adding %s to entry", key)
+			pool[key] = item
+		}
+	}
+
+	logger.Infof("Returning filtered map of size %d", len(pool))
+	return pool, nil
+}

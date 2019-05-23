@@ -3,7 +3,7 @@
 package cf
 
 import (
-  	cfclient "github.com/cloudfoundry-community/go-cfclient"
+	cfclient "github.com/cloudfoundry-community/go-cfclient"
 	"io"
 	"net/http"
 	"net/url"

@@ -5,9 +5,14 @@
 ##
 
 function patch() {
+  local pkg="$PWD"
+  pkg="${pkg/$GOPATH\//}"
+  pkg="${pkg/src\//}"
+
   local keep_backup=false
   local args=()
   local ignore=()
+  local inject_test_imports=false
   while [[ -n "${1:-}" ]]; do
     case $1 in
       --keep-backup )
@@ -15,6 +20,10 @@ function patch() {
         ;;
       --ignore )
         ignore+=("$2")
+        shift
+        ;;
+      --inject-test-imports )
+        inject_test_imports=true
         shift
         ;;
       -- )
@@ -40,6 +49,14 @@ function patch() {
     echo "Modifying $file"
 
     sed -i.bak 's/Cfclient//g' $file
+
+    if [[ $inject_test_imports == true ]]; then
+      for import in '. "github.com/onsi/ginkgo"' '. "github.com/onsi/gomega"' '. "'"$pkg"'"'; do
+        sed -i.bak 's|\(import (\)|\1\
+'$'\t'"$import"'|g' $file
+      done
+    fi
+
     if [[ $keep_backup != true ]]; then
       rm -f $file.bak
     else

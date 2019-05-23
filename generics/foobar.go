@@ -9,7 +9,7 @@ type Foo struct {
 // NewFoo ...
 func NewFoo(name string, bar *Bar) Foo {
 	return Foo{
-		Bar: bar,
+		Bar:  bar,
 		Name: name,
 	}
 }
