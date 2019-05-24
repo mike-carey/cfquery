@@ -5,7 +5,9 @@
 package query
 
 import (
+	"fmt"
 	"reflect"
+	"strings"
 	"sync"
 
 	"github.com/cloudfoundry-community/go-cfclient"
@@ -14,10 +16,12 @@ import (
 )
 
 type OrgService struct {
-	Client  cf.CFClient
-	storage map[string]cfclient.Org
-	filled  bool
-	mutex   *sync.Mutex
+	Client      cf.CFClient
+	storage     map[string]cfclient.Org
+	filled      bool
+	mutex       *sync.Mutex
+	serviceName string
+	key         string
 }
 
 func NewOrgService(client cf.CFClient) *OrgService {
@@ -27,6 +31,14 @@ func NewOrgService(client cf.CFClient) *OrgService {
 		filled:  false,
 		mutex:   &sync.Mutex{},
 	}
+}
+
+func (s *OrgService) ServiceName() string {
+	return fmt.Sprintf("%v", reflect.TypeOf(s))
+}
+
+func (s *OrgService) Key() string {
+	return strings.Split(s.ServiceName(), "Service")[0]
 }
 
 func (s *OrgService) lock() {
@@ -152,10 +164,13 @@ func (s *OrgService) GetAll() ([]cfclient.Org, error) {
 	return sis, nil
 }
 
-func (i *Inquistor) GetOrgService() *OrgService {
-	if i.OrgService == nil {
-		i.OrgService = NewOrgService(i.CFClient)
-	}
+func (i *Inquistor) NewOrgService() *OrgService {
+	return NewOrgService(i.CFClient)
+}
 
-	return i.OrgService
+func (i *Inquistor) GetOrgService() *OrgService {
+	class := &OrgService{}
+	service := i.GetService(class.key)
+
+	return service.(*OrgService)
 }

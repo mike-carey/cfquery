@@ -9,6 +9,7 @@ import (
 	. "github.com/onsi/gomega"
 	. "github.com/onsi/ginkgo"
 	"fmt"
+	"io"
 	"reflect"
 
 	"github.com/cloudfoundry-community/go-cfclient"
@@ -29,6 +30,10 @@ func newServiceBinding(guid string) cfclient.ServiceBinding {
 	}
 }
 
+func ServiceBindingShouldImplementService(service Service) {
+	io.WriteString(GinkgoWriter, fmt.Sprintf("If this did not compile, it indicates that %v does not implement Service", reflect.TypeOf(&cfclient.ServiceBinding{})))
+}
+
 var _ = Describe(getServiceBindingServiceName()+"Base", func() {
 
 	var (
@@ -39,6 +44,10 @@ var _ = Describe(getServiceBindingServiceName()+"Base", func() {
 	BeforeEach(func() {
 		fakeClient = new(fakes.FakeCFClient)
 		service = NewServiceBindingService(fakeClient)
+	})
+
+	It("Should Implement Service", func() {
+		ServiceBindingShouldImplementService(service)
 	})
 
 	It("Should Get All "+getServiceBindingName()+"s", func() {

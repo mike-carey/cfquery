@@ -9,6 +9,7 @@ import (
 	. "github.com/onsi/gomega"
 	. "github.com/onsi/ginkgo"
 	"fmt"
+	"io"
 	"reflect"
 
 	"github.com/cloudfoundry-community/go-cfclient"
@@ -29,6 +30,10 @@ func newOrg(guid string) cfclient.Org {
 	}
 }
 
+func OrgShouldImplementService(service Service) {
+	io.WriteString(GinkgoWriter, fmt.Sprintf("If this did not compile, it indicates that %v does not implement Service", reflect.TypeOf(&cfclient.Org{})))
+}
+
 var _ = Describe(getOrgServiceName()+"Base", func() {
 
 	var (
@@ -39,6 +44,10 @@ var _ = Describe(getOrgServiceName()+"Base", func() {
 	BeforeEach(func() {
 		fakeClient = new(fakes.FakeCFClient)
 		service = NewOrgService(fakeClient)
+	})
+
+	It("Should Implement Service", func() {
+		OrgShouldImplementService(service)
 	})
 
 	It("Should Get All "+getOrgName()+"s", func() {

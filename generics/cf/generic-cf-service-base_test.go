@@ -2,6 +2,7 @@ package query_test
 
 import (
 	"reflect"
+	"io"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -28,6 +29,10 @@ func newCFObject(guid string) CFObject {
 	}
 }
 
+func CFObjectShouldImplementService(service Service) {
+	io.WriteString(GinkgoWriter, fmt.Sprintf("If this did not compile, it indicates that %v does not implement Service", reflect.TypeOf(&CFObject{})))
+}
+
 var _ = Describe(getCFObjectServiceName()+"Base", func() {
 
 	var (
@@ -38,6 +43,10 @@ var _ = Describe(getCFObjectServiceName()+"Base", func() {
 	BeforeEach(func() {
 		fakeClient = new(fakes.FakeCFClient)
 		service = NewCFObjectService(fakeClient)
+	})
+
+	It("Should Implement Service", func() {
+		CFObjectShouldImplementService(service)
 	})
 
 	It("Should Get All "+getCFObjectName()+"s", func() {

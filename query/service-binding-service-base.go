@@ -5,7 +5,9 @@
 package query
 
 import (
+	"fmt"
 	"reflect"
+	"strings"
 	"sync"
 
 	"github.com/cloudfoundry-community/go-cfclient"
@@ -14,10 +16,12 @@ import (
 )
 
 type ServiceBindingService struct {
-	Client  cf.CFClient
-	storage map[string]cfclient.ServiceBinding
-	filled  bool
-	mutex   *sync.Mutex
+	Client      cf.CFClient
+	storage     map[string]cfclient.ServiceBinding
+	filled      bool
+	mutex       *sync.Mutex
+	serviceName string
+	key         string
 }
 
 func NewServiceBindingService(client cf.CFClient) *ServiceBindingService {
@@ -27,6 +31,14 @@ func NewServiceBindingService(client cf.CFClient) *ServiceBindingService {
 		filled:  false,
 		mutex:   &sync.Mutex{},
 	}
+}
+
+func (s *ServiceBindingService) ServiceName() string {
+	return fmt.Sprintf("%v", reflect.TypeOf(s))
+}
+
+func (s *ServiceBindingService) Key() string {
+	return strings.Split(s.ServiceName(), "Service")[0]
 }
 
 func (s *ServiceBindingService) lock() {
@@ -152,10 +164,13 @@ func (s *ServiceBindingService) GetAll() ([]cfclient.ServiceBinding, error) {
 	return sis, nil
 }
 
-func (i *Inquistor) GetServiceBindingService() *ServiceBindingService {
-	if i.ServiceBindingService == nil {
-		i.ServiceBindingService = NewServiceBindingService(i.CFClient)
-	}
+func (i *Inquistor) NewServiceBindingService() *ServiceBindingService {
+	return NewServiceBindingService(i.CFClient)
+}
 
-	return i.ServiceBindingService
+func (i *Inquistor) GetServiceBindingService() *ServiceBindingService {
+	class := &ServiceBindingService{}
+	service := i.GetService(class.key)
+
+	return service.(*ServiceBindingService)
 }

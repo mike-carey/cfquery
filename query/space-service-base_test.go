@@ -9,6 +9,7 @@ import (
 	. "github.com/onsi/gomega"
 	. "github.com/onsi/ginkgo"
 	"fmt"
+	"io"
 	"reflect"
 
 	"github.com/cloudfoundry-community/go-cfclient"
@@ -29,6 +30,10 @@ func newSpace(guid string) cfclient.Space {
 	}
 }
 
+func SpaceShouldImplementService(service Service) {
+	io.WriteString(GinkgoWriter, fmt.Sprintf("If this did not compile, it indicates that %v does not implement Service", reflect.TypeOf(&cfclient.Space{})))
+}
+
 var _ = Describe(getSpaceServiceName()+"Base", func() {
 
 	var (
@@ -39,6 +44,10 @@ var _ = Describe(getSpaceServiceName()+"Base", func() {
 	BeforeEach(func() {
 		fakeClient = new(fakes.FakeCFClient)
 		service = NewSpaceService(fakeClient)
+	})
+
+	It("Should Implement Service", func() {
+		SpaceShouldImplementService(service)
 	})
 
 	It("Should Get All "+getSpaceName()+"s", func() {

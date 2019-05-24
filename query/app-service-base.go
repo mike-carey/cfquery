@@ -5,7 +5,9 @@
 package query
 
 import (
+	"fmt"
 	"reflect"
+	"strings"
 	"sync"
 
 	"github.com/cloudfoundry-community/go-cfclient"
@@ -14,10 +16,12 @@ import (
 )
 
 type AppService struct {
-	Client  cf.CFClient
-	storage map[string]cfclient.App
-	filled  bool
-	mutex   *sync.Mutex
+	Client      cf.CFClient
+	storage     map[string]cfclient.App
+	filled      bool
+	mutex       *sync.Mutex
+	serviceName string
+	key         string
 }
 
 func NewAppService(client cf.CFClient) *AppService {
@@ -27,6 +31,14 @@ func NewAppService(client cf.CFClient) *AppService {
 		filled:  false,
 		mutex:   &sync.Mutex{},
 	}
+}
+
+func (s *AppService) ServiceName() string {
+	return fmt.Sprintf("%v", reflect.TypeOf(s))
+}
+
+func (s *AppService) Key() string {
+	return strings.Split(s.ServiceName(), "Service")[0]
 }
 
 func (s *AppService) lock() {
@@ -152,10 +164,13 @@ func (s *AppService) GetAll() ([]cfclient.App, error) {
 	return sis, nil
 }
 
-func (i *Inquistor) GetAppService() *AppService {
-	if i.AppService == nil {
-		i.AppService = NewAppService(i.CFClient)
-	}
+func (i *Inquistor) NewAppService() *AppService {
+	return NewAppService(i.CFClient)
+}
 
-	return i.AppService
+func (i *Inquistor) GetAppService() *AppService {
+	class := &AppService{}
+	service := i.GetService(class.key)
+
+	return service.(*AppService)
 }

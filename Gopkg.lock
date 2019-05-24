@@ -64,6 +64,14 @@
   version = "v1.0.0"
 
 [[projects]]
+  branch = "master"
+  digest = "1:be3bd107094de27145a9a92e9e5e2b3eb03d3d92a5dec68da31b8eba4e4c6ae2"
+  name = "github.com/iancoleman/strcase"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "e506e3ef73653e84c592ba44aab577a46678f68c"
+
+[[projects]]
   digest = "1:a2cff208d4759f6ba1b1cd228587b0a1869f95f22542ec9cd17fff64430113c7"
   name = "github.com/jessevdk/go-flags"
   packages = ["."]
@@ -189,7 +197,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:0c645b31475a292d5335c19984d20dcb8d863a6afadd52ae31070270062ce3f3"
+  digest = "1:5f2495eeb7319cab2e5b652065236c4cf9a5baaef6aff885eef9399ca8e51cf6"
   name = "golang.org/x/sys"
   packages = [
     "unix",
@@ -198,7 +206,7 @@
     "windows/svc/eventlog",
   ]
   pruneopts = "UT"
-  revision = "0e01d883c5c5e3a1741118a9962f68d71b0a6ed4"
+  revision = "dbbf3f1254d491605cf4a0034ce25d0dc71b0c58"
 
 [[projects]]
   digest = "1:7570a3e4daa14b7627089e77ad8c714f5f36b4cf1b7dfd8510df7d6935dc42a0"
@@ -250,7 +258,7 @@
     "internal/semver",
   ]
   pruneopts = "UT"
-  revision = "38d8bcfa38af6494a92557425458dc19a8e204d4"
+  revision = "2c0ae70061356820330c96810d9483beb9a6da8e"
 
 [[projects]]
   digest = "1:6eb6e3b6d9fffb62958cf7f7d88dbbe1dd6839436b0802e194c590667a40412a"
@@ -300,6 +308,7 @@
     "github.com/cheekybits/genny/generic",
     "github.com/cloudfoundry-community/go-cfclient",
     "github.com/google/logger",
+    "github.com/iancoleman/strcase",
     "github.com/maxbrunsfeld/counterfeiter",
     "github.com/onsi/ginkgo",
     "github.com/onsi/gomega",

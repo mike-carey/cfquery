@@ -4,6 +4,8 @@ import (
 	"errors"
 	"reflect"
 	"sync"
+	"strings"
+	"fmt"
 
 	"github.com/cheekybits/genny/generic"
 
@@ -19,6 +21,8 @@ type CFObjectService struct {
 	storage map[string]CFObject
 	filled  bool
 	mutex   *sync.Mutex
+	serviceName string
+	key string
 }
 
 func NewCFObjectService(client cf.CFClient) *CFObjectService {
@@ -28,6 +32,14 @@ func NewCFObjectService(client cf.CFClient) *CFObjectService {
 		filled:  false,
 		mutex:   &sync.Mutex{},
 	}
+}
+
+func (s *CFObjectService) ServiceName() string {
+	return fmt.Sprintf("%v", reflect.TypeOf(s))
+}
+
+func (s *CFObjectService) Key() string {
+	return strings.Split(s.ServiceName(), "Service")[0]
 }
 
 func (s *CFObjectService) lock() {
@@ -153,10 +165,13 @@ func (s *CFObjectService) GetAll() ([]CFObject, error) {
 	return sis, nil
 }
 
-func (i *Inquistor) GetCFObjectService() *CFObjectService {
-	if i.CFObjectService == nil {
-		i.CFObjectService = NewCFObjectService(i.CFClient)
-	}
+func (i *Inquistor) NewCFObjectService() *CFObjectService {
+	return NewCFObjectService(i.CFClient)
+}
 
-	return i.CFObjectService
+func (i *Inquistor) GetCFObjectService() *CFObjectService {
+	class := &CFObjectService{}
+	service := i.GetService(class.key)
+
+	return service.(*CFObjectService)
 }

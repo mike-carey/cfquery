@@ -4,25 +4,57 @@ import (
 	"errors"
 	"fmt"
 	"sync"
+	"reflect"
 
 	"github.com/mike-carey/cfquery/cf"
 	"github.com/mike-carey/cfquery/logger"
+	"github.com/mike-carey/cfquery/util"
 
 	cfclient "github.com/cloudfoundry-community/go-cfclient"
 )
 
+type Service interface {
+	ServiceName() string
+}
+
 type Inquistor struct {
-	CFClient               cf.CFClient
-	AppService             *AppService
-	ServiceBindingService  *ServiceBindingService
-	ServiceInstanceService *ServiceInstanceService
-	SpaceService           *SpaceService
-	OrgService             *OrgService
+	CFClient cf.CFClient
+	Services map[string]Service
+}
+
+func (i *Inquistor) GetService(name string) Service {
+	if service, ok := i.Services[name]; ok {
+		return service
+	}
+
+	className := util.TranslateKeyToClassName(name)
+	serviceName := fmt.Sprintf("%sService", className)
+	funcName := fmt.Sprintf("New%s", serviceName)
+
+	fnZeroValue := reflect.ValueOf(nil)
+
+	fn := reflect.ValueOf(i).MethodByName(funcName)
+	if fn == fnZeroValue {
+		panic(fmt.Sprintf("Unknown service %s", name))
+	}
+
+	serviceValue := fn.Call([]reflect.Value{})[0]
+
+	if serviceValue == fnZeroValue {
+		panic(fmt.Sprintf("Error creating service %s", serviceName))
+	}
+
+	service := serviceValue.Interface().(Service)
+
+	i.Services[name] = service
+
+	return service
 }
 
 func NewInquistor(cfClient cf.CFClient) *Inquistor {
 	return &Inquistor{
 		CFClient: cfClient,
+		Services: make(map[string]Service, 0),
 	}
 }
 
