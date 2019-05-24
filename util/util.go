@@ -21,3 +21,17 @@ func MapKeys(subject interface{}) []string {
 func TranslateKeyToClassName(key string) string {
 	return strcase.ToCamel(key)
 }
+
+func StackErrors(errs []error) error {
+	s := ""
+	if len(errs) > 0 {
+		s = "s"
+	}
+
+	err := fmt.Sprintf("%d error%s occured:\n", len(errs), s)
+	for _, e := range errs {
+		err += fmt.Sprintf("%q\n", e)
+	}
+
+	return errors.New(err)
+}

@@ -58,20 +58,6 @@ func NewInquistor(cfClient cf.CFClient) *Inquistor {
 	}
 }
 
-func StackErrors(errs []error) error {
-	s := ""
-	if len(errs) > 0 {
-		s = "s"
-	}
-
-	err := fmt.Sprintf("%d error%s occured:\n", len(errs), s)
-	for _, e := range errs {
-		err += fmt.Sprintf("%q\n", e)
-	}
-
-	return errors.New(err)
-}
-
 func (i *Inquistor) GetServiceInstanceToAppRatio() (map[string][]cfclient.App, error) {
 	var serviceBindings []cfclient.ServiceBinding
 	// var serviceInstances []cfclient.ServiceInstance
@@ -133,7 +119,7 @@ func (i *Inquistor) GetServiceInstanceToAppRatio() (map[string][]cfclient.App, e
 	logger.Info("Done waiting for service*s")
 
 	if len(errs) > 0 {
-		return nil, StackErrors(errs)
+		return nil, util.StackErrors(errs)
 	}
 
 	type Result struct {
@@ -189,7 +175,7 @@ func (i *Inquistor) GetServiceInstanceToAppRatio() (map[string][]cfclient.App, e
 	logger.Info("Done waiting for mapping")
 
 	if len(errs) > 0 {
-		return nil, StackErrors(errs)
+		return nil, util.StackErrors(errs)
 	}
 
 	return ret, nil
