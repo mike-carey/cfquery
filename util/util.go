@@ -1,9 +1,9 @@
 package util
 
 import (
+	"errors"
+	"fmt"
 	"reflect"
-
-	"github.com/iancoleman/strcase"
 )
 
 func MapKeys(subject interface{}) []string {
@@ -18,10 +18,6 @@ func MapKeys(subject interface{}) []string {
 	return keys
 }
 
-func TranslateKeyToClassName(key string) string {
-	return strcase.ToCamel(key)
-}
-
 func StackErrors(errs []error) error {
 	s := ""
 	if len(errs) > 0 {
@@ -34,4 +30,14 @@ func StackErrors(errs []error) error {
 	}
 
 	return errors.New(err)
+}
+
+func StringSliceContains(subject []string, item string) bool {
+	for _, str := range subject {
+		if str == item {
+			return true
+		}
+	}
+
+	return false
 }
