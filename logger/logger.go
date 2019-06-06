@@ -10,24 +10,39 @@ import (
 	"github.com/google/logger"
 )
 
+var verbose bool
 var instance *logger.Logger
 var once sync.Once
 
 func getInstance() *logger.Logger {
 	once.Do(func() {
-		v := os.Getenv("CFQUERY_VERBOSE")
-		if v == "" {
-			v = "false"
-		}
-		verbose, err := strconv.ParseBool(v)
-		if err != nil {
-			panic(err)
-		}
-		instance = logger.Init("", verbose, false, ioutil.Discard)
+		instance = logger.Init("", getVerbose(), false, ioutil.Discard)
 		logger.SetFlags(log.LstdFlags)
 	})
 
 	return instance
+}
+
+// SetVerbose sets the verbose flag before the logger is initialized
+func SetVerbose() {
+	verbose = true
+}
+
+func getVerbose() bool {
+	if verbose {
+		return true
+	}
+
+	v := os.Getenv("CFQUERY_VERBOSE")
+	if v == "" {
+		v = "false"
+	}
+	verbose, err := strconv.ParseBool(v)
+	if err != nil {
+		panic(err)
+	}
+
+	return verbose
 }
 
 // Close ...
