@@ -3,4 +3,4 @@
 .PHONY: test
 
 test:
-	ginkgo generics util config
+	@./bin/test
