@@ -7,6 +7,7 @@ import (
 
 type Commands struct {
 	Apps AppsCommand `command:"apps"`
+	Spaces SpacesCommand `command:"spaces"`
 	ServiceInstances ServiceInstancesCommand `command:"service-instances"`
 }
 
