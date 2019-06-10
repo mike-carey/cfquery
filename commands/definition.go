@@ -3,6 +3,7 @@ package commands
 //go:generate genny -in=../generics/commands/generic-command.go -out=gen-apps-command.go -pkg commands gen "Item=cfclient.App"
 //go:generate genny -in=../generics/commands/generic-command.go -out=gen-service-instances-command.go -pkg commands gen "Item=cfclient.ServiceInstance"
 //go:generate genny -in=../generics/commands/generic-command.go -out=gen-spaces-command.go -pkg commands gen "Item=cfclient.Space"
+//go:generate genny -in=../generics/commands/generic-command.go -out=gen-orgs-command.go -pkg commands gen "Item=cfclient.Org"
 //go:generate ../generics/patch.sh -- gen-*.go
 
 //go:generate counterfeiter -o fakes/fake_command.go command.go Command
