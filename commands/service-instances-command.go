@@ -1,39 +1,50 @@
 package commands
 
-import ()
+import (
+	"github.com/mike-carey/cfquery/query"
+)
 
 type ServiceInstancesCommand struct {
-	BaseCommand
+	CommandDefaults
 }
 
-func (c *ServiceInstancesCommand) Execute() error {
-	return nil
+func (c *ServiceInstancesCommand) Execute([]string) error {
+	w, e := workerFactory.NewWorker(c)
+	if e != nil {
+		return e
+	}
+
+	return w.Work()
+}
+
+func (c *ServiceInstancesCommand) Run(o *Options, i *query.Inquistor) (interface{}, error) {
+	service := i.GetServiceInstanceService()
+	//
+	// if o.Target == "apps" {
+	// 	_, err := service.GetApps(i)
+	// 	if err != nil {
+	// 		return err
+	// 	}
+	// } else {
+		sis, err := service.GetAll()
+		if err != nil {
+			return nil, err
+		}
+	// }
+
+	return sis, nil
 }
 
 func (c *ServiceInstancesCommand) TargetOptions() []string {
-	return []string{}
+	return []string{
+		"apps",
+	}
 }
 
 func (c *ServiceInstancesCommand) GroupByOptions() []string {
 	return []string{
-		"stack",
 		"space",
-		"org"
+		"org",
+		"space-and-org",
 	}
-}
-
-func (c *ServiceInstancesCommand) SortByOptions() []string {
-	return []string{}
-}
-
-func (c *ServiceInstancesCommand) SortBy(string name) {
-
-}
-
-func (c *ServiceInstancesCommand) GroupBy(string ...name) {
-
-}
-
-func (c *ServiceInstancesCommand) Target(string name) {
-
 }

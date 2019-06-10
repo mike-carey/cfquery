@@ -10,13 +10,15 @@ import (
 var _ = Describe("Foobar", func() {
 
 	var (
-		foos   []Foo
+		foos   Foos
 		bars   []Bar
-		fooMap map[string]Foo
+		fooMap FooMap
+		fooGroup FooGroup
 	)
 
 	BeforeEach(func() {
-		fooMap = make(map[string]Foo, 0)
+		fooGroup = make(FooGroup, 0)
+		fooMap = make(FooMap, 0)
 
 		foo1, bar1 := NewFooBarPair("one")
 		foos = append(foos, foo1)
@@ -31,21 +33,43 @@ var _ = Describe("Foobar", func() {
 		foos = append(foos, foo3)
 		fooMap["three"] = foo3
 
+		fooGroup["one"] = []Foo{
+			foo1,
+			foo2,
+			foo3,
+		}
+
 		foo4, bar4 := NewFooBarPair("four")
 		foos = append(foos, foo4)
 		bars = append(bars, bar4)
 		fooMap["four"] = foo4
+
+		fooGroup["four"] = []Foo{
+			foo4,
+		}
+
+		foo5, bar5 := NewFooBarPair("five")
+		foos = append(foos, foo5)
+		bars = append(bars, bar5)
+		fooMap["five"] = foo5
+
+		fooGroup["five"] = []Foo{
+			foo5,
+		}
 	})
 
 	It("Should group slice by bar name", func() {
-		expect := map[string][]Foo{
-			"one": []Foo{
+		expect := FooGroup{
+			"one": Foos{
 				foos[0],
 				foos[1],
 				foos[2],
 			},
-			"four": []Foo{
+			"four": Foos{
 				foos[3],
+			},
+			"five": Foos{
+				foos[4],
 			},
 		}
 
@@ -58,22 +82,53 @@ var _ = Describe("Foobar", func() {
 	})
 
 	It("Should group map by bar name", func() {
-		expect := map[string]map[string]Foo{
-			"one": map[string]Foo{
+		expect := MappedFooMap{
+			"one": FooMap{
 				"one":   foos[0],
 				"two":   foos[1],
 				"three": foos[2],
 			},
-			"four": map[string]Foo{
+			"four": FooMap{
 				"four": foos[3],
+			},
+			"five": FooMap{
+				"five": foos[4],
 			},
 		}
 
-		actual, err := FooGroupMapBy(fooMap, func(foo Foo) (string, error) {
+		actual, err := FooGroupMapBy(fooMap, func(_ string, foo Foo) (string, error) {
 			return foo.Bar.Name, nil
 		})
 
 		Expect(err).To(BeNil())
 		Expect(actual).To(Equal(expect))
 	})
+
+	It("Should group mapped slice by first character", func() {
+		expect := MappedFooGroup{
+			"o": FooGroup{
+				"one": Foos{
+					foos[0],
+					foos[1],
+					foos[2],
+				},
+			},
+			"f": FooGroup{
+				"four": Foos{
+					foos[3],
+				},
+				"five": Foos{
+					foos[4],
+				},
+			},
+		}
+
+		actual, err := FooGroupMappedSliceBy(fooGroup, func(key string, _ Foos) (string, error) {
+			return string([]rune(key)[0]), nil
+		})
+
+		Expect(err).To(BeNil())
+		Expect(actual).To(Equal(expect))
+	})
+
 })

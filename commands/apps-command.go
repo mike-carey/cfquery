@@ -1,53 +1,62 @@
 package commands
 
 import (
+	"fmt"
+	"reflect"
+
 	"github.com/mike-carey/cfquery/query"
-	cfclient "github.com/cloudfoundry-community/go-cfclient"
+	"github.com/iancoleman/strcase"
 )
 
 type AppsCommand struct {
-	BaseCommand
-
-	apps []cfclient.App
+	CommandDefaults
 }
 
-func NewAppsCommand(inquisitor *query.Inquistor) *AppsCommand {
-	return &AppsCommand{
-		Inquistor: inquisitor
+func (c *AppsCommand) Execute([]string) error {
+	w, e := workerFactory.NewWorker(c)
+	if e != nil {
+		return e
 	}
+
+	return w.Work()
 }
 
-func (c *AppsCommand) Execute() error {
-	return nil
-}
+func (c *AppsCommand) Run(o *Options, i *query.Inquistor) (interface{}, error) {
+	service := i.GetAppService()
 
-func (c *AppsCommand) TargetOptions() []string {
-	return []string{}
+	apps, err := service.GetAll()
+	if err != nil {
+		return nil, err
+	}
+
+	val := reflect.ValueOf(apps)
+
+	if gb := o.GroupBy; gb != "" {
+		fn := val.MethodByName(fmt.Sprintf("GroupBy%s", strcase.ToCamel(gb)))
+
+		if fn == reflect.Zero(reflect.TypeOf(fn)) {
+			panic(fmt.Sprintf("Missing method GrouBy%s", strcase.ToCamel(gb)))
+		}
+
+		res := fn.Call([]reflect.Value{
+			reflect.ValueOf(i),
+		})
+
+		if e := res[1].Interface(); e != nil {
+			return nil, e.(error)
+		}
+
+		val = res[0]
+	}
+
+	return val.Interface(), nil
 }
 
 func (c *AppsCommand) GroupByOptions() []string {
 	return []string{
-		"stack",
+		// "stack",
 		"space",
 		"org",
-	}
-}
-
-func (c *AppsCommand) SortByOptions() []string {
-	return []string{}
-}
-
-func (c *AppsCommand) SortBy(name string) {
-	panic("Sort By Not supported")
-}
-
-func (c *AppsCommand) GroupBy(name ...string) {
-
-}
-
-func (c *AppsCommand) Target(name string) error {
-	c.apps, err := inquisitor.GetAppService().GetAll()
-	if err != nil {
-		return err
+		"space-and-org",
 	}
 }

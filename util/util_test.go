@@ -154,7 +154,6 @@ var _ = Describe("Util", func() {
 	})
 
 	Describe("StringSliceContains", func() {
-		description := "Should check contain (or not) within a(n) %s slice"
 		pool := []string {
 			"foo",
 			"bar",
@@ -162,12 +161,12 @@ var _ = Describe("Util", func() {
 		}
 
 		It("Should contain the string: foo", func() {
-			doesContain := SliceContains(pool, "foo")
+			doesContain := StringSliceContains(pool, "foo")
 			Expect(doesContain).To(BeTrue())
 		})
 
 		It("Should not contain the string: nothere", func() {
-			doesNotContain := SliceContains(pool, "nothere")
+			doesNotContain := StringSliceContains(pool, "nothere")
 			Expect(doesNotContain).To(BeFalse())
 		})
 	})

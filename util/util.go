@@ -1,9 +1,9 @@
 package util
 
 import (
+	"reflect"
 	"errors"
 	"fmt"
-	"reflect"
 )
 
 func MapKeys(subject interface{}) []string {

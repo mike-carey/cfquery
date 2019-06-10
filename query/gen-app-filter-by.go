@@ -2,15 +2,16 @@
 // Any changes will be lost if this file is regenerated.
 // see https://github.com/cheekybits/genny
 
-package generics
+package query
 
 import (
+	"github.com/cloudfoundry-community/go-cfclient"
 	"github.com/mike-carey/cfquery/logger"
 	"github.com/pkg/errors"
 )
 
-func FooFilterBy(items Foos, check func(Foo) (bool, error)) (Foos, error) {
-	pool := make(Foos, 0)
+func AppFilterBy(items Apps, check func(cfclient.App) (bool, error)) (Apps, error) {
+	pool := make(Apps, 0)
 
 	for _, item := range items {
 		ok, err := check(item)
@@ -29,8 +30,8 @@ func FooFilterBy(items Foos, check func(Foo) (bool, error)) (Foos, error) {
 	return pool, nil
 }
 
-func FooFilterMapBy(items FooMap, check func(Foo) (bool, error)) (FooMap, error) {
-	pool := make(FooMap, 0)
+func AppFilterMapBy(items AppMap, check func(cfclient.App) (bool, error)) (AppMap, error) {
+	pool := make(AppMap, 0)
 
 	for key, item := range items {
 		ok, err := check(item)

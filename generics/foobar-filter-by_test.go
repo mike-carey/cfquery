@@ -10,13 +10,13 @@ import (
 var _ = Describe("FoobarFilterBy", func() {
 
 	var (
-		foos   []Foo
+		foos   Foos
 		bars   []Bar
-		fooMap map[string]Foo
+		fooMap FooMap
 	)
 
 	BeforeEach(func() {
-		fooMap = make(map[string]Foo, 0)
+		fooMap = make(FooMap, 0)
 
 		foo1, bar1 := NewFooBarPair("one")
 		foos = append(foos, foo1)
@@ -38,7 +38,7 @@ var _ = Describe("FoobarFilterBy", func() {
 	})
 
 	It("Should filter slice by bar name", func() {
-		expect := []Foo{
+		expect := Foos{
 			foos[0],
 			foos[3],
 		}
@@ -52,7 +52,7 @@ var _ = Describe("FoobarFilterBy", func() {
 	})
 
 	It("Should filter map by bar name", func() {
-		expect := map[string]Foo{
+		expect := FooMap{
 			"one":  foos[0],
 			"four": foos[3],
 		}

@@ -34,6 +34,14 @@
   revision = "f136f9222381e2fea5099f62e4b751dcb660ff82"
 
 [[projects]]
+  digest = "1:2cd7915ab26ede7d95b8749e6b1f933f1c6d5398030684e6505940a10f31cfda"
+  name = "github.com/ghodss/yaml"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "0ca9ea5df5451ffdf184b4428c902747c2c11cd7"
+  version = "v1.0.0"
+
+[[projects]]
   digest = "1:318f1c959a8a740366fce4b1e1eb2fd914036b4af58fbd0a003349b305f118ad"
   name = "github.com/golang/protobuf"
   packages = ["proto"]
@@ -307,8 +315,10 @@
   input-imports = [
     "github.com/cheekybits/genny/generic",
     "github.com/cloudfoundry-community/go-cfclient",
+    "github.com/ghodss/yaml",
     "github.com/google/logger",
     "github.com/iancoleman/strcase",
+    "github.com/jessevdk/go-flags",
     "github.com/maxbrunsfeld/counterfeiter",
     "github.com/onsi/ginkgo",
     "github.com/onsi/gomega",

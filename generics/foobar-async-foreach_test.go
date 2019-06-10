@@ -11,7 +11,7 @@ import (
 
 var _ = Describe("FoobarAsyncForeach", func() {
 	It("Should cycle through every Foo and return proper Bars", func() {
-		foos := make([]Foo, 0)
+		foos := make(Foos, 0)
 		bars := make([]Bar, 0)
 
 		for _, i := range []string{"one", "two", "three"} {
@@ -29,7 +29,7 @@ var _ = Describe("FoobarAsyncForeach", func() {
 	})
 
 	It("Should cycle through every Foo and return errors", func() {
-		foos := make([]Foo, 0)
+		foos := make(Foos, 0)
 		bars := make([]Bar, 0)
 
 		for _, i := range []string{"one", "two", "three"} {

@@ -11,6 +11,8 @@ import (
 	. "github.com/mike-carey/cfquery/query"
 )
 
+type FooService struct {}
+
 var _ = Describe("Inquistor", func() {
 
 	var (

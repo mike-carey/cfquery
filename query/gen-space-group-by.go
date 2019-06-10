@@ -2,15 +2,16 @@
 // Any changes will be lost if this file is regenerated.
 // see https://github.com/cheekybits/genny
 
-package generics
+package query
 
 import (
+	"github.com/cloudfoundry-community/go-cfclient"
 	"github.com/mike-carey/cfquery/logger"
 	"github.com/pkg/errors"
 )
 
-func FooGroupBy(items Foos, getKey func(Foo) (string, error)) (FooGroup, error) {
-	pool := make(FooGroup, 0)
+func SpaceGroupBy(items Spaces, getKey func(cfclient.Space) (string, error)) (SpaceGroup, error) {
+	pool := make(SpaceGroup, 0)
 
 	for _, item := range items {
 		key, err := getKey(item)
@@ -20,7 +21,7 @@ func FooGroupBy(items Foos, getKey func(Foo) (string, error)) (FooGroup, error) 
 		}
 
 		if _, ok := pool[key]; !ok {
-			pool[key] = make(Foos, 0)
+			pool[key] = make(Spaces, 0)
 		}
 
 		logger.Infof("Adding item to %s entry", key)
@@ -31,8 +32,8 @@ func FooGroupBy(items Foos, getKey func(Foo) (string, error)) (FooGroup, error) 
 	return pool, nil
 }
 
-func FooGroupMapBy(items FooMap, getKey func(string, Foo) (string, error)) (MappedFooMap, error) {
-	pool := make(MappedFooMap, 0)
+func SpaceGroupMapBy(items SpaceMap, getKey func(string, cfclient.Space) (string, error)) (MappedSpaceMap, error) {
+	pool := make(MappedSpaceMap, 0)
 
 	for origKey, item := range items {
 		key, err := getKey(origKey, item)
@@ -42,7 +43,7 @@ func FooGroupMapBy(items FooMap, getKey func(string, Foo) (string, error)) (Mapp
 		}
 
 		if _, ok := pool[key]; !ok {
-			pool[key] = make(FooMap, 0)
+			pool[key] = make(SpaceMap, 0)
 		}
 
 		logger.Infof("Adding %s item to %s entry", origKey, key)
@@ -53,8 +54,8 @@ func FooGroupMapBy(items FooMap, getKey func(string, Foo) (string, error)) (Mapp
 	return pool, nil
 }
 
-func FooGroupMappedSliceBy(items FooGroup, getKey func(string, Foos) (string, error)) (MappedFooGroup, error) {
-	pool := make(MappedFooGroup, 0)
+func SpaceGroupMappedSliceBy(items SpaceGroup, getKey func(string, Spaces) (string, error)) (MappedSpaceGroup, error) {
+	pool := make(MappedSpaceGroup, 0)
 
 	for origKey, item := range items {
 		key, err := getKey(origKey, item)
@@ -64,7 +65,7 @@ func FooGroupMappedSliceBy(items FooGroup, getKey func(string, Foos) (string, er
 		}
 
 		if _, ok := pool[key]; !ok {
-			pool[key] = make(FooGroup, 0)
+			pool[key] = make(SpaceGroup, 0)
 		}
 
 		logger.Infof("Adding %s item to %s entry", origKey, key)

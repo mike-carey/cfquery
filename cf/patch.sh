@@ -25,13 +25,13 @@ function patch() {
 
   file=client.go
 
+  echo "Modifying $file"
   sed -i.bak 's|\(import (\)|\1\
-  '$'\tcfclient "github.com/cloudfoundry-community/go-cfclient"|g' $file
+'$'\tcfclient "github.com/cloudfoundry-community/go-cfclient"|g' $file
   sed -i.bak '/^[type|/\/\/]/! s/\([][( \*]\)\([A-Z]\)/\1cfclient.\2/g' $file
   if [[ $keep_backup != true ]]; then
     rm -f $file.bak
   fi
-
 }
 
 if [[ ${BASH_SOURCE[0]} != $0 ]]; then
