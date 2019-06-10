@@ -17,12 +17,7 @@ type ItemsCommand struct {
 }
 
 func (c *ItemsCommand) Execute([]string) error {
-	w, e := workerFactory.NewWorker(c)
-	if e != nil {
-		return e
-	}
-
-	return w.Work()
+	return workerFactory.Go(c)
 }
 
 func (c *ItemsCommand) Run(o *Options, i *query.Inquistor) (interface{}, error) {

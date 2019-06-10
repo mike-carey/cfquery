@@ -17,12 +17,7 @@ type SpacesCommand struct {
 }
 
 func (c *SpacesCommand) Execute([]string) error {
-	w, e := workerFactory.NewWorker(c)
-	if e != nil {
-		return e
-	}
-
-	return w.Work()
+	return workerFactory.Go(c)
 }
 
 func (c *SpacesCommand) Run(o *Options, i *query.Inquistor) (interface{}, error) {

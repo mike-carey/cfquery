@@ -14,7 +14,7 @@ type Commands struct {
 type GlobalOptions struct {
 	Verbose bool `short:"v" long:"verbose" description:"Show verbose debug information"`
 	Config string `short:"c" long:"config" description:"The config file to load" default:"cfquery.json"`
-	Format string `short:"f" long:"format" description:"The format of printing the objects" default:"table"`
+	Format string `short:"f" long:"format" description:"The format of printing the objects" default:"yaml"`
 }
 
 type Options struct {
