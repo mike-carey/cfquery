@@ -2,6 +2,7 @@ package query
 
 import (
 	"fmt"
+	"sync"
 	"reflect"
 
 	"github.com/mike-carey/cfquery/cf"
@@ -16,13 +17,23 @@ type Service interface {
 type Inquisitor struct {
 	CFClient cf.CFClient
 	Services map[string]Service
+	mutex       *sync.Mutex
 }
 
 func NewInquisitor(cfClient cf.CFClient) *Inquisitor {
 	return &Inquisitor{
 		CFClient: cfClient,
 		Services: make(map[string]Service, 0),
+		mutex: &sync.Mutex{},
 	}
+}
+
+func (i *Inquisitor) lock() {
+	i.mutex.Lock()
+}
+
+func (i *Inquisitor) unlock() {
+	i.mutex.Unlock()
 }
 
 func (i *Inquisitor) GetService(name string) Service {
@@ -49,7 +60,9 @@ func (i *Inquisitor) GetService(name string) Service {
 
 	service := serviceValue.Interface().(Service)
 
+	i.lock()
 	i.Services[name] = service
+	i.unlock()
 
 	return service
 }
