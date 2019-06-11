@@ -68,7 +68,7 @@ func (s *OrgService) unlock() {
 }
 
 func (s *OrgService) GetStorage() (OrgMap, error) {
-	_, err := s.GetAll()
+	_, err := s.GetAllOrgs()
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func (s *OrgService) GetStorage() (OrgMap, error) {
 	return s.storage, nil
 }
 
-func (s *OrgService) GetByGuid(guid string) (*cfclient.Org, error) {
+func (s *OrgService) GetOrgByGuid(guid string) (*cfclient.Org, error) {
 	s.lock()
 
 	defer s.unlock()
@@ -99,7 +99,7 @@ func (s *OrgService) GetByGuid(guid string) (*cfclient.Org, error) {
 	return &item, nil
 }
 
-func (s *OrgService) GetManyByGuid(guids ...string) (OrgMap, error) {
+func (s *OrgService) GetManyOrgsByGuid(guids ...string) (OrgMap, error) {
 	pool := make(OrgMap, len(guids))
 
 	type Result struct {
@@ -112,7 +112,7 @@ func (s *OrgService) GetManyByGuid(guids ...string) (OrgMap, error) {
 
 	for _, guid := range guids {
 		go func(guid string) {
-			obj, err := s.GetByGuid(guid)
+			obj, err := s.GetOrgByGuid(guid)
 			res := Result{
 				Guid:   guid,
 				Error:  err,
@@ -143,7 +143,7 @@ func (s *OrgService) GetManyByGuid(guids ...string) (OrgMap, error) {
 	return pool, nil
 }
 
-func (s *OrgService) GetAll() (Orgs, error) {
+func (s *OrgService) GetAllOrgs() (Orgs, error) {
 	s.lock()
 
 	if s.filled {

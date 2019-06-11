@@ -23,7 +23,7 @@ func (c *ItemsCommand) Execute([]string) error {
 func (c *ItemsCommand) Run(o *Options, i *query.Inquisitor) (interface{}, error) {
 	service := i.GetItemService()
 
-	a, err := service.GetAll()
+	a, err := service.GetAllItems()
 	if err != nil {
 		return nil, err
 	}

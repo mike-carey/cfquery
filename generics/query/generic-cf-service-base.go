@@ -67,7 +67,7 @@ func (s *ItemService) unlock() {
 }
 
 func (s *ItemService) GetStorage() (ItemMap, error) {
-	_, err := s.GetAll()
+	_, err := s.GetAllItems()
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +75,7 @@ func (s *ItemService) GetStorage() (ItemMap, error) {
 	return s.storage, nil
 }
 
-func (s *ItemService) GetByGuid(guid string) (*Item, error) {
+func (s *ItemService) GetItemByGuid(guid string) (*Item, error) {
 	s.lock()
 
 	defer s.unlock()
@@ -98,7 +98,7 @@ func (s *ItemService) GetByGuid(guid string) (*Item, error) {
 	return &item, nil
 }
 
-func (s *ItemService) GetManyByGuid(guids ...string) (ItemMap, error) {
+func (s *ItemService) GetManyItemsByGuid(guids ...string) (ItemMap, error) {
 	pool := make(ItemMap, len(guids))
 
 	type Result struct {
@@ -111,7 +111,7 @@ func (s *ItemService) GetManyByGuid(guids ...string) (ItemMap, error) {
 
 	for _, guid := range guids {
 		go func(guid string) {
-			obj, err := s.GetByGuid(guid)
+			obj, err := s.GetItemByGuid(guid)
 			res := Result{
 				Guid:   guid,
 				Error:  err,
@@ -142,7 +142,7 @@ func (s *ItemService) GetManyByGuid(guids ...string) (ItemMap, error) {
 	return pool, nil
 }
 
-func (s *ItemService) GetAll() (Items, error) {
+func (s *ItemService) GetAllItems() (Items, error) {
 	s.lock()
 
 	if s.filled {

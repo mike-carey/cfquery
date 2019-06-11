@@ -68,7 +68,7 @@ func (s *SpaceService) unlock() {
 }
 
 func (s *SpaceService) GetStorage() (SpaceMap, error) {
-	_, err := s.GetAll()
+	_, err := s.GetAllSpaces()
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func (s *SpaceService) GetStorage() (SpaceMap, error) {
 	return s.storage, nil
 }
 
-func (s *SpaceService) GetByGuid(guid string) (*cfclient.Space, error) {
+func (s *SpaceService) GetSpaceByGuid(guid string) (*cfclient.Space, error) {
 	s.lock()
 
 	defer s.unlock()
@@ -99,7 +99,7 @@ func (s *SpaceService) GetByGuid(guid string) (*cfclient.Space, error) {
 	return &item, nil
 }
 
-func (s *SpaceService) GetManyByGuid(guids ...string) (SpaceMap, error) {
+func (s *SpaceService) GetManySpacesByGuid(guids ...string) (SpaceMap, error) {
 	pool := make(SpaceMap, len(guids))
 
 	type Result struct {
@@ -112,7 +112,7 @@ func (s *SpaceService) GetManyByGuid(guids ...string) (SpaceMap, error) {
 
 	for _, guid := range guids {
 		go func(guid string) {
-			obj, err := s.GetByGuid(guid)
+			obj, err := s.GetSpaceByGuid(guid)
 			res := Result{
 				Guid:   guid,
 				Error:  err,
@@ -143,7 +143,7 @@ func (s *SpaceService) GetManyByGuid(guids ...string) (SpaceMap, error) {
 	return pool, nil
 }
 
-func (s *SpaceService) GetAll() (Spaces, error) {
+func (s *SpaceService) GetAllSpaces() (Spaces, error) {
 	s.lock()
 
 	if s.filled {

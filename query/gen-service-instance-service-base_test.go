@@ -60,7 +60,7 @@ var _ = Describe(getServiceInstanceServiceName()+"Base", func() {
 
 		fakeClient.ListServiceInstancesReturns(expect, nil)
 
-		actual, err := service.GetAll()
+		actual, err := service.GetAllServiceInstances()
 
 		Expect(err).To(BeNil())
 		Expect(actual).Should(ConsistOf(expect))
@@ -69,7 +69,7 @@ var _ = Describe(getServiceInstanceServiceName()+"Base", func() {
 
 		By("Using the storage")
 
-		actual2, err2 := service.GetAll()
+		actual2, err2 := service.GetAllServiceInstances()
 
 		Expect(err2).To(BeNil())
 		Expect(actual2).Should(ConsistOf(expect))

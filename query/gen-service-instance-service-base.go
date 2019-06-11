@@ -68,7 +68,7 @@ func (s *ServiceInstanceService) unlock() {
 }
 
 func (s *ServiceInstanceService) GetStorage() (ServiceInstanceMap, error) {
-	_, err := s.GetAll()
+	_, err := s.GetAllServiceInstances()
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func (s *ServiceInstanceService) GetStorage() (ServiceInstanceMap, error) {
 	return s.storage, nil
 }
 
-func (s *ServiceInstanceService) GetByGuid(guid string) (*cfclient.ServiceInstance, error) {
+func (s *ServiceInstanceService) GetServiceInstanceByGuid(guid string) (*cfclient.ServiceInstance, error) {
 	s.lock()
 
 	defer s.unlock()
@@ -99,7 +99,7 @@ func (s *ServiceInstanceService) GetByGuid(guid string) (*cfclient.ServiceInstan
 	return &item, nil
 }
 
-func (s *ServiceInstanceService) GetManyByGuid(guids ...string) (ServiceInstanceMap, error) {
+func (s *ServiceInstanceService) GetManyServiceInstancesByGuid(guids ...string) (ServiceInstanceMap, error) {
 	pool := make(ServiceInstanceMap, len(guids))
 
 	type Result struct {
@@ -112,7 +112,7 @@ func (s *ServiceInstanceService) GetManyByGuid(guids ...string) (ServiceInstance
 
 	for _, guid := range guids {
 		go func(guid string) {
-			obj, err := s.GetByGuid(guid)
+			obj, err := s.GetServiceInstanceByGuid(guid)
 			res := Result{
 				Guid:   guid,
 				Error:  err,
@@ -143,7 +143,7 @@ func (s *ServiceInstanceService) GetManyByGuid(guids ...string) (ServiceInstance
 	return pool, nil
 }
 
-func (s *ServiceInstanceService) GetAll() (ServiceInstances, error) {
+func (s *ServiceInstanceService) GetAllServiceInstances() (ServiceInstances, error) {
 	s.lock()
 
 	if s.filled {

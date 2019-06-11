@@ -68,7 +68,7 @@ func (s *AppService) unlock() {
 }
 
 func (s *AppService) GetStorage() (AppMap, error) {
-	_, err := s.GetAll()
+	_, err := s.GetAllApps()
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func (s *AppService) GetStorage() (AppMap, error) {
 	return s.storage, nil
 }
 
-func (s *AppService) GetByGuid(guid string) (*cfclient.App, error) {
+func (s *AppService) GetAppByGuid(guid string) (*cfclient.App, error) {
 	s.lock()
 
 	defer s.unlock()
@@ -99,7 +99,7 @@ func (s *AppService) GetByGuid(guid string) (*cfclient.App, error) {
 	return &item, nil
 }
 
-func (s *AppService) GetManyByGuid(guids ...string) (AppMap, error) {
+func (s *AppService) GetManyAppsByGuid(guids ...string) (AppMap, error) {
 	pool := make(AppMap, len(guids))
 
 	type Result struct {
@@ -112,7 +112,7 @@ func (s *AppService) GetManyByGuid(guids ...string) (AppMap, error) {
 
 	for _, guid := range guids {
 		go func(guid string) {
-			obj, err := s.GetByGuid(guid)
+			obj, err := s.GetAppByGuid(guid)
 			res := Result{
 				Guid:   guid,
 				Error:  err,
@@ -143,7 +143,7 @@ func (s *AppService) GetManyByGuid(guids ...string) (AppMap, error) {
 	return pool, nil
 }
 
-func (s *AppService) GetAll() (Apps, error) {
+func (s *AppService) GetAllApps() (Apps, error) {
 	s.lock()
 
 	if s.filled {

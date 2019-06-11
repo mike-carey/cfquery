@@ -68,7 +68,7 @@ func (s *ServiceBindingService) unlock() {
 }
 
 func (s *ServiceBindingService) GetStorage() (ServiceBindingMap, error) {
-	_, err := s.GetAll()
+	_, err := s.GetAllServiceBindings()
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func (s *ServiceBindingService) GetStorage() (ServiceBindingMap, error) {
 	return s.storage, nil
 }
 
-func (s *ServiceBindingService) GetByGuid(guid string) (*cfclient.ServiceBinding, error) {
+func (s *ServiceBindingService) GetServiceBindingByGuid(guid string) (*cfclient.ServiceBinding, error) {
 	s.lock()
 
 	defer s.unlock()
@@ -99,7 +99,7 @@ func (s *ServiceBindingService) GetByGuid(guid string) (*cfclient.ServiceBinding
 	return &item, nil
 }
 
-func (s *ServiceBindingService) GetManyByGuid(guids ...string) (ServiceBindingMap, error) {
+func (s *ServiceBindingService) GetManyServiceBindingsByGuid(guids ...string) (ServiceBindingMap, error) {
 	pool := make(ServiceBindingMap, len(guids))
 
 	type Result struct {
@@ -112,7 +112,7 @@ func (s *ServiceBindingService) GetManyByGuid(guids ...string) (ServiceBindingMa
 
 	for _, guid := range guids {
 		go func(guid string) {
-			obj, err := s.GetByGuid(guid)
+			obj, err := s.GetServiceBindingByGuid(guid)
 			res := Result{
 				Guid:   guid,
 				Error:  err,
@@ -143,7 +143,7 @@ func (s *ServiceBindingService) GetManyByGuid(guids ...string) (ServiceBindingMa
 	return pool, nil
 }
 
-func (s *ServiceBindingService) GetAll() (ServiceBindings, error) {
+func (s *ServiceBindingService) GetAllServiceBindings() (ServiceBindings, error) {
 	s.lock()
 
 	if s.filled {
