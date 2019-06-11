@@ -13,58 +13,58 @@ import (
 	"github.com/cheekybits/genny/generic"
 )
 
-type CFObject generic.Type
+type Item generic.Type
 
-func getCFObjectServiceName() string {
-	return fmt.Sprintf("%v", reflect.TypeOf(CFObjectService{}))
+func getItemServiceName() string {
+	return fmt.Sprintf("%v", reflect.TypeOf(ItemService{}))
 }
 
-func getCFObjectName() string {
-	return fmt.Sprintf("%v", reflect.TypeOf(CFObject{}))
+func getItemName() string {
+	return fmt.Sprintf("%v", reflect.TypeOf(Item{}))
 }
 
-func newCFObject(guid string) CFObject {
-	return CFObject{
+func newItem(guid string) Item {
+	return Item{
 		Guid: guid,
 	}
 }
 
-func CFObjectShouldImplementService(service Service) {
-	io.WriteString(GinkgoWriter, fmt.Sprintf("If this did not compile, it indicates that %v does not implement Service", reflect.TypeOf(&CFObject{})))
+func ItemShouldImplementService(service Service) {
+	io.WriteString(GinkgoWriter, fmt.Sprintf("If this did not compile, it indicates that %v does not implement Service", reflect.TypeOf(&Item{})))
 }
 
-var _ = Describe(getCFObjectServiceName()+"Base", func() {
+var _ = Describe(getItemServiceName()+"Base", func() {
 
 	var (
 		fakeClient *fakes.FakeCFClient
-		service    *CFObjectService
+		service    *ItemService
 	)
 
 	BeforeEach(func() {
 		fakeClient = new(fakes.FakeCFClient)
-		service = NewCFObjectService(fakeClient)
+		service = NewItemService(fakeClient)
 	})
 
 	It("Should Implement Service", func() {
-		CFObjectShouldImplementService(service)
+		ItemShouldImplementService(service)
 	})
 
-	It("Should Get All "+getCFObjectName()+"s", func() {
+	It("Should Get All "+getItemName()+"s", func() {
 		By("Calling the CFClient")
-		expect := CFObjects{
-			newCFObject("one"),
-			newCFObject("two"),
-			newCFObject("three"),
+		expect := Items{
+			newItem("one"),
+			newItem("two"),
+			newItem("three"),
 		}
 
-		fakeClient.ListCFObjectsReturns(expect, nil)
+		fakeClient.ListItemsReturns(expect, nil)
 
 		actual, err := service.GetAll()
 
 		Expect(err).To(BeNil())
 		Expect(actual).Should(ConsistOf(expect))
 
-		Expect(fakeClient.ListCFObjectsCallCount()).To(Equal(1))
+		Expect(fakeClient.ListItemsCallCount()).To(Equal(1))
 
 		By("Using the storage")
 
@@ -74,7 +74,7 @@ var _ = Describe(getCFObjectServiceName()+"Base", func() {
 		Expect(actual2).Should(ConsistOf(expect))
 
 		// It should still equal 1
-		Expect(fakeClient.ListCFObjectsCallCount()).To(Equal(1))
+		Expect(fakeClient.ListItemsCallCount()).To(Equal(1))
 	})
 
 })

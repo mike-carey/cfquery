@@ -13,27 +13,27 @@ import (
 	"github.com/mike-carey/cfquery/util"
 )
 
-type CFObject generic.Type
+type Item generic.Type
 
-type CFObjectService struct {
+type ItemService struct {
 	Client  cf.CFClient
-	storage CFObjectMap
+	storage ItemMap
 	filled  bool
 	mutex   *sync.Mutex
 	serviceName string
 	key string
 }
 
-func NewCFObjectService(client cf.CFClient) *CFObjectService {
-	return &CFObjectService{
+func NewItemService(client cf.CFClient) *ItemService {
+	return &ItemService{
 		Client:  client,
-		storage: make(map[string]CFObject, 0),
+		storage: make(map[string]Item, 0),
 		filled:  false,
 		mutex:   &sync.Mutex{},
 	}
 }
 
-func (s *CFObjectService) ServiceName() string {
+func (s *ItemService) ServiceName() string {
 	if s.serviceName == "" {
 		name := fmt.Sprintf("%T", s)
 
@@ -46,7 +46,7 @@ func (s *CFObjectService) ServiceName() string {
 	return s.serviceName
 }
 
-func (s *CFObjectService) Key() string {
+func (s *ItemService) Key() string {
 	if s.key == "" {
 		key := s.ServiceName()
 		s.key = key[:len(key)-len("Service")]
@@ -56,17 +56,17 @@ func (s *CFObjectService) Key() string {
 	return s.key
 }
 
-func (s *CFObjectService) lock() {
+func (s *ItemService) lock() {
 	s.mutex.Lock()
 	logger.Infof("Locked %v", reflect.TypeOf(s))
 }
 
-func (s *CFObjectService) unlock() {
+func (s *ItemService) unlock() {
 	s.mutex.Unlock()
 	logger.Infof("Unlocked %v", reflect.TypeOf(s))
 }
 
-func (s *CFObjectService) GetStorage() (CFObjectMap, error) {
+func (s *ItemService) GetStorage() (ItemMap, error) {
 	_, err := s.GetAll()
 	if err != nil {
 		return nil, err
@@ -75,7 +75,7 @@ func (s *CFObjectService) GetStorage() (CFObjectMap, error) {
 	return s.storage, nil
 }
 
-func (s *CFObjectService) GetByGuid(guid string) (*CFObject, error) {
+func (s *ItemService) GetByGuid(guid string) (*Item, error) {
 	s.lock()
 
 	defer s.unlock()
@@ -87,7 +87,7 @@ func (s *CFObjectService) GetByGuid(guid string) (*CFObject, error) {
 	}
 
 	logger.Infof("Did not find %s in storage", guid)
-	item, err := s.Client.GetCFObjectByGuid(guid)
+	item, err := s.Client.GetItemByGuid(guid)
 	if err != nil {
 		return nil, err
 	}
@@ -98,12 +98,12 @@ func (s *CFObjectService) GetByGuid(guid string) (*CFObject, error) {
 	return &item, nil
 }
 
-func (s *CFObjectService) GetManyByGuid(guids ...string) (CFObjectMap, error) {
-	pool := make(CFObjectMap, len(guids))
+func (s *ItemService) GetManyByGuid(guids ...string) (ItemMap, error) {
+	pool := make(ItemMap, len(guids))
 
 	type Result struct {
 		Guid   string
-		Object *CFObject
+		Object *Item
 		Error  error
 	}
 
@@ -142,12 +142,12 @@ func (s *CFObjectService) GetManyByGuid(guids ...string) (CFObjectMap, error) {
 	return pool, nil
 }
 
-func (s *CFObjectService) GetAll() (CFObjects, error) {
+func (s *ItemService) GetAll() (Items, error) {
 	s.lock()
 
 	if s.filled {
 		logger.Infof("Reusing storage")
-		siSlice := make(CFObjects, 0, len(s.storage))
+		siSlice := make(Items, 0, len(s.storage))
 		for _, si := range s.storage {
 			siSlice = append(siSlice, si)
 		}
@@ -158,12 +158,12 @@ func (s *CFObjectService) GetAll() (CFObjects, error) {
 	}
 
 	logger.Infof("Calling out to CFClient")
-	sis, err := s.Client.ListCFObjects()
+	sis, err := s.Client.ListItems()
 	if err != nil {
 		return nil, err
 	}
 
-	go func(s *CFObjectService, sis CFObjects) {
+	go func(s *ItemService, sis Items) {
 		logger.Infof("Storing contents to storage")
 		for _, si := range sis {
 			s.storage[si.Guid] = si
@@ -179,13 +179,13 @@ func (s *CFObjectService) GetAll() (CFObjects, error) {
 	return sis, nil
 }
 
-func (i *Inquisitor) NewCFObjectService() *CFObjectService {
-	return NewCFObjectService(i.CFClient)
+func (i *Inquisitor) NewItemService() *ItemService {
+	return NewItemService(i.CFClient)
 }
 
-func (i *Inquisitor) GetCFObjectService() *CFObjectService {
-	class := &CFObjectService{}
+func (i *Inquisitor) GetItemService() *ItemService {
+	class := &ItemService{}
 	service := i.GetService(class.Key())
 
-	return service.(*CFObjectService)
+	return service.(*ItemService)
 }
