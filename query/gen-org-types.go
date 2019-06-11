@@ -11,10 +11,3 @@ type OrgMap map[string]cfclient.Org
 type OrgGroup map[string]Orgs
 type MappedOrgMap map[string]OrgMap
 type MappedOrgGroup map[string]OrgGroup
-
-// func (i *Orgs) ToJson() {
-// 	enc := json.NewEncoder(os.Stdin)
-// 	enc.SetIndent("", "    ")
-// 	if err := enc.Encode(&a); err != nil {
-// 		panic(err)
-// 	}

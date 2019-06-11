@@ -16,18 +16,18 @@ var _ = Describe("Worker", func() {
 	var (
 		fakeCommand *fakes.FakeCommand
 		options *Options
-		inquistor *query.Inquistor
+		inquisitor *query.Inquisitor
 		worker *Worker
 	)
 
 	BeforeEach(func() {
 		fakeCommand = new(fakes.FakeCommand)
 		options = &Options{}
-		inquistor = &query.Inquistor{}
+		inquisitor = &query.Inquisitor{}
 		worker = &Worker{
 			Command: fakeCommand,
 			Options: options,
-			Inquistor: inquistor,
+			Inquisitor: inquisitor,
 		}
 	})
 

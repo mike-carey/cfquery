@@ -20,7 +20,7 @@ func (c *AppsCommand) Execute([]string) error {
 	return workerFactory.Go(c)
 }
 
-func (c *AppsCommand) Run(o *Options, i *query.Inquistor) (interface{}, error) {
+func (c *AppsCommand) Run(o *Options, i *query.Inquisitor) (interface{}, error) {
 	service := i.GetAppService()
 
 	a, err := service.GetAll()

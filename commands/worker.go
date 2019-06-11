@@ -17,7 +17,7 @@ import (
 type Worker struct {
 	Command Command
 	Options *Options
-	Inquistor *query.Inquistor
+	Inquisitor *query.Inquisitor
 }
 
 func (w *Worker) Validate() error {
@@ -44,7 +44,7 @@ func (w *Worker) Work() (interface{}, error) {
 	}
 
 	logger.Info("Working...")
-	i, err := w.Command.Run(w.Options, w.Inquistor)
+	i, err := w.Command.Run(w.Options, w.Inquisitor)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func (f *WorkerFactory) NewWorker(cmd Command, cnf *cfclient.Config) (*Worker, e
 	w := &Worker{
 		Command: cmd,
 		Options: f.Options,
-		Inquistor: query.NewInquistor(cli),
+		Inquisitor: query.NewInquisitor(cli),
 	}
 
 	return w, nil

@@ -180,11 +180,11 @@ func (s *SpaceService) GetAll() (Spaces, error) {
 	return sis, nil
 }
 
-func (i *Inquistor) NewSpaceService() *SpaceService {
+func (i *Inquisitor) NewSpaceService() *SpaceService {
 	return NewSpaceService(i.CFClient)
 }
 
-func (i *Inquistor) GetSpaceService() *SpaceService {
+func (i *Inquisitor) GetSpaceService() *SpaceService {
 	class := &SpaceService{}
 	service := i.GetService(class.Key())
 

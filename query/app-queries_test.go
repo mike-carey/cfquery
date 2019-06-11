@@ -15,14 +15,14 @@ var _ = Describe("App Queries", func() {
 
 	var (
 		fakeClient *fakes.FakeCFClient
-		inquistor *Inquistor
+		inquisitor *Inquisitor
 		apps Apps
 		spaces SpaceMap
 	)
 
 	BeforeEach(func() {
 		fakeClient = new(fakes.FakeCFClient)
-		inquistor = NewInquistor(fakeClient)
+		inquisitor = NewInquisitor(fakeClient)
 
 		apps = Apps{
 			cfclient.App{
@@ -107,10 +107,10 @@ var _ = Describe("App Queries", func() {
 			return spaces[guid], nil
 		}
 
-		gas, err := apps.GroupBySpace(inquistor)
+		gas, err := apps.GroupBySpace(inquisitor)
 		Expect(err).To(BeNil())
 
-		gags, err := gas.GroupByOrg(inquistor)
+		gags, err := gas.GroupByOrg(inquisitor)
 		Expect(err).To(BeNil())
 
 		RecursiveMapCompare(expect, gags)
@@ -134,7 +134,7 @@ var _ = Describe("App Queries", func() {
 			return spaces[guid], nil
 		}
 
-		gas, err := apps.GroupByOrg(inquistor)
+		gas, err := apps.GroupByOrg(inquisitor)
 		Expect(err).To(BeNil())
 
 		RecursiveMapCompare(expect, gas)

@@ -20,7 +20,7 @@ func (c *ServiceInstancesCommand) Execute([]string) error {
 	return workerFactory.Go(c)
 }
 
-func (c *ServiceInstancesCommand) Run(o *Options, i *query.Inquistor) (interface{}, error) {
+func (c *ServiceInstancesCommand) Run(o *Options, i *query.Inquisitor) (interface{}, error) {
 	service := i.GetServiceInstanceService()
 
 	a, err := service.GetAll()

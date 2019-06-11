@@ -11,10 +11,3 @@ type SpaceMap map[string]cfclient.Space
 type SpaceGroup map[string]Spaces
 type MappedSpaceMap map[string]SpaceMap
 type MappedSpaceGroup map[string]SpaceGroup
-
-// func (i *Spaces) ToJson() {
-// 	enc := json.NewEncoder(os.Stdin)
-// 	enc.SetIndent("", "    ")
-// 	if err := enc.Encode(&a); err != nil {
-// 		panic(err)
-// 	}

@@ -18,7 +18,7 @@ var _ = Describe("AppsCommand", func() {
 
 	var (
 		fakeClient *fakes.FakeCFClient
-		inquistor *query.Inquistor
+		inquisitor *query.Inquisitor
 
 		apps []cfclient.App
 		spaces []cfclient.Space
@@ -26,7 +26,7 @@ var _ = Describe("AppsCommand", func() {
 
 	BeforeEach(func() {
 		fakeClient = new(fakes.FakeCFClient)
-		inquistor = query.NewInquistor(fakeClient)
+		inquisitor = query.NewInquisitor(fakeClient)
 
 		apps = []cfclient.App{
 			cfclient.App{
@@ -75,7 +75,7 @@ var _ = Describe("AppsCommand", func() {
 
 		i, e := c.Run(&Options{
 			GroupBy: "space",
-		}, inquistor)
+		}, inquisitor)
 
 		Expect(e).To(BeNil())
 		Expect(x).To(Equal(i))
@@ -92,7 +92,7 @@ var _ = Describe("AppsCommand", func() {
 
 		i, e := c.Run(&Options{
 			GroupBy: "org",
-		}, inquistor)
+		}, inquisitor)
 
 		Expect(e).To(BeNil())
 		Expect(x).To(Equal(i))
@@ -111,7 +111,7 @@ var _ = Describe("AppsCommand", func() {
 
 		i, e := c.Run(&Options{
 			GroupBy: "space-and-org",
-		}, inquistor)
+		}, inquisitor)
 
 		Expect(e).To(BeNil())
 		Expect(x).To(Equal(i))

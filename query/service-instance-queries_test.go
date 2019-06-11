@@ -15,14 +15,14 @@ var _ = Describe("Service Instance Queries", func() {
 
 	var (
 		fakeClient *fakes.FakeCFClient
-		inquistor *Inquistor
+		inquisitor *Inquisitor
 		serviceInstances ServiceInstances
 		spaces SpaceMap
 	)
 
 	BeforeEach(func() {
 		fakeClient = new(fakes.FakeCFClient)
-		inquistor = NewInquistor(fakeClient)
+		inquisitor = NewInquisitor(fakeClient)
 
 		serviceInstances = ServiceInstances{
 			cfclient.ServiceInstance{
@@ -107,10 +107,10 @@ var _ = Describe("Service Instance Queries", func() {
 			return spaces[guid], nil
 		}
 
-		gas, err := serviceInstances.GroupBySpace(inquistor)
+		gas, err := serviceInstances.GroupBySpace(inquisitor)
 		Expect(err).To(BeNil())
 
-		gags, err := gas.GroupByOrg(inquistor)
+		gags, err := gas.GroupByOrg(inquisitor)
 		Expect(err).To(BeNil())
 
 		RecursiveMapCompare(expect, gags)
@@ -134,7 +134,7 @@ var _ = Describe("Service Instance Queries", func() {
 			return spaces[guid], nil
 		}
 
-		gas, err := serviceInstances.GroupByOrg(inquistor)
+		gas, err := serviceInstances.GroupByOrg(inquisitor)
 		Expect(err).To(BeNil())
 
 		RecursiveMapCompare(expect, gas)

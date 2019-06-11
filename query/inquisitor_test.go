@@ -13,20 +13,20 @@ import (
 
 type FooService struct {}
 
-var _ = Describe("Inquistor", func() {
+var _ = Describe("Inquisitor", func() {
 
 	var (
 		fakeClient *fakes.FakeCFClient
-		inquistor *Inquistor
+		inquisitor *Inquisitor
 	)
 
 	BeforeEach(func() {
 		fakeClient = new(fakes.FakeCFClient)
-		inquistor = NewInquistor(fakeClient)
+		inquisitor = NewInquisitor(fakeClient)
 	})
 
 	It("Should know how to Get the proper service", func() {
-		service := inquistor.GetService("app")
+		service := inquisitor.GetService("app")
 
 		Expect(reflect.TypeOf(service)).To(Equal(reflect.TypeOf(&AppService{})))
 	})

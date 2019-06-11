@@ -11,10 +11,3 @@ type ServiceBindingMap map[string]cfclient.ServiceBinding
 type ServiceBindingGroup map[string]ServiceBindings
 type MappedServiceBindingMap map[string]ServiceBindingMap
 type MappedServiceBindingGroup map[string]ServiceBindingGroup
-
-// func (i *ServiceBindings) ToJson() {
-// 	enc := json.NewEncoder(os.Stdin)
-// 	enc.SetIndent("", "    ")
-// 	if err := enc.Encode(&a); err != nil {
-// 		panic(err)
-// 	}

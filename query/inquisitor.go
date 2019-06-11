@@ -13,19 +13,19 @@ type Service interface {
 	ServiceName() string
 }
 
-type Inquistor struct {
+type Inquisitor struct {
 	CFClient cf.CFClient
 	Services map[string]Service
 }
 
-func NewInquistor(cfClient cf.CFClient) *Inquistor {
-	return &Inquistor{
+func NewInquisitor(cfClient cf.CFClient) *Inquisitor {
+	return &Inquisitor{
 		CFClient: cfClient,
 		Services: make(map[string]Service, 0),
 	}
 }
 
-func (i *Inquistor) GetService(name string) Service {
+func (i *Inquisitor) GetService(name string) Service {
 	if service, ok := i.Services[name]; ok {
 		return service
 	}

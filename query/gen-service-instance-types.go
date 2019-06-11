@@ -11,10 +11,3 @@ type ServiceInstanceMap map[string]cfclient.ServiceInstance
 type ServiceInstanceGroup map[string]ServiceInstances
 type MappedServiceInstanceMap map[string]ServiceInstanceMap
 type MappedServiceInstanceGroup map[string]ServiceInstanceGroup
-
-// func (i *ServiceInstances) ToJson() {
-// 	enc := json.NewEncoder(os.Stdin)
-// 	enc.SetIndent("", "    ")
-// 	if err := enc.Encode(&a); err != nil {
-// 		panic(err)
-// 	}

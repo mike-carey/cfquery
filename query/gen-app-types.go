@@ -11,10 +11,3 @@ type AppMap map[string]cfclient.App
 type AppGroup map[string]Apps
 type MappedAppMap map[string]AppMap
 type MappedAppGroup map[string]AppGroup
-
-// func (i *Apps) ToJson() {
-// 	enc := json.NewEncoder(os.Stdin)
-// 	enc.SetIndent("", "    ")
-// 	if err := enc.Encode(&a); err != nil {
-// 		panic(err)
-// 	}

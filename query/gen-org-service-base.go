@@ -180,11 +180,11 @@ func (s *OrgService) GetAll() (Orgs, error) {
 	return sis, nil
 }
 
-func (i *Inquistor) NewOrgService() *OrgService {
+func (i *Inquisitor) NewOrgService() *OrgService {
 	return NewOrgService(i.CFClient)
 }
 
-func (i *Inquistor) GetOrgService() *OrgService {
+func (i *Inquisitor) GetOrgService() *OrgService {
 	class := &OrgService{}
 	service := i.GetService(class.Key())
 

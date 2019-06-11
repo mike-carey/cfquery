@@ -30,11 +30,11 @@ type FakeCommand struct {
 	groupByOptionsReturnsOnCall map[int]struct {
 		result1 []string
 	}
-	RunStub        func(*commands.Options, *query.Inquistor) (interface{}, error)
+	RunStub        func(*commands.Options, *query.Inquisitor) (interface{}, error)
 	runMutex       sync.RWMutex
 	runArgsForCall []struct {
 		arg1 *commands.Options
-		arg2 *query.Inquistor
+		arg2 *query.Inquisitor
 	}
 	runReturns struct {
 		result1 interface{}
@@ -185,12 +185,12 @@ func (fake *FakeCommand) GroupByOptionsReturnsOnCall(i int, result1 []string) {
 	}{result1}
 }
 
-func (fake *FakeCommand) Run(arg1 *commands.Options, arg2 *query.Inquistor) (interface{}, error) {
+func (fake *FakeCommand) Run(arg1 *commands.Options, arg2 *query.Inquisitor) (interface{}, error) {
 	fake.runMutex.Lock()
 	ret, specificReturn := fake.runReturnsOnCall[len(fake.runArgsForCall)]
 	fake.runArgsForCall = append(fake.runArgsForCall, struct {
 		arg1 *commands.Options
-		arg2 *query.Inquistor
+		arg2 *query.Inquisitor
 	}{arg1, arg2})
 	fake.recordInvocation("Run", []interface{}{arg1, arg2})
 	fake.runMutex.Unlock()
@@ -210,13 +210,13 @@ func (fake *FakeCommand) RunCallCount() int {
 	return len(fake.runArgsForCall)
 }
 
-func (fake *FakeCommand) RunCalls(stub func(*commands.Options, *query.Inquistor) (interface{}, error)) {
+func (fake *FakeCommand) RunCalls(stub func(*commands.Options, *query.Inquisitor) (interface{}, error)) {
 	fake.runMutex.Lock()
 	defer fake.runMutex.Unlock()
 	fake.RunStub = stub
 }
 
-func (fake *FakeCommand) RunArgsForCall(i int) (*commands.Options, *query.Inquistor) {
+func (fake *FakeCommand) RunArgsForCall(i int) (*commands.Options, *query.Inquisitor) {
 	fake.runMutex.RLock()
 	defer fake.runMutex.RUnlock()
 	argsForCall := fake.runArgsForCall[i]

@@ -180,11 +180,11 @@ func (s *ServiceInstanceService) GetAll() (ServiceInstances, error) {
 	return sis, nil
 }
 
-func (i *Inquistor) NewServiceInstanceService() *ServiceInstanceService {
+func (i *Inquisitor) NewServiceInstanceService() *ServiceInstanceService {
 	return NewServiceInstanceService(i.CFClient)
 }
 
-func (i *Inquistor) GetServiceInstanceService() *ServiceInstanceService {
+func (i *Inquisitor) GetServiceInstanceService() *ServiceInstanceService {
 	class := &ServiceInstanceService{}
 	service := i.GetService(class.Key())
 

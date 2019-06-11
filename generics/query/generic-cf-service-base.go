@@ -179,11 +179,11 @@ func (s *CFObjectService) GetAll() (CFObjects, error) {
 	return sis, nil
 }
 
-func (i *Inquistor) NewCFObjectService() *CFObjectService {
+func (i *Inquisitor) NewCFObjectService() *CFObjectService {
 	return NewCFObjectService(i.CFClient)
 }
 
-func (i *Inquistor) GetCFObjectService() *CFObjectService {
+func (i *Inquisitor) GetCFObjectService() *CFObjectService {
 	class := &CFObjectService{}
 	service := i.GetService(class.Key())
 
