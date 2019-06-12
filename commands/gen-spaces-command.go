@@ -21,9 +21,7 @@ func (c *SpacesCommand) Execute([]string) error {
 }
 
 func (c *SpacesCommand) Run(o *Options, i query.Inquisitor) (interface{}, error) {
-	service := i.GetSpaceService()
-
-	a, err := service.GetAllSpaces()
+	a, err := i.GetAllSpaces()
 	if err != nil {
 		return nil, err
 	}

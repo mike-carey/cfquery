@@ -21,9 +21,7 @@ func (c *ItemsCommand) Execute([]string) error {
 }
 
 func (c *ItemsCommand) Run(o *Options, i query.Inquisitor) (interface{}, error) {
-	service := i.GetItemService()
-
-	a, err := service.GetAllItems()
+	a, err := i.GetAllItems()
 	if err != nil {
 		return nil, err
 	}

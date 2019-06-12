@@ -66,13 +66,17 @@ func (s *ItemService) unlock() {
 	logger.Infof("Unlocked %v", reflect.TypeOf(s))
 }
 
-func (s *ItemService) GetStorage() (ItemMap, error) {
+func (s *ItemService) GetItemMap() (ItemMap, error) {
 	_, err := s.GetAllItems()
 	if err != nil {
 		return nil, err
 	}
 
 	return s.storage, nil
+}
+
+func (i *inquisitor) GetItemMap() (ItemMap, error) {
+	return i.getItemService().GetItemMap()
 }
 
 func (s *ItemService) GetItemByGuid(guid string) (*Item, error) {
@@ -96,6 +100,10 @@ func (s *ItemService) GetItemByGuid(guid string) (*Item, error) {
 	s.storage[guid] = item
 
 	return &item, nil
+}
+
+func (i *inquisitor) GetItemByGuid(guid string) (*Item, error) {
+	return i.getItemService().GetItemByGuid(guid)
 }
 
 func (s *ItemService) GetManyItemsByGuid(guids ...string) (ItemMap, error) {
@@ -142,6 +150,10 @@ func (s *ItemService) GetManyItemsByGuid(guids ...string) (ItemMap, error) {
 	return pool, nil
 }
 
+func (i *inquisitor) GetManyItemsByGuid(guids ...string) (ItemMap, error) {
+	return i.getItemService().GetManyItemsByGuid(guids...)
+}
+
 func (s *ItemService) GetAllItems() (Items, error) {
 	s.lock()
 
@@ -179,13 +191,27 @@ func (s *ItemService) GetAllItems() (Items, error) {
 	return sis, nil
 }
 
-func (i *inquisitor) NewItemService() *ItemService {
+func (i *inquisitor) GetAllItems() (Items, error) {
+	return i.getItemService().GetAllItems()
+}
+
+func (i *inquisitor) newItemService() *ItemService {
 	return NewItemService(i.CFClient)
 }
 
-func (i *inquisitor) GetItemService() *ItemService {
+func (i *inquisitor) getItemService() *ItemService {
 	class := &ItemService{}
-	service := i.GetService(class.Key())
+	key := class.Key()
 
-	return service.(*ItemService)
+	if service, ok := i.services[key]; ok {
+		return service.(*ItemService)
+	}
+
+	service := i.newItemService()
+
+	i.lock()
+	i.services[key] = service
+	i.unlock()
+
+	return service
 }

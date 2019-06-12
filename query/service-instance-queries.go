@@ -12,7 +12,7 @@ func (g ServiceInstances) GroupBySpace(_ Inquisitor) (ServiceInstanceGroup, erro
 
 func (g ServiceInstances) GroupByOrg(i Inquisitor) (ServiceInstanceGroup, error) {
 	return ServiceInstanceGroupBy(g, func(si cfclient.ServiceInstance) (string, error) {
-		s, e := i.GetSpaceService().GetSpaceByGuid(si.SpaceGuid)
+		s, e := i.GetSpaceByGuid(si.SpaceGuid)
 		if e != nil {
 			return "", e
 		}
@@ -33,7 +33,7 @@ func (g ServiceInstances) GroupBySpaceAndOrg(i Inquisitor) (MappedServiceInstanc
 
 func (g ServiceInstanceGroup) GroupByOrg(i Inquisitor) (MappedServiceInstanceGroup, error) {
 	return ServiceInstanceGroupMappedSliceBy(g, func(_ string, apps ServiceInstances) (string, error) {
-		s, e := i.GetSpaceService().GetSpaceByGuid(apps[0].SpaceGuid)
+		s, e := i.GetSpaceByGuid(apps[0].SpaceGuid)
 		if e != nil {
 			return "", e
 		}

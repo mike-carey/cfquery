@@ -67,13 +67,17 @@ func (s *SpaceService) unlock() {
 	logger.Infof("Unlocked %v", reflect.TypeOf(s))
 }
 
-func (s *SpaceService) GetStorage() (SpaceMap, error) {
+func (s *SpaceService) GetSpaceMap() (SpaceMap, error) {
 	_, err := s.GetAllSpaces()
 	if err != nil {
 		return nil, err
 	}
 
 	return s.storage, nil
+}
+
+func (i *inquisitor) GetSpaceMap() (SpaceMap, error) {
+	return i.getSpaceService().GetSpaceMap()
 }
 
 func (s *SpaceService) GetSpaceByGuid(guid string) (*cfclient.Space, error) {
@@ -97,6 +101,10 @@ func (s *SpaceService) GetSpaceByGuid(guid string) (*cfclient.Space, error) {
 	s.storage[guid] = item
 
 	return &item, nil
+}
+
+func (i *inquisitor) GetSpaceByGuid(guid string) (*cfclient.Space, error) {
+	return i.getSpaceService().GetSpaceByGuid(guid)
 }
 
 func (s *SpaceService) GetManySpacesByGuid(guids ...string) (SpaceMap, error) {
@@ -143,6 +151,10 @@ func (s *SpaceService) GetManySpacesByGuid(guids ...string) (SpaceMap, error) {
 	return pool, nil
 }
 
+func (i *inquisitor) GetManySpacesByGuid(guids ...string) (SpaceMap, error) {
+	return i.getSpaceService().GetManySpacesByGuid(guids...)
+}
+
 func (s *SpaceService) GetAllSpaces() (Spaces, error) {
 	s.lock()
 
@@ -180,13 +192,27 @@ func (s *SpaceService) GetAllSpaces() (Spaces, error) {
 	return sis, nil
 }
 
-func (i *inquisitor) NewSpaceService() *SpaceService {
+func (i *inquisitor) GetAllSpaces() (Spaces, error) {
+	return i.getSpaceService().GetAllSpaces()
+}
+
+func (i *inquisitor) newSpaceService() *SpaceService {
 	return NewSpaceService(i.CFClient)
 }
 
-func (i *inquisitor) GetSpaceService() *SpaceService {
+func (i *inquisitor) getSpaceService() *SpaceService {
 	class := &SpaceService{}
-	service := i.GetService(class.Key())
+	key := class.Key()
 
-	return service.(*SpaceService)
+	if service, ok := i.services[key]; ok {
+		return service.(*SpaceService)
+	}
+
+	service := i.newSpaceService()
+
+	i.lock()
+	i.services[key] = service
+	i.unlock()
+
+	return service
 }

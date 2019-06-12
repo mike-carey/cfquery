@@ -21,9 +21,7 @@ func (c *OrgsCommand) Execute([]string) error {
 }
 
 func (c *OrgsCommand) Run(o *Options, i query.Inquisitor) (interface{}, error) {
-	service := i.GetOrgService()
-
-	a, err := service.GetAllOrgs()
+	a, err := i.GetAllOrgs()
 	if err != nil {
 		return nil, err
 	}

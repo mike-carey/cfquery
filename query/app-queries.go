@@ -12,7 +12,7 @@ func (g Apps) GroupBySpace(_ Inquisitor) (AppGroup, error) {
 
 func (g Apps) GroupByOrg(i Inquisitor) (AppGroup, error) {
 	return AppGroupBy(g, func(app cfclient.App) (string, error) {
-		s, e := i.GetSpaceService().GetSpaceByGuid(app.SpaceGuid)
+		s, e := i.GetSpaceByGuid(app.SpaceGuid)
 		if e != nil {
 			return "", e
 		}
@@ -33,7 +33,7 @@ func (g Apps) GroupBySpaceAndOrg(i Inquisitor) (MappedAppGroup, error) {
 
 func (g AppGroup) GroupByOrg(i Inquisitor) (MappedAppGroup, error) {
 	return AppGroupMappedSliceBy(g, func(_ string, apps Apps) (string, error) {
-		s, e := i.GetSpaceService().GetSpaceByGuid(apps[0].SpaceGuid)
+		s, e := i.GetSpaceByGuid(apps[0].SpaceGuid)
 		if e != nil {
 			return "", e
 		}

@@ -67,13 +67,17 @@ func (s *ServiceInstanceService) unlock() {
 	logger.Infof("Unlocked %v", reflect.TypeOf(s))
 }
 
-func (s *ServiceInstanceService) GetStorage() (ServiceInstanceMap, error) {
+func (s *ServiceInstanceService) GetServiceInstanceMap() (ServiceInstanceMap, error) {
 	_, err := s.GetAllServiceInstances()
 	if err != nil {
 		return nil, err
 	}
 
 	return s.storage, nil
+}
+
+func (i *inquisitor) GetServiceInstanceMap() (ServiceInstanceMap, error) {
+	return i.getServiceInstanceService().GetServiceInstanceMap()
 }
 
 func (s *ServiceInstanceService) GetServiceInstanceByGuid(guid string) (*cfclient.ServiceInstance, error) {
@@ -97,6 +101,10 @@ func (s *ServiceInstanceService) GetServiceInstanceByGuid(guid string) (*cfclien
 	s.storage[guid] = item
 
 	return &item, nil
+}
+
+func (i *inquisitor) GetServiceInstanceByGuid(guid string) (*cfclient.ServiceInstance, error) {
+	return i.getServiceInstanceService().GetServiceInstanceByGuid(guid)
 }
 
 func (s *ServiceInstanceService) GetManyServiceInstancesByGuid(guids ...string) (ServiceInstanceMap, error) {
@@ -143,6 +151,10 @@ func (s *ServiceInstanceService) GetManyServiceInstancesByGuid(guids ...string) 
 	return pool, nil
 }
 
+func (i *inquisitor) GetManyServiceInstancesByGuid(guids ...string) (ServiceInstanceMap, error) {
+	return i.getServiceInstanceService().GetManyServiceInstancesByGuid(guids...)
+}
+
 func (s *ServiceInstanceService) GetAllServiceInstances() (ServiceInstances, error) {
 	s.lock()
 
@@ -180,13 +192,27 @@ func (s *ServiceInstanceService) GetAllServiceInstances() (ServiceInstances, err
 	return sis, nil
 }
 
-func (i *inquisitor) NewServiceInstanceService() *ServiceInstanceService {
+func (i *inquisitor) GetAllServiceInstances() (ServiceInstances, error) {
+	return i.getServiceInstanceService().GetAllServiceInstances()
+}
+
+func (i *inquisitor) newServiceInstanceService() *ServiceInstanceService {
 	return NewServiceInstanceService(i.CFClient)
 }
 
-func (i *inquisitor) GetServiceInstanceService() *ServiceInstanceService {
+func (i *inquisitor) getServiceInstanceService() *ServiceInstanceService {
 	class := &ServiceInstanceService{}
-	service := i.GetService(class.Key())
+	key := class.Key()
 
-	return service.(*ServiceInstanceService)
+	if service, ok := i.services[key]; ok {
+		return service.(*ServiceInstanceService)
+	}
+
+	service := i.newServiceInstanceService()
+
+	i.lock()
+	i.services[key] = service
+	i.unlock()
+
+	return service
 }

@@ -21,9 +21,7 @@ func (c *ServiceInstancesCommand) Execute([]string) error {
 }
 
 func (c *ServiceInstancesCommand) Run(o *Options, i query.Inquisitor) (interface{}, error) {
-	service := i.GetServiceInstanceService()
-
-	a, err := service.GetAllServiceInstances()
+	a, err := i.GetAllServiceInstances()
 	if err != nil {
 		return nil, err
 	}

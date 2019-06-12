@@ -67,13 +67,17 @@ func (s *ServiceBindingService) unlock() {
 	logger.Infof("Unlocked %v", reflect.TypeOf(s))
 }
 
-func (s *ServiceBindingService) GetStorage() (ServiceBindingMap, error) {
+func (s *ServiceBindingService) GetServiceBindingMap() (ServiceBindingMap, error) {
 	_, err := s.GetAllServiceBindings()
 	if err != nil {
 		return nil, err
 	}
 
 	return s.storage, nil
+}
+
+func (i *inquisitor) GetServiceBindingMap() (ServiceBindingMap, error) {
+	return i.getServiceBindingService().GetServiceBindingMap()
 }
 
 func (s *ServiceBindingService) GetServiceBindingByGuid(guid string) (*cfclient.ServiceBinding, error) {
@@ -97,6 +101,10 @@ func (s *ServiceBindingService) GetServiceBindingByGuid(guid string) (*cfclient.
 	s.storage[guid] = item
 
 	return &item, nil
+}
+
+func (i *inquisitor) GetServiceBindingByGuid(guid string) (*cfclient.ServiceBinding, error) {
+	return i.getServiceBindingService().GetServiceBindingByGuid(guid)
 }
 
 func (s *ServiceBindingService) GetManyServiceBindingsByGuid(guids ...string) (ServiceBindingMap, error) {
@@ -143,6 +151,10 @@ func (s *ServiceBindingService) GetManyServiceBindingsByGuid(guids ...string) (S
 	return pool, nil
 }
 
+func (i *inquisitor) GetManyServiceBindingsByGuid(guids ...string) (ServiceBindingMap, error) {
+	return i.getServiceBindingService().GetManyServiceBindingsByGuid(guids...)
+}
+
 func (s *ServiceBindingService) GetAllServiceBindings() (ServiceBindings, error) {
 	s.lock()
 
@@ -180,13 +192,27 @@ func (s *ServiceBindingService) GetAllServiceBindings() (ServiceBindings, error)
 	return sis, nil
 }
 
-func (i *inquisitor) NewServiceBindingService() *ServiceBindingService {
+func (i *inquisitor) GetAllServiceBindings() (ServiceBindings, error) {
+	return i.getServiceBindingService().GetAllServiceBindings()
+}
+
+func (i *inquisitor) newServiceBindingService() *ServiceBindingService {
 	return NewServiceBindingService(i.CFClient)
 }
 
-func (i *inquisitor) GetServiceBindingService() *ServiceBindingService {
+func (i *inquisitor) getServiceBindingService() *ServiceBindingService {
 	class := &ServiceBindingService{}
-	service := i.GetService(class.Key())
+	key := class.Key()
 
-	return service.(*ServiceBindingService)
+	if service, ok := i.services[key]; ok {
+		return service.(*ServiceBindingService)
+	}
+
+	service := i.newServiceBindingService()
+
+	i.lock()
+	i.services[key] = service
+	i.unlock()
+
+	return service
 }

@@ -67,13 +67,17 @@ func (s *OrgService) unlock() {
 	logger.Infof("Unlocked %v", reflect.TypeOf(s))
 }
 
-func (s *OrgService) GetStorage() (OrgMap, error) {
+func (s *OrgService) GetOrgMap() (OrgMap, error) {
 	_, err := s.GetAllOrgs()
 	if err != nil {
 		return nil, err
 	}
 
 	return s.storage, nil
+}
+
+func (i *inquisitor) GetOrgMap() (OrgMap, error) {
+	return i.getOrgService().GetOrgMap()
 }
 
 func (s *OrgService) GetOrgByGuid(guid string) (*cfclient.Org, error) {
@@ -97,6 +101,10 @@ func (s *OrgService) GetOrgByGuid(guid string) (*cfclient.Org, error) {
 	s.storage[guid] = item
 
 	return &item, nil
+}
+
+func (i *inquisitor) GetOrgByGuid(guid string) (*cfclient.Org, error) {
+	return i.getOrgService().GetOrgByGuid(guid)
 }
 
 func (s *OrgService) GetManyOrgsByGuid(guids ...string) (OrgMap, error) {
@@ -143,6 +151,10 @@ func (s *OrgService) GetManyOrgsByGuid(guids ...string) (OrgMap, error) {
 	return pool, nil
 }
 
+func (i *inquisitor) GetManyOrgsByGuid(guids ...string) (OrgMap, error) {
+	return i.getOrgService().GetManyOrgsByGuid(guids...)
+}
+
 func (s *OrgService) GetAllOrgs() (Orgs, error) {
 	s.lock()
 
@@ -180,13 +192,27 @@ func (s *OrgService) GetAllOrgs() (Orgs, error) {
 	return sis, nil
 }
 
-func (i *inquisitor) NewOrgService() *OrgService {
+func (i *inquisitor) GetAllOrgs() (Orgs, error) {
+	return i.getOrgService().GetAllOrgs()
+}
+
+func (i *inquisitor) newOrgService() *OrgService {
 	return NewOrgService(i.CFClient)
 }
 
-func (i *inquisitor) GetOrgService() *OrgService {
+func (i *inquisitor) getOrgService() *OrgService {
 	class := &OrgService{}
-	service := i.GetService(class.Key())
+	key := class.Key()
 
-	return service.(*OrgService)
+	if service, ok := i.services[key]; ok {
+		return service.(*OrgService)
+	}
+
+	service := i.newOrgService()
+
+	i.lock()
+	i.services[key] = service
+	i.unlock()
+
+	return service
 }

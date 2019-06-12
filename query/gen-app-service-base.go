@@ -67,13 +67,17 @@ func (s *AppService) unlock() {
 	logger.Infof("Unlocked %v", reflect.TypeOf(s))
 }
 
-func (s *AppService) GetStorage() (AppMap, error) {
+func (s *AppService) GetAppMap() (AppMap, error) {
 	_, err := s.GetAllApps()
 	if err != nil {
 		return nil, err
 	}
 
 	return s.storage, nil
+}
+
+func (i *inquisitor) GetAppMap() (AppMap, error) {
+	return i.getAppService().GetAppMap()
 }
 
 func (s *AppService) GetAppByGuid(guid string) (*cfclient.App, error) {
@@ -97,6 +101,10 @@ func (s *AppService) GetAppByGuid(guid string) (*cfclient.App, error) {
 	s.storage[guid] = item
 
 	return &item, nil
+}
+
+func (i *inquisitor) GetAppByGuid(guid string) (*cfclient.App, error) {
+	return i.getAppService().GetAppByGuid(guid)
 }
 
 func (s *AppService) GetManyAppsByGuid(guids ...string) (AppMap, error) {
@@ -143,6 +151,10 @@ func (s *AppService) GetManyAppsByGuid(guids ...string) (AppMap, error) {
 	return pool, nil
 }
 
+func (i *inquisitor) GetManyAppsByGuid(guids ...string) (AppMap, error) {
+	return i.getAppService().GetManyAppsByGuid(guids...)
+}
+
 func (s *AppService) GetAllApps() (Apps, error) {
 	s.lock()
 
@@ -180,13 +192,27 @@ func (s *AppService) GetAllApps() (Apps, error) {
 	return sis, nil
 }
 
-func (i *inquisitor) NewAppService() *AppService {
+func (i *inquisitor) GetAllApps() (Apps, error) {
+	return i.getAppService().GetAllApps()
+}
+
+func (i *inquisitor) newAppService() *AppService {
 	return NewAppService(i.CFClient)
 }
 
-func (i *inquisitor) GetAppService() *AppService {
+func (i *inquisitor) getAppService() *AppService {
 	class := &AppService{}
-	service := i.GetService(class.Key())
+	key := class.Key()
 
-	return service.(*AppService)
+	if service, ok := i.services[key]; ok {
+		return service.(*AppService)
+	}
+
+	service := i.newAppService()
+
+	i.lock()
+	i.services[key] = service
+	i.unlock()
+
+	return service
 }

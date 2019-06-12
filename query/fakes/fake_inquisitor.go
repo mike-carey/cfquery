@@ -4,730 +4,1488 @@ package fakes
 import (
 	"sync"
 
+	cfclient "github.com/cloudfoundry-community/go-cfclient"
 	"github.com/mike-carey/cfquery/query"
 )
 
 type FakeInquisitor struct {
-	GetAppServiceStub        func() *query.AppService
-	getAppServiceMutex       sync.RWMutex
-	getAppServiceArgsForCall []struct {
+	GetAllAppsStub        func() (query.Apps, error)
+	getAllAppsMutex       sync.RWMutex
+	getAllAppsArgsForCall []struct {
 	}
-	getAppServiceReturns struct {
-		result1 *query.AppService
+	getAllAppsReturns struct {
+		result1 query.Apps
+		result2 error
 	}
-	getAppServiceReturnsOnCall map[int]struct {
-		result1 *query.AppService
+	getAllAppsReturnsOnCall map[int]struct {
+		result1 query.Apps
+		result2 error
 	}
-	GetOrgServiceStub        func() *query.OrgService
-	getOrgServiceMutex       sync.RWMutex
-	getOrgServiceArgsForCall []struct {
+	GetAllOrgsStub        func() (query.Orgs, error)
+	getAllOrgsMutex       sync.RWMutex
+	getAllOrgsArgsForCall []struct {
 	}
-	getOrgServiceReturns struct {
-		result1 *query.OrgService
+	getAllOrgsReturns struct {
+		result1 query.Orgs
+		result2 error
 	}
-	getOrgServiceReturnsOnCall map[int]struct {
-		result1 *query.OrgService
+	getAllOrgsReturnsOnCall map[int]struct {
+		result1 query.Orgs
+		result2 error
 	}
-	GetServiceStub        func(string) query.Service
-	getServiceMutex       sync.RWMutex
-	getServiceArgsForCall []struct {
+	GetAllServiceBindingsStub        func() (query.ServiceBindings, error)
+	getAllServiceBindingsMutex       sync.RWMutex
+	getAllServiceBindingsArgsForCall []struct {
+	}
+	getAllServiceBindingsReturns struct {
+		result1 query.ServiceBindings
+		result2 error
+	}
+	getAllServiceBindingsReturnsOnCall map[int]struct {
+		result1 query.ServiceBindings
+		result2 error
+	}
+	GetAllServiceInstancesStub        func() (query.ServiceInstances, error)
+	getAllServiceInstancesMutex       sync.RWMutex
+	getAllServiceInstancesArgsForCall []struct {
+	}
+	getAllServiceInstancesReturns struct {
+		result1 query.ServiceInstances
+		result2 error
+	}
+	getAllServiceInstancesReturnsOnCall map[int]struct {
+		result1 query.ServiceInstances
+		result2 error
+	}
+	GetAllSpacesStub        func() (query.Spaces, error)
+	getAllSpacesMutex       sync.RWMutex
+	getAllSpacesArgsForCall []struct {
+	}
+	getAllSpacesReturns struct {
+		result1 query.Spaces
+		result2 error
+	}
+	getAllSpacesReturnsOnCall map[int]struct {
+		result1 query.Spaces
+		result2 error
+	}
+	GetAppByGuidStub        func(string) (*cfclient.App, error)
+	getAppByGuidMutex       sync.RWMutex
+	getAppByGuidArgsForCall []struct {
 		arg1 string
 	}
-	getServiceReturns struct {
-		result1 query.Service
+	getAppByGuidReturns struct {
+		result1 *cfclient.App
+		result2 error
 	}
-	getServiceReturnsOnCall map[int]struct {
-		result1 query.Service
+	getAppByGuidReturnsOnCall map[int]struct {
+		result1 *cfclient.App
+		result2 error
 	}
-	GetServiceBindingServiceStub        func() *query.ServiceBindingService
-	getServiceBindingServiceMutex       sync.RWMutex
-	getServiceBindingServiceArgsForCall []struct {
+	GetAppMapStub        func() (query.AppMap, error)
+	getAppMapMutex       sync.RWMutex
+	getAppMapArgsForCall []struct {
 	}
-	getServiceBindingServiceReturns struct {
-		result1 *query.ServiceBindingService
+	getAppMapReturns struct {
+		result1 query.AppMap
+		result2 error
 	}
-	getServiceBindingServiceReturnsOnCall map[int]struct {
-		result1 *query.ServiceBindingService
+	getAppMapReturnsOnCall map[int]struct {
+		result1 query.AppMap
+		result2 error
 	}
-	GetServiceInstanceServiceStub        func() *query.ServiceInstanceService
-	getServiceInstanceServiceMutex       sync.RWMutex
-	getServiceInstanceServiceArgsForCall []struct {
+	GetManyAppsByGuidStub        func(...string) (query.AppMap, error)
+	getManyAppsByGuidMutex       sync.RWMutex
+	getManyAppsByGuidArgsForCall []struct {
+		arg1 []string
 	}
-	getServiceInstanceServiceReturns struct {
-		result1 *query.ServiceInstanceService
+	getManyAppsByGuidReturns struct {
+		result1 query.AppMap
+		result2 error
 	}
-	getServiceInstanceServiceReturnsOnCall map[int]struct {
-		result1 *query.ServiceInstanceService
+	getManyAppsByGuidReturnsOnCall map[int]struct {
+		result1 query.AppMap
+		result2 error
 	}
-	GetSpaceServiceStub        func() *query.SpaceService
-	getSpaceServiceMutex       sync.RWMutex
-	getSpaceServiceArgsForCall []struct {
+	GetManyOrgsByGuidStub        func(...string) (query.OrgMap, error)
+	getManyOrgsByGuidMutex       sync.RWMutex
+	getManyOrgsByGuidArgsForCall []struct {
+		arg1 []string
 	}
-	getSpaceServiceReturns struct {
-		result1 *query.SpaceService
+	getManyOrgsByGuidReturns struct {
+		result1 query.OrgMap
+		result2 error
 	}
-	getSpaceServiceReturnsOnCall map[int]struct {
-		result1 *query.SpaceService
+	getManyOrgsByGuidReturnsOnCall map[int]struct {
+		result1 query.OrgMap
+		result2 error
 	}
-	NewAppServiceStub        func() *query.AppService
-	newAppServiceMutex       sync.RWMutex
-	newAppServiceArgsForCall []struct {
+	GetManyServiceBindingsByGuidStub        func(...string) (query.ServiceBindingMap, error)
+	getManyServiceBindingsByGuidMutex       sync.RWMutex
+	getManyServiceBindingsByGuidArgsForCall []struct {
+		arg1 []string
 	}
-	newAppServiceReturns struct {
-		result1 *query.AppService
+	getManyServiceBindingsByGuidReturns struct {
+		result1 query.ServiceBindingMap
+		result2 error
 	}
-	newAppServiceReturnsOnCall map[int]struct {
-		result1 *query.AppService
+	getManyServiceBindingsByGuidReturnsOnCall map[int]struct {
+		result1 query.ServiceBindingMap
+		result2 error
 	}
-	NewOrgServiceStub        func() *query.OrgService
-	newOrgServiceMutex       sync.RWMutex
-	newOrgServiceArgsForCall []struct {
+	GetManyServiceInstancesByGuidStub        func(...string) (query.ServiceInstanceMap, error)
+	getManyServiceInstancesByGuidMutex       sync.RWMutex
+	getManyServiceInstancesByGuidArgsForCall []struct {
+		arg1 []string
 	}
-	newOrgServiceReturns struct {
-		result1 *query.OrgService
+	getManyServiceInstancesByGuidReturns struct {
+		result1 query.ServiceInstanceMap
+		result2 error
 	}
-	newOrgServiceReturnsOnCall map[int]struct {
-		result1 *query.OrgService
+	getManyServiceInstancesByGuidReturnsOnCall map[int]struct {
+		result1 query.ServiceInstanceMap
+		result2 error
 	}
-	NewServiceBindingServiceStub        func() *query.ServiceBindingService
-	newServiceBindingServiceMutex       sync.RWMutex
-	newServiceBindingServiceArgsForCall []struct {
+	GetManySpacesByGuidStub        func(...string) (query.SpaceMap, error)
+	getManySpacesByGuidMutex       sync.RWMutex
+	getManySpacesByGuidArgsForCall []struct {
+		arg1 []string
 	}
-	newServiceBindingServiceReturns struct {
-		result1 *query.ServiceBindingService
+	getManySpacesByGuidReturns struct {
+		result1 query.SpaceMap
+		result2 error
 	}
-	newServiceBindingServiceReturnsOnCall map[int]struct {
-		result1 *query.ServiceBindingService
+	getManySpacesByGuidReturnsOnCall map[int]struct {
+		result1 query.SpaceMap
+		result2 error
 	}
-	NewServiceInstanceServiceStub        func() *query.ServiceInstanceService
-	newServiceInstanceServiceMutex       sync.RWMutex
-	newServiceInstanceServiceArgsForCall []struct {
+	GetOrgByGuidStub        func(string) (*cfclient.Org, error)
+	getOrgByGuidMutex       sync.RWMutex
+	getOrgByGuidArgsForCall []struct {
+		arg1 string
 	}
-	newServiceInstanceServiceReturns struct {
-		result1 *query.ServiceInstanceService
+	getOrgByGuidReturns struct {
+		result1 *cfclient.Org
+		result2 error
 	}
-	newServiceInstanceServiceReturnsOnCall map[int]struct {
-		result1 *query.ServiceInstanceService
+	getOrgByGuidReturnsOnCall map[int]struct {
+		result1 *cfclient.Org
+		result2 error
 	}
-	NewSpaceServiceStub        func() *query.SpaceService
-	newSpaceServiceMutex       sync.RWMutex
-	newSpaceServiceArgsForCall []struct {
+	GetOrgMapStub        func() (query.OrgMap, error)
+	getOrgMapMutex       sync.RWMutex
+	getOrgMapArgsForCall []struct {
 	}
-	newSpaceServiceReturns struct {
-		result1 *query.SpaceService
+	getOrgMapReturns struct {
+		result1 query.OrgMap
+		result2 error
 	}
-	newSpaceServiceReturnsOnCall map[int]struct {
-		result1 *query.SpaceService
+	getOrgMapReturnsOnCall map[int]struct {
+		result1 query.OrgMap
+		result2 error
+	}
+	GetServiceBindingByGuidStub        func(string) (*cfclient.ServiceBinding, error)
+	getServiceBindingByGuidMutex       sync.RWMutex
+	getServiceBindingByGuidArgsForCall []struct {
+		arg1 string
+	}
+	getServiceBindingByGuidReturns struct {
+		result1 *cfclient.ServiceBinding
+		result2 error
+	}
+	getServiceBindingByGuidReturnsOnCall map[int]struct {
+		result1 *cfclient.ServiceBinding
+		result2 error
+	}
+	GetServiceBindingMapStub        func() (query.ServiceBindingMap, error)
+	getServiceBindingMapMutex       sync.RWMutex
+	getServiceBindingMapArgsForCall []struct {
+	}
+	getServiceBindingMapReturns struct {
+		result1 query.ServiceBindingMap
+		result2 error
+	}
+	getServiceBindingMapReturnsOnCall map[int]struct {
+		result1 query.ServiceBindingMap
+		result2 error
+	}
+	GetServiceInstanceByGuidStub        func(string) (*cfclient.ServiceInstance, error)
+	getServiceInstanceByGuidMutex       sync.RWMutex
+	getServiceInstanceByGuidArgsForCall []struct {
+		arg1 string
+	}
+	getServiceInstanceByGuidReturns struct {
+		result1 *cfclient.ServiceInstance
+		result2 error
+	}
+	getServiceInstanceByGuidReturnsOnCall map[int]struct {
+		result1 *cfclient.ServiceInstance
+		result2 error
+	}
+	GetServiceInstanceMapStub        func() (query.ServiceInstanceMap, error)
+	getServiceInstanceMapMutex       sync.RWMutex
+	getServiceInstanceMapArgsForCall []struct {
+	}
+	getServiceInstanceMapReturns struct {
+		result1 query.ServiceInstanceMap
+		result2 error
+	}
+	getServiceInstanceMapReturnsOnCall map[int]struct {
+		result1 query.ServiceInstanceMap
+		result2 error
+	}
+	GetSpaceByGuidStub        func(string) (*cfclient.Space, error)
+	getSpaceByGuidMutex       sync.RWMutex
+	getSpaceByGuidArgsForCall []struct {
+		arg1 string
+	}
+	getSpaceByGuidReturns struct {
+		result1 *cfclient.Space
+		result2 error
+	}
+	getSpaceByGuidReturnsOnCall map[int]struct {
+		result1 *cfclient.Space
+		result2 error
+	}
+	GetSpaceMapStub        func() (query.SpaceMap, error)
+	getSpaceMapMutex       sync.RWMutex
+	getSpaceMapArgsForCall []struct {
+	}
+	getSpaceMapReturns struct {
+		result1 query.SpaceMap
+		result2 error
+	}
+	getSpaceMapReturnsOnCall map[int]struct {
+		result1 query.SpaceMap
+		result2 error
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeInquisitor) GetAppService() *query.AppService {
-	fake.getAppServiceMutex.Lock()
-	ret, specificReturn := fake.getAppServiceReturnsOnCall[len(fake.getAppServiceArgsForCall)]
-	fake.getAppServiceArgsForCall = append(fake.getAppServiceArgsForCall, struct {
+func (fake *FakeInquisitor) GetAllApps() (query.Apps, error) {
+	fake.getAllAppsMutex.Lock()
+	ret, specificReturn := fake.getAllAppsReturnsOnCall[len(fake.getAllAppsArgsForCall)]
+	fake.getAllAppsArgsForCall = append(fake.getAllAppsArgsForCall, struct {
 	}{})
-	fake.recordInvocation("GetAppService", []interface{}{})
-	fake.getAppServiceMutex.Unlock()
-	if fake.GetAppServiceStub != nil {
-		return fake.GetAppServiceStub()
+	fake.recordInvocation("GetAllApps", []interface{}{})
+	fake.getAllAppsMutex.Unlock()
+	if fake.GetAllAppsStub != nil {
+		return fake.GetAllAppsStub()
 	}
 	if specificReturn {
-		return ret.result1
+		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getAppServiceReturns
-	return fakeReturns.result1
+	fakeReturns := fake.getAllAppsReturns
+	return fakeReturns.result1, fakeReturns.result2
 }
 
-func (fake *FakeInquisitor) GetAppServiceCallCount() int {
-	fake.getAppServiceMutex.RLock()
-	defer fake.getAppServiceMutex.RUnlock()
-	return len(fake.getAppServiceArgsForCall)
+func (fake *FakeInquisitor) GetAllAppsCallCount() int {
+	fake.getAllAppsMutex.RLock()
+	defer fake.getAllAppsMutex.RUnlock()
+	return len(fake.getAllAppsArgsForCall)
 }
 
-func (fake *FakeInquisitor) GetAppServiceCalls(stub func() *query.AppService) {
-	fake.getAppServiceMutex.Lock()
-	defer fake.getAppServiceMutex.Unlock()
-	fake.GetAppServiceStub = stub
+func (fake *FakeInquisitor) GetAllAppsCalls(stub func() (query.Apps, error)) {
+	fake.getAllAppsMutex.Lock()
+	defer fake.getAllAppsMutex.Unlock()
+	fake.GetAllAppsStub = stub
 }
 
-func (fake *FakeInquisitor) GetAppServiceReturns(result1 *query.AppService) {
-	fake.getAppServiceMutex.Lock()
-	defer fake.getAppServiceMutex.Unlock()
-	fake.GetAppServiceStub = nil
-	fake.getAppServiceReturns = struct {
-		result1 *query.AppService
-	}{result1}
+func (fake *FakeInquisitor) GetAllAppsReturns(result1 query.Apps, result2 error) {
+	fake.getAllAppsMutex.Lock()
+	defer fake.getAllAppsMutex.Unlock()
+	fake.GetAllAppsStub = nil
+	fake.getAllAppsReturns = struct {
+		result1 query.Apps
+		result2 error
+	}{result1, result2}
 }
 
-func (fake *FakeInquisitor) GetAppServiceReturnsOnCall(i int, result1 *query.AppService) {
-	fake.getAppServiceMutex.Lock()
-	defer fake.getAppServiceMutex.Unlock()
-	fake.GetAppServiceStub = nil
-	if fake.getAppServiceReturnsOnCall == nil {
-		fake.getAppServiceReturnsOnCall = make(map[int]struct {
-			result1 *query.AppService
+func (fake *FakeInquisitor) GetAllAppsReturnsOnCall(i int, result1 query.Apps, result2 error) {
+	fake.getAllAppsMutex.Lock()
+	defer fake.getAllAppsMutex.Unlock()
+	fake.GetAllAppsStub = nil
+	if fake.getAllAppsReturnsOnCall == nil {
+		fake.getAllAppsReturnsOnCall = make(map[int]struct {
+			result1 query.Apps
+			result2 error
 		})
 	}
-	fake.getAppServiceReturnsOnCall[i] = struct {
-		result1 *query.AppService
-	}{result1}
+	fake.getAllAppsReturnsOnCall[i] = struct {
+		result1 query.Apps
+		result2 error
+	}{result1, result2}
 }
 
-func (fake *FakeInquisitor) GetOrgService() *query.OrgService {
-	fake.getOrgServiceMutex.Lock()
-	ret, specificReturn := fake.getOrgServiceReturnsOnCall[len(fake.getOrgServiceArgsForCall)]
-	fake.getOrgServiceArgsForCall = append(fake.getOrgServiceArgsForCall, struct {
+func (fake *FakeInquisitor) GetAllOrgs() (query.Orgs, error) {
+	fake.getAllOrgsMutex.Lock()
+	ret, specificReturn := fake.getAllOrgsReturnsOnCall[len(fake.getAllOrgsArgsForCall)]
+	fake.getAllOrgsArgsForCall = append(fake.getAllOrgsArgsForCall, struct {
 	}{})
-	fake.recordInvocation("GetOrgService", []interface{}{})
-	fake.getOrgServiceMutex.Unlock()
-	if fake.GetOrgServiceStub != nil {
-		return fake.GetOrgServiceStub()
+	fake.recordInvocation("GetAllOrgs", []interface{}{})
+	fake.getAllOrgsMutex.Unlock()
+	if fake.GetAllOrgsStub != nil {
+		return fake.GetAllOrgsStub()
 	}
 	if specificReturn {
-		return ret.result1
+		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getOrgServiceReturns
-	return fakeReturns.result1
+	fakeReturns := fake.getAllOrgsReturns
+	return fakeReturns.result1, fakeReturns.result2
 }
 
-func (fake *FakeInquisitor) GetOrgServiceCallCount() int {
-	fake.getOrgServiceMutex.RLock()
-	defer fake.getOrgServiceMutex.RUnlock()
-	return len(fake.getOrgServiceArgsForCall)
+func (fake *FakeInquisitor) GetAllOrgsCallCount() int {
+	fake.getAllOrgsMutex.RLock()
+	defer fake.getAllOrgsMutex.RUnlock()
+	return len(fake.getAllOrgsArgsForCall)
 }
 
-func (fake *FakeInquisitor) GetOrgServiceCalls(stub func() *query.OrgService) {
-	fake.getOrgServiceMutex.Lock()
-	defer fake.getOrgServiceMutex.Unlock()
-	fake.GetOrgServiceStub = stub
+func (fake *FakeInquisitor) GetAllOrgsCalls(stub func() (query.Orgs, error)) {
+	fake.getAllOrgsMutex.Lock()
+	defer fake.getAllOrgsMutex.Unlock()
+	fake.GetAllOrgsStub = stub
 }
 
-func (fake *FakeInquisitor) GetOrgServiceReturns(result1 *query.OrgService) {
-	fake.getOrgServiceMutex.Lock()
-	defer fake.getOrgServiceMutex.Unlock()
-	fake.GetOrgServiceStub = nil
-	fake.getOrgServiceReturns = struct {
-		result1 *query.OrgService
-	}{result1}
+func (fake *FakeInquisitor) GetAllOrgsReturns(result1 query.Orgs, result2 error) {
+	fake.getAllOrgsMutex.Lock()
+	defer fake.getAllOrgsMutex.Unlock()
+	fake.GetAllOrgsStub = nil
+	fake.getAllOrgsReturns = struct {
+		result1 query.Orgs
+		result2 error
+	}{result1, result2}
 }
 
-func (fake *FakeInquisitor) GetOrgServiceReturnsOnCall(i int, result1 *query.OrgService) {
-	fake.getOrgServiceMutex.Lock()
-	defer fake.getOrgServiceMutex.Unlock()
-	fake.GetOrgServiceStub = nil
-	if fake.getOrgServiceReturnsOnCall == nil {
-		fake.getOrgServiceReturnsOnCall = make(map[int]struct {
-			result1 *query.OrgService
+func (fake *FakeInquisitor) GetAllOrgsReturnsOnCall(i int, result1 query.Orgs, result2 error) {
+	fake.getAllOrgsMutex.Lock()
+	defer fake.getAllOrgsMutex.Unlock()
+	fake.GetAllOrgsStub = nil
+	if fake.getAllOrgsReturnsOnCall == nil {
+		fake.getAllOrgsReturnsOnCall = make(map[int]struct {
+			result1 query.Orgs
+			result2 error
 		})
 	}
-	fake.getOrgServiceReturnsOnCall[i] = struct {
-		result1 *query.OrgService
-	}{result1}
+	fake.getAllOrgsReturnsOnCall[i] = struct {
+		result1 query.Orgs
+		result2 error
+	}{result1, result2}
 }
 
-func (fake *FakeInquisitor) GetService(arg1 string) query.Service {
-	fake.getServiceMutex.Lock()
-	ret, specificReturn := fake.getServiceReturnsOnCall[len(fake.getServiceArgsForCall)]
-	fake.getServiceArgsForCall = append(fake.getServiceArgsForCall, struct {
+func (fake *FakeInquisitor) GetAllServiceBindings() (query.ServiceBindings, error) {
+	fake.getAllServiceBindingsMutex.Lock()
+	ret, specificReturn := fake.getAllServiceBindingsReturnsOnCall[len(fake.getAllServiceBindingsArgsForCall)]
+	fake.getAllServiceBindingsArgsForCall = append(fake.getAllServiceBindingsArgsForCall, struct {
+	}{})
+	fake.recordInvocation("GetAllServiceBindings", []interface{}{})
+	fake.getAllServiceBindingsMutex.Unlock()
+	if fake.GetAllServiceBindingsStub != nil {
+		return fake.GetAllServiceBindingsStub()
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getAllServiceBindingsReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeInquisitor) GetAllServiceBindingsCallCount() int {
+	fake.getAllServiceBindingsMutex.RLock()
+	defer fake.getAllServiceBindingsMutex.RUnlock()
+	return len(fake.getAllServiceBindingsArgsForCall)
+}
+
+func (fake *FakeInquisitor) GetAllServiceBindingsCalls(stub func() (query.ServiceBindings, error)) {
+	fake.getAllServiceBindingsMutex.Lock()
+	defer fake.getAllServiceBindingsMutex.Unlock()
+	fake.GetAllServiceBindingsStub = stub
+}
+
+func (fake *FakeInquisitor) GetAllServiceBindingsReturns(result1 query.ServiceBindings, result2 error) {
+	fake.getAllServiceBindingsMutex.Lock()
+	defer fake.getAllServiceBindingsMutex.Unlock()
+	fake.GetAllServiceBindingsStub = nil
+	fake.getAllServiceBindingsReturns = struct {
+		result1 query.ServiceBindings
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetAllServiceBindingsReturnsOnCall(i int, result1 query.ServiceBindings, result2 error) {
+	fake.getAllServiceBindingsMutex.Lock()
+	defer fake.getAllServiceBindingsMutex.Unlock()
+	fake.GetAllServiceBindingsStub = nil
+	if fake.getAllServiceBindingsReturnsOnCall == nil {
+		fake.getAllServiceBindingsReturnsOnCall = make(map[int]struct {
+			result1 query.ServiceBindings
+			result2 error
+		})
+	}
+	fake.getAllServiceBindingsReturnsOnCall[i] = struct {
+		result1 query.ServiceBindings
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetAllServiceInstances() (query.ServiceInstances, error) {
+	fake.getAllServiceInstancesMutex.Lock()
+	ret, specificReturn := fake.getAllServiceInstancesReturnsOnCall[len(fake.getAllServiceInstancesArgsForCall)]
+	fake.getAllServiceInstancesArgsForCall = append(fake.getAllServiceInstancesArgsForCall, struct {
+	}{})
+	fake.recordInvocation("GetAllServiceInstances", []interface{}{})
+	fake.getAllServiceInstancesMutex.Unlock()
+	if fake.GetAllServiceInstancesStub != nil {
+		return fake.GetAllServiceInstancesStub()
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getAllServiceInstancesReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeInquisitor) GetAllServiceInstancesCallCount() int {
+	fake.getAllServiceInstancesMutex.RLock()
+	defer fake.getAllServiceInstancesMutex.RUnlock()
+	return len(fake.getAllServiceInstancesArgsForCall)
+}
+
+func (fake *FakeInquisitor) GetAllServiceInstancesCalls(stub func() (query.ServiceInstances, error)) {
+	fake.getAllServiceInstancesMutex.Lock()
+	defer fake.getAllServiceInstancesMutex.Unlock()
+	fake.GetAllServiceInstancesStub = stub
+}
+
+func (fake *FakeInquisitor) GetAllServiceInstancesReturns(result1 query.ServiceInstances, result2 error) {
+	fake.getAllServiceInstancesMutex.Lock()
+	defer fake.getAllServiceInstancesMutex.Unlock()
+	fake.GetAllServiceInstancesStub = nil
+	fake.getAllServiceInstancesReturns = struct {
+		result1 query.ServiceInstances
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetAllServiceInstancesReturnsOnCall(i int, result1 query.ServiceInstances, result2 error) {
+	fake.getAllServiceInstancesMutex.Lock()
+	defer fake.getAllServiceInstancesMutex.Unlock()
+	fake.GetAllServiceInstancesStub = nil
+	if fake.getAllServiceInstancesReturnsOnCall == nil {
+		fake.getAllServiceInstancesReturnsOnCall = make(map[int]struct {
+			result1 query.ServiceInstances
+			result2 error
+		})
+	}
+	fake.getAllServiceInstancesReturnsOnCall[i] = struct {
+		result1 query.ServiceInstances
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetAllSpaces() (query.Spaces, error) {
+	fake.getAllSpacesMutex.Lock()
+	ret, specificReturn := fake.getAllSpacesReturnsOnCall[len(fake.getAllSpacesArgsForCall)]
+	fake.getAllSpacesArgsForCall = append(fake.getAllSpacesArgsForCall, struct {
+	}{})
+	fake.recordInvocation("GetAllSpaces", []interface{}{})
+	fake.getAllSpacesMutex.Unlock()
+	if fake.GetAllSpacesStub != nil {
+		return fake.GetAllSpacesStub()
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getAllSpacesReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeInquisitor) GetAllSpacesCallCount() int {
+	fake.getAllSpacesMutex.RLock()
+	defer fake.getAllSpacesMutex.RUnlock()
+	return len(fake.getAllSpacesArgsForCall)
+}
+
+func (fake *FakeInquisitor) GetAllSpacesCalls(stub func() (query.Spaces, error)) {
+	fake.getAllSpacesMutex.Lock()
+	defer fake.getAllSpacesMutex.Unlock()
+	fake.GetAllSpacesStub = stub
+}
+
+func (fake *FakeInquisitor) GetAllSpacesReturns(result1 query.Spaces, result2 error) {
+	fake.getAllSpacesMutex.Lock()
+	defer fake.getAllSpacesMutex.Unlock()
+	fake.GetAllSpacesStub = nil
+	fake.getAllSpacesReturns = struct {
+		result1 query.Spaces
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetAllSpacesReturnsOnCall(i int, result1 query.Spaces, result2 error) {
+	fake.getAllSpacesMutex.Lock()
+	defer fake.getAllSpacesMutex.Unlock()
+	fake.GetAllSpacesStub = nil
+	if fake.getAllSpacesReturnsOnCall == nil {
+		fake.getAllSpacesReturnsOnCall = make(map[int]struct {
+			result1 query.Spaces
+			result2 error
+		})
+	}
+	fake.getAllSpacesReturnsOnCall[i] = struct {
+		result1 query.Spaces
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetAppByGuid(arg1 string) (*cfclient.App, error) {
+	fake.getAppByGuidMutex.Lock()
+	ret, specificReturn := fake.getAppByGuidReturnsOnCall[len(fake.getAppByGuidArgsForCall)]
+	fake.getAppByGuidArgsForCall = append(fake.getAppByGuidArgsForCall, struct {
 		arg1 string
 	}{arg1})
-	fake.recordInvocation("GetService", []interface{}{arg1})
-	fake.getServiceMutex.Unlock()
-	if fake.GetServiceStub != nil {
-		return fake.GetServiceStub(arg1)
+	fake.recordInvocation("GetAppByGuid", []interface{}{arg1})
+	fake.getAppByGuidMutex.Unlock()
+	if fake.GetAppByGuidStub != nil {
+		return fake.GetAppByGuidStub(arg1)
 	}
 	if specificReturn {
-		return ret.result1
+		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getServiceReturns
-	return fakeReturns.result1
+	fakeReturns := fake.getAppByGuidReturns
+	return fakeReturns.result1, fakeReturns.result2
 }
 
-func (fake *FakeInquisitor) GetServiceCallCount() int {
-	fake.getServiceMutex.RLock()
-	defer fake.getServiceMutex.RUnlock()
-	return len(fake.getServiceArgsForCall)
+func (fake *FakeInquisitor) GetAppByGuidCallCount() int {
+	fake.getAppByGuidMutex.RLock()
+	defer fake.getAppByGuidMutex.RUnlock()
+	return len(fake.getAppByGuidArgsForCall)
 }
 
-func (fake *FakeInquisitor) GetServiceCalls(stub func(string) query.Service) {
-	fake.getServiceMutex.Lock()
-	defer fake.getServiceMutex.Unlock()
-	fake.GetServiceStub = stub
+func (fake *FakeInquisitor) GetAppByGuidCalls(stub func(string) (*cfclient.App, error)) {
+	fake.getAppByGuidMutex.Lock()
+	defer fake.getAppByGuidMutex.Unlock()
+	fake.GetAppByGuidStub = stub
 }
 
-func (fake *FakeInquisitor) GetServiceArgsForCall(i int) string {
-	fake.getServiceMutex.RLock()
-	defer fake.getServiceMutex.RUnlock()
-	argsForCall := fake.getServiceArgsForCall[i]
+func (fake *FakeInquisitor) GetAppByGuidArgsForCall(i int) string {
+	fake.getAppByGuidMutex.RLock()
+	defer fake.getAppByGuidMutex.RUnlock()
+	argsForCall := fake.getAppByGuidArgsForCall[i]
 	return argsForCall.arg1
 }
 
-func (fake *FakeInquisitor) GetServiceReturns(result1 query.Service) {
-	fake.getServiceMutex.Lock()
-	defer fake.getServiceMutex.Unlock()
-	fake.GetServiceStub = nil
-	fake.getServiceReturns = struct {
-		result1 query.Service
-	}{result1}
+func (fake *FakeInquisitor) GetAppByGuidReturns(result1 *cfclient.App, result2 error) {
+	fake.getAppByGuidMutex.Lock()
+	defer fake.getAppByGuidMutex.Unlock()
+	fake.GetAppByGuidStub = nil
+	fake.getAppByGuidReturns = struct {
+		result1 *cfclient.App
+		result2 error
+	}{result1, result2}
 }
 
-func (fake *FakeInquisitor) GetServiceReturnsOnCall(i int, result1 query.Service) {
-	fake.getServiceMutex.Lock()
-	defer fake.getServiceMutex.Unlock()
-	fake.GetServiceStub = nil
-	if fake.getServiceReturnsOnCall == nil {
-		fake.getServiceReturnsOnCall = make(map[int]struct {
-			result1 query.Service
+func (fake *FakeInquisitor) GetAppByGuidReturnsOnCall(i int, result1 *cfclient.App, result2 error) {
+	fake.getAppByGuidMutex.Lock()
+	defer fake.getAppByGuidMutex.Unlock()
+	fake.GetAppByGuidStub = nil
+	if fake.getAppByGuidReturnsOnCall == nil {
+		fake.getAppByGuidReturnsOnCall = make(map[int]struct {
+			result1 *cfclient.App
+			result2 error
 		})
 	}
-	fake.getServiceReturnsOnCall[i] = struct {
-		result1 query.Service
-	}{result1}
+	fake.getAppByGuidReturnsOnCall[i] = struct {
+		result1 *cfclient.App
+		result2 error
+	}{result1, result2}
 }
 
-func (fake *FakeInquisitor) GetServiceBindingService() *query.ServiceBindingService {
-	fake.getServiceBindingServiceMutex.Lock()
-	ret, specificReturn := fake.getServiceBindingServiceReturnsOnCall[len(fake.getServiceBindingServiceArgsForCall)]
-	fake.getServiceBindingServiceArgsForCall = append(fake.getServiceBindingServiceArgsForCall, struct {
+func (fake *FakeInquisitor) GetAppMap() (query.AppMap, error) {
+	fake.getAppMapMutex.Lock()
+	ret, specificReturn := fake.getAppMapReturnsOnCall[len(fake.getAppMapArgsForCall)]
+	fake.getAppMapArgsForCall = append(fake.getAppMapArgsForCall, struct {
 	}{})
-	fake.recordInvocation("GetServiceBindingService", []interface{}{})
-	fake.getServiceBindingServiceMutex.Unlock()
-	if fake.GetServiceBindingServiceStub != nil {
-		return fake.GetServiceBindingServiceStub()
+	fake.recordInvocation("GetAppMap", []interface{}{})
+	fake.getAppMapMutex.Unlock()
+	if fake.GetAppMapStub != nil {
+		return fake.GetAppMapStub()
 	}
 	if specificReturn {
-		return ret.result1
+		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getServiceBindingServiceReturns
-	return fakeReturns.result1
+	fakeReturns := fake.getAppMapReturns
+	return fakeReturns.result1, fakeReturns.result2
 }
 
-func (fake *FakeInquisitor) GetServiceBindingServiceCallCount() int {
-	fake.getServiceBindingServiceMutex.RLock()
-	defer fake.getServiceBindingServiceMutex.RUnlock()
-	return len(fake.getServiceBindingServiceArgsForCall)
+func (fake *FakeInquisitor) GetAppMapCallCount() int {
+	fake.getAppMapMutex.RLock()
+	defer fake.getAppMapMutex.RUnlock()
+	return len(fake.getAppMapArgsForCall)
 }
 
-func (fake *FakeInquisitor) GetServiceBindingServiceCalls(stub func() *query.ServiceBindingService) {
-	fake.getServiceBindingServiceMutex.Lock()
-	defer fake.getServiceBindingServiceMutex.Unlock()
-	fake.GetServiceBindingServiceStub = stub
+func (fake *FakeInquisitor) GetAppMapCalls(stub func() (query.AppMap, error)) {
+	fake.getAppMapMutex.Lock()
+	defer fake.getAppMapMutex.Unlock()
+	fake.GetAppMapStub = stub
 }
 
-func (fake *FakeInquisitor) GetServiceBindingServiceReturns(result1 *query.ServiceBindingService) {
-	fake.getServiceBindingServiceMutex.Lock()
-	defer fake.getServiceBindingServiceMutex.Unlock()
-	fake.GetServiceBindingServiceStub = nil
-	fake.getServiceBindingServiceReturns = struct {
-		result1 *query.ServiceBindingService
-	}{result1}
+func (fake *FakeInquisitor) GetAppMapReturns(result1 query.AppMap, result2 error) {
+	fake.getAppMapMutex.Lock()
+	defer fake.getAppMapMutex.Unlock()
+	fake.GetAppMapStub = nil
+	fake.getAppMapReturns = struct {
+		result1 query.AppMap
+		result2 error
+	}{result1, result2}
 }
 
-func (fake *FakeInquisitor) GetServiceBindingServiceReturnsOnCall(i int, result1 *query.ServiceBindingService) {
-	fake.getServiceBindingServiceMutex.Lock()
-	defer fake.getServiceBindingServiceMutex.Unlock()
-	fake.GetServiceBindingServiceStub = nil
-	if fake.getServiceBindingServiceReturnsOnCall == nil {
-		fake.getServiceBindingServiceReturnsOnCall = make(map[int]struct {
-			result1 *query.ServiceBindingService
+func (fake *FakeInquisitor) GetAppMapReturnsOnCall(i int, result1 query.AppMap, result2 error) {
+	fake.getAppMapMutex.Lock()
+	defer fake.getAppMapMutex.Unlock()
+	fake.GetAppMapStub = nil
+	if fake.getAppMapReturnsOnCall == nil {
+		fake.getAppMapReturnsOnCall = make(map[int]struct {
+			result1 query.AppMap
+			result2 error
 		})
 	}
-	fake.getServiceBindingServiceReturnsOnCall[i] = struct {
-		result1 *query.ServiceBindingService
-	}{result1}
+	fake.getAppMapReturnsOnCall[i] = struct {
+		result1 query.AppMap
+		result2 error
+	}{result1, result2}
 }
 
-func (fake *FakeInquisitor) GetServiceInstanceService() *query.ServiceInstanceService {
-	fake.getServiceInstanceServiceMutex.Lock()
-	ret, specificReturn := fake.getServiceInstanceServiceReturnsOnCall[len(fake.getServiceInstanceServiceArgsForCall)]
-	fake.getServiceInstanceServiceArgsForCall = append(fake.getServiceInstanceServiceArgsForCall, struct {
-	}{})
-	fake.recordInvocation("GetServiceInstanceService", []interface{}{})
-	fake.getServiceInstanceServiceMutex.Unlock()
-	if fake.GetServiceInstanceServiceStub != nil {
-		return fake.GetServiceInstanceServiceStub()
+func (fake *FakeInquisitor) GetManyAppsByGuid(arg1 ...string) (query.AppMap, error) {
+	fake.getManyAppsByGuidMutex.Lock()
+	ret, specificReturn := fake.getManyAppsByGuidReturnsOnCall[len(fake.getManyAppsByGuidArgsForCall)]
+	fake.getManyAppsByGuidArgsForCall = append(fake.getManyAppsByGuidArgsForCall, struct {
+		arg1 []string
+	}{arg1})
+	fake.recordInvocation("GetManyAppsByGuid", []interface{}{arg1})
+	fake.getManyAppsByGuidMutex.Unlock()
+	if fake.GetManyAppsByGuidStub != nil {
+		return fake.GetManyAppsByGuidStub(arg1...)
 	}
 	if specificReturn {
-		return ret.result1
+		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getServiceInstanceServiceReturns
-	return fakeReturns.result1
+	fakeReturns := fake.getManyAppsByGuidReturns
+	return fakeReturns.result1, fakeReturns.result2
 }
 
-func (fake *FakeInquisitor) GetServiceInstanceServiceCallCount() int {
-	fake.getServiceInstanceServiceMutex.RLock()
-	defer fake.getServiceInstanceServiceMutex.RUnlock()
-	return len(fake.getServiceInstanceServiceArgsForCall)
+func (fake *FakeInquisitor) GetManyAppsByGuidCallCount() int {
+	fake.getManyAppsByGuidMutex.RLock()
+	defer fake.getManyAppsByGuidMutex.RUnlock()
+	return len(fake.getManyAppsByGuidArgsForCall)
 }
 
-func (fake *FakeInquisitor) GetServiceInstanceServiceCalls(stub func() *query.ServiceInstanceService) {
-	fake.getServiceInstanceServiceMutex.Lock()
-	defer fake.getServiceInstanceServiceMutex.Unlock()
-	fake.GetServiceInstanceServiceStub = stub
+func (fake *FakeInquisitor) GetManyAppsByGuidCalls(stub func(...string) (query.AppMap, error)) {
+	fake.getManyAppsByGuidMutex.Lock()
+	defer fake.getManyAppsByGuidMutex.Unlock()
+	fake.GetManyAppsByGuidStub = stub
 }
 
-func (fake *FakeInquisitor) GetServiceInstanceServiceReturns(result1 *query.ServiceInstanceService) {
-	fake.getServiceInstanceServiceMutex.Lock()
-	defer fake.getServiceInstanceServiceMutex.Unlock()
-	fake.GetServiceInstanceServiceStub = nil
-	fake.getServiceInstanceServiceReturns = struct {
-		result1 *query.ServiceInstanceService
-	}{result1}
+func (fake *FakeInquisitor) GetManyAppsByGuidArgsForCall(i int) []string {
+	fake.getManyAppsByGuidMutex.RLock()
+	defer fake.getManyAppsByGuidMutex.RUnlock()
+	argsForCall := fake.getManyAppsByGuidArgsForCall[i]
+	return argsForCall.arg1
 }
 
-func (fake *FakeInquisitor) GetServiceInstanceServiceReturnsOnCall(i int, result1 *query.ServiceInstanceService) {
-	fake.getServiceInstanceServiceMutex.Lock()
-	defer fake.getServiceInstanceServiceMutex.Unlock()
-	fake.GetServiceInstanceServiceStub = nil
-	if fake.getServiceInstanceServiceReturnsOnCall == nil {
-		fake.getServiceInstanceServiceReturnsOnCall = make(map[int]struct {
-			result1 *query.ServiceInstanceService
+func (fake *FakeInquisitor) GetManyAppsByGuidReturns(result1 query.AppMap, result2 error) {
+	fake.getManyAppsByGuidMutex.Lock()
+	defer fake.getManyAppsByGuidMutex.Unlock()
+	fake.GetManyAppsByGuidStub = nil
+	fake.getManyAppsByGuidReturns = struct {
+		result1 query.AppMap
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetManyAppsByGuidReturnsOnCall(i int, result1 query.AppMap, result2 error) {
+	fake.getManyAppsByGuidMutex.Lock()
+	defer fake.getManyAppsByGuidMutex.Unlock()
+	fake.GetManyAppsByGuidStub = nil
+	if fake.getManyAppsByGuidReturnsOnCall == nil {
+		fake.getManyAppsByGuidReturnsOnCall = make(map[int]struct {
+			result1 query.AppMap
+			result2 error
 		})
 	}
-	fake.getServiceInstanceServiceReturnsOnCall[i] = struct {
-		result1 *query.ServiceInstanceService
-	}{result1}
+	fake.getManyAppsByGuidReturnsOnCall[i] = struct {
+		result1 query.AppMap
+		result2 error
+	}{result1, result2}
 }
 
-func (fake *FakeInquisitor) GetSpaceService() *query.SpaceService {
-	fake.getSpaceServiceMutex.Lock()
-	ret, specificReturn := fake.getSpaceServiceReturnsOnCall[len(fake.getSpaceServiceArgsForCall)]
-	fake.getSpaceServiceArgsForCall = append(fake.getSpaceServiceArgsForCall, struct {
-	}{})
-	fake.recordInvocation("GetSpaceService", []interface{}{})
-	fake.getSpaceServiceMutex.Unlock()
-	if fake.GetSpaceServiceStub != nil {
-		return fake.GetSpaceServiceStub()
+func (fake *FakeInquisitor) GetManyOrgsByGuid(arg1 ...string) (query.OrgMap, error) {
+	fake.getManyOrgsByGuidMutex.Lock()
+	ret, specificReturn := fake.getManyOrgsByGuidReturnsOnCall[len(fake.getManyOrgsByGuidArgsForCall)]
+	fake.getManyOrgsByGuidArgsForCall = append(fake.getManyOrgsByGuidArgsForCall, struct {
+		arg1 []string
+	}{arg1})
+	fake.recordInvocation("GetManyOrgsByGuid", []interface{}{arg1})
+	fake.getManyOrgsByGuidMutex.Unlock()
+	if fake.GetManyOrgsByGuidStub != nil {
+		return fake.GetManyOrgsByGuidStub(arg1...)
 	}
 	if specificReturn {
-		return ret.result1
+		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.getSpaceServiceReturns
-	return fakeReturns.result1
+	fakeReturns := fake.getManyOrgsByGuidReturns
+	return fakeReturns.result1, fakeReturns.result2
 }
 
-func (fake *FakeInquisitor) GetSpaceServiceCallCount() int {
-	fake.getSpaceServiceMutex.RLock()
-	defer fake.getSpaceServiceMutex.RUnlock()
-	return len(fake.getSpaceServiceArgsForCall)
+func (fake *FakeInquisitor) GetManyOrgsByGuidCallCount() int {
+	fake.getManyOrgsByGuidMutex.RLock()
+	defer fake.getManyOrgsByGuidMutex.RUnlock()
+	return len(fake.getManyOrgsByGuidArgsForCall)
 }
 
-func (fake *FakeInquisitor) GetSpaceServiceCalls(stub func() *query.SpaceService) {
-	fake.getSpaceServiceMutex.Lock()
-	defer fake.getSpaceServiceMutex.Unlock()
-	fake.GetSpaceServiceStub = stub
+func (fake *FakeInquisitor) GetManyOrgsByGuidCalls(stub func(...string) (query.OrgMap, error)) {
+	fake.getManyOrgsByGuidMutex.Lock()
+	defer fake.getManyOrgsByGuidMutex.Unlock()
+	fake.GetManyOrgsByGuidStub = stub
 }
 
-func (fake *FakeInquisitor) GetSpaceServiceReturns(result1 *query.SpaceService) {
-	fake.getSpaceServiceMutex.Lock()
-	defer fake.getSpaceServiceMutex.Unlock()
-	fake.GetSpaceServiceStub = nil
-	fake.getSpaceServiceReturns = struct {
-		result1 *query.SpaceService
-	}{result1}
+func (fake *FakeInquisitor) GetManyOrgsByGuidArgsForCall(i int) []string {
+	fake.getManyOrgsByGuidMutex.RLock()
+	defer fake.getManyOrgsByGuidMutex.RUnlock()
+	argsForCall := fake.getManyOrgsByGuidArgsForCall[i]
+	return argsForCall.arg1
 }
 
-func (fake *FakeInquisitor) GetSpaceServiceReturnsOnCall(i int, result1 *query.SpaceService) {
-	fake.getSpaceServiceMutex.Lock()
-	defer fake.getSpaceServiceMutex.Unlock()
-	fake.GetSpaceServiceStub = nil
-	if fake.getSpaceServiceReturnsOnCall == nil {
-		fake.getSpaceServiceReturnsOnCall = make(map[int]struct {
-			result1 *query.SpaceService
+func (fake *FakeInquisitor) GetManyOrgsByGuidReturns(result1 query.OrgMap, result2 error) {
+	fake.getManyOrgsByGuidMutex.Lock()
+	defer fake.getManyOrgsByGuidMutex.Unlock()
+	fake.GetManyOrgsByGuidStub = nil
+	fake.getManyOrgsByGuidReturns = struct {
+		result1 query.OrgMap
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetManyOrgsByGuidReturnsOnCall(i int, result1 query.OrgMap, result2 error) {
+	fake.getManyOrgsByGuidMutex.Lock()
+	defer fake.getManyOrgsByGuidMutex.Unlock()
+	fake.GetManyOrgsByGuidStub = nil
+	if fake.getManyOrgsByGuidReturnsOnCall == nil {
+		fake.getManyOrgsByGuidReturnsOnCall = make(map[int]struct {
+			result1 query.OrgMap
+			result2 error
 		})
 	}
-	fake.getSpaceServiceReturnsOnCall[i] = struct {
-		result1 *query.SpaceService
-	}{result1}
+	fake.getManyOrgsByGuidReturnsOnCall[i] = struct {
+		result1 query.OrgMap
+		result2 error
+	}{result1, result2}
 }
 
-func (fake *FakeInquisitor) NewAppService() *query.AppService {
-	fake.newAppServiceMutex.Lock()
-	ret, specificReturn := fake.newAppServiceReturnsOnCall[len(fake.newAppServiceArgsForCall)]
-	fake.newAppServiceArgsForCall = append(fake.newAppServiceArgsForCall, struct {
-	}{})
-	fake.recordInvocation("NewAppService", []interface{}{})
-	fake.newAppServiceMutex.Unlock()
-	if fake.NewAppServiceStub != nil {
-		return fake.NewAppServiceStub()
+func (fake *FakeInquisitor) GetManyServiceBindingsByGuid(arg1 ...string) (query.ServiceBindingMap, error) {
+	fake.getManyServiceBindingsByGuidMutex.Lock()
+	ret, specificReturn := fake.getManyServiceBindingsByGuidReturnsOnCall[len(fake.getManyServiceBindingsByGuidArgsForCall)]
+	fake.getManyServiceBindingsByGuidArgsForCall = append(fake.getManyServiceBindingsByGuidArgsForCall, struct {
+		arg1 []string
+	}{arg1})
+	fake.recordInvocation("GetManyServiceBindingsByGuid", []interface{}{arg1})
+	fake.getManyServiceBindingsByGuidMutex.Unlock()
+	if fake.GetManyServiceBindingsByGuidStub != nil {
+		return fake.GetManyServiceBindingsByGuidStub(arg1...)
 	}
 	if specificReturn {
-		return ret.result1
+		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.newAppServiceReturns
-	return fakeReturns.result1
+	fakeReturns := fake.getManyServiceBindingsByGuidReturns
+	return fakeReturns.result1, fakeReturns.result2
 }
 
-func (fake *FakeInquisitor) NewAppServiceCallCount() int {
-	fake.newAppServiceMutex.RLock()
-	defer fake.newAppServiceMutex.RUnlock()
-	return len(fake.newAppServiceArgsForCall)
+func (fake *FakeInquisitor) GetManyServiceBindingsByGuidCallCount() int {
+	fake.getManyServiceBindingsByGuidMutex.RLock()
+	defer fake.getManyServiceBindingsByGuidMutex.RUnlock()
+	return len(fake.getManyServiceBindingsByGuidArgsForCall)
 }
 
-func (fake *FakeInquisitor) NewAppServiceCalls(stub func() *query.AppService) {
-	fake.newAppServiceMutex.Lock()
-	defer fake.newAppServiceMutex.Unlock()
-	fake.NewAppServiceStub = stub
+func (fake *FakeInquisitor) GetManyServiceBindingsByGuidCalls(stub func(...string) (query.ServiceBindingMap, error)) {
+	fake.getManyServiceBindingsByGuidMutex.Lock()
+	defer fake.getManyServiceBindingsByGuidMutex.Unlock()
+	fake.GetManyServiceBindingsByGuidStub = stub
 }
 
-func (fake *FakeInquisitor) NewAppServiceReturns(result1 *query.AppService) {
-	fake.newAppServiceMutex.Lock()
-	defer fake.newAppServiceMutex.Unlock()
-	fake.NewAppServiceStub = nil
-	fake.newAppServiceReturns = struct {
-		result1 *query.AppService
-	}{result1}
+func (fake *FakeInquisitor) GetManyServiceBindingsByGuidArgsForCall(i int) []string {
+	fake.getManyServiceBindingsByGuidMutex.RLock()
+	defer fake.getManyServiceBindingsByGuidMutex.RUnlock()
+	argsForCall := fake.getManyServiceBindingsByGuidArgsForCall[i]
+	return argsForCall.arg1
 }
 
-func (fake *FakeInquisitor) NewAppServiceReturnsOnCall(i int, result1 *query.AppService) {
-	fake.newAppServiceMutex.Lock()
-	defer fake.newAppServiceMutex.Unlock()
-	fake.NewAppServiceStub = nil
-	if fake.newAppServiceReturnsOnCall == nil {
-		fake.newAppServiceReturnsOnCall = make(map[int]struct {
-			result1 *query.AppService
+func (fake *FakeInquisitor) GetManyServiceBindingsByGuidReturns(result1 query.ServiceBindingMap, result2 error) {
+	fake.getManyServiceBindingsByGuidMutex.Lock()
+	defer fake.getManyServiceBindingsByGuidMutex.Unlock()
+	fake.GetManyServiceBindingsByGuidStub = nil
+	fake.getManyServiceBindingsByGuidReturns = struct {
+		result1 query.ServiceBindingMap
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetManyServiceBindingsByGuidReturnsOnCall(i int, result1 query.ServiceBindingMap, result2 error) {
+	fake.getManyServiceBindingsByGuidMutex.Lock()
+	defer fake.getManyServiceBindingsByGuidMutex.Unlock()
+	fake.GetManyServiceBindingsByGuidStub = nil
+	if fake.getManyServiceBindingsByGuidReturnsOnCall == nil {
+		fake.getManyServiceBindingsByGuidReturnsOnCall = make(map[int]struct {
+			result1 query.ServiceBindingMap
+			result2 error
 		})
 	}
-	fake.newAppServiceReturnsOnCall[i] = struct {
-		result1 *query.AppService
-	}{result1}
+	fake.getManyServiceBindingsByGuidReturnsOnCall[i] = struct {
+		result1 query.ServiceBindingMap
+		result2 error
+	}{result1, result2}
 }
 
-func (fake *FakeInquisitor) NewOrgService() *query.OrgService {
-	fake.newOrgServiceMutex.Lock()
-	ret, specificReturn := fake.newOrgServiceReturnsOnCall[len(fake.newOrgServiceArgsForCall)]
-	fake.newOrgServiceArgsForCall = append(fake.newOrgServiceArgsForCall, struct {
-	}{})
-	fake.recordInvocation("NewOrgService", []interface{}{})
-	fake.newOrgServiceMutex.Unlock()
-	if fake.NewOrgServiceStub != nil {
-		return fake.NewOrgServiceStub()
+func (fake *FakeInquisitor) GetManyServiceInstancesByGuid(arg1 ...string) (query.ServiceInstanceMap, error) {
+	fake.getManyServiceInstancesByGuidMutex.Lock()
+	ret, specificReturn := fake.getManyServiceInstancesByGuidReturnsOnCall[len(fake.getManyServiceInstancesByGuidArgsForCall)]
+	fake.getManyServiceInstancesByGuidArgsForCall = append(fake.getManyServiceInstancesByGuidArgsForCall, struct {
+		arg1 []string
+	}{arg1})
+	fake.recordInvocation("GetManyServiceInstancesByGuid", []interface{}{arg1})
+	fake.getManyServiceInstancesByGuidMutex.Unlock()
+	if fake.GetManyServiceInstancesByGuidStub != nil {
+		return fake.GetManyServiceInstancesByGuidStub(arg1...)
 	}
 	if specificReturn {
-		return ret.result1
+		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.newOrgServiceReturns
-	return fakeReturns.result1
+	fakeReturns := fake.getManyServiceInstancesByGuidReturns
+	return fakeReturns.result1, fakeReturns.result2
 }
 
-func (fake *FakeInquisitor) NewOrgServiceCallCount() int {
-	fake.newOrgServiceMutex.RLock()
-	defer fake.newOrgServiceMutex.RUnlock()
-	return len(fake.newOrgServiceArgsForCall)
+func (fake *FakeInquisitor) GetManyServiceInstancesByGuidCallCount() int {
+	fake.getManyServiceInstancesByGuidMutex.RLock()
+	defer fake.getManyServiceInstancesByGuidMutex.RUnlock()
+	return len(fake.getManyServiceInstancesByGuidArgsForCall)
 }
 
-func (fake *FakeInquisitor) NewOrgServiceCalls(stub func() *query.OrgService) {
-	fake.newOrgServiceMutex.Lock()
-	defer fake.newOrgServiceMutex.Unlock()
-	fake.NewOrgServiceStub = stub
+func (fake *FakeInquisitor) GetManyServiceInstancesByGuidCalls(stub func(...string) (query.ServiceInstanceMap, error)) {
+	fake.getManyServiceInstancesByGuidMutex.Lock()
+	defer fake.getManyServiceInstancesByGuidMutex.Unlock()
+	fake.GetManyServiceInstancesByGuidStub = stub
 }
 
-func (fake *FakeInquisitor) NewOrgServiceReturns(result1 *query.OrgService) {
-	fake.newOrgServiceMutex.Lock()
-	defer fake.newOrgServiceMutex.Unlock()
-	fake.NewOrgServiceStub = nil
-	fake.newOrgServiceReturns = struct {
-		result1 *query.OrgService
-	}{result1}
+func (fake *FakeInquisitor) GetManyServiceInstancesByGuidArgsForCall(i int) []string {
+	fake.getManyServiceInstancesByGuidMutex.RLock()
+	defer fake.getManyServiceInstancesByGuidMutex.RUnlock()
+	argsForCall := fake.getManyServiceInstancesByGuidArgsForCall[i]
+	return argsForCall.arg1
 }
 
-func (fake *FakeInquisitor) NewOrgServiceReturnsOnCall(i int, result1 *query.OrgService) {
-	fake.newOrgServiceMutex.Lock()
-	defer fake.newOrgServiceMutex.Unlock()
-	fake.NewOrgServiceStub = nil
-	if fake.newOrgServiceReturnsOnCall == nil {
-		fake.newOrgServiceReturnsOnCall = make(map[int]struct {
-			result1 *query.OrgService
+func (fake *FakeInquisitor) GetManyServiceInstancesByGuidReturns(result1 query.ServiceInstanceMap, result2 error) {
+	fake.getManyServiceInstancesByGuidMutex.Lock()
+	defer fake.getManyServiceInstancesByGuidMutex.Unlock()
+	fake.GetManyServiceInstancesByGuidStub = nil
+	fake.getManyServiceInstancesByGuidReturns = struct {
+		result1 query.ServiceInstanceMap
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetManyServiceInstancesByGuidReturnsOnCall(i int, result1 query.ServiceInstanceMap, result2 error) {
+	fake.getManyServiceInstancesByGuidMutex.Lock()
+	defer fake.getManyServiceInstancesByGuidMutex.Unlock()
+	fake.GetManyServiceInstancesByGuidStub = nil
+	if fake.getManyServiceInstancesByGuidReturnsOnCall == nil {
+		fake.getManyServiceInstancesByGuidReturnsOnCall = make(map[int]struct {
+			result1 query.ServiceInstanceMap
+			result2 error
 		})
 	}
-	fake.newOrgServiceReturnsOnCall[i] = struct {
-		result1 *query.OrgService
-	}{result1}
+	fake.getManyServiceInstancesByGuidReturnsOnCall[i] = struct {
+		result1 query.ServiceInstanceMap
+		result2 error
+	}{result1, result2}
 }
 
-func (fake *FakeInquisitor) NewServiceBindingService() *query.ServiceBindingService {
-	fake.newServiceBindingServiceMutex.Lock()
-	ret, specificReturn := fake.newServiceBindingServiceReturnsOnCall[len(fake.newServiceBindingServiceArgsForCall)]
-	fake.newServiceBindingServiceArgsForCall = append(fake.newServiceBindingServiceArgsForCall, struct {
-	}{})
-	fake.recordInvocation("NewServiceBindingService", []interface{}{})
-	fake.newServiceBindingServiceMutex.Unlock()
-	if fake.NewServiceBindingServiceStub != nil {
-		return fake.NewServiceBindingServiceStub()
+func (fake *FakeInquisitor) GetManySpacesByGuid(arg1 ...string) (query.SpaceMap, error) {
+	fake.getManySpacesByGuidMutex.Lock()
+	ret, specificReturn := fake.getManySpacesByGuidReturnsOnCall[len(fake.getManySpacesByGuidArgsForCall)]
+	fake.getManySpacesByGuidArgsForCall = append(fake.getManySpacesByGuidArgsForCall, struct {
+		arg1 []string
+	}{arg1})
+	fake.recordInvocation("GetManySpacesByGuid", []interface{}{arg1})
+	fake.getManySpacesByGuidMutex.Unlock()
+	if fake.GetManySpacesByGuidStub != nil {
+		return fake.GetManySpacesByGuidStub(arg1...)
 	}
 	if specificReturn {
-		return ret.result1
+		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.newServiceBindingServiceReturns
-	return fakeReturns.result1
+	fakeReturns := fake.getManySpacesByGuidReturns
+	return fakeReturns.result1, fakeReturns.result2
 }
 
-func (fake *FakeInquisitor) NewServiceBindingServiceCallCount() int {
-	fake.newServiceBindingServiceMutex.RLock()
-	defer fake.newServiceBindingServiceMutex.RUnlock()
-	return len(fake.newServiceBindingServiceArgsForCall)
+func (fake *FakeInquisitor) GetManySpacesByGuidCallCount() int {
+	fake.getManySpacesByGuidMutex.RLock()
+	defer fake.getManySpacesByGuidMutex.RUnlock()
+	return len(fake.getManySpacesByGuidArgsForCall)
 }
 
-func (fake *FakeInquisitor) NewServiceBindingServiceCalls(stub func() *query.ServiceBindingService) {
-	fake.newServiceBindingServiceMutex.Lock()
-	defer fake.newServiceBindingServiceMutex.Unlock()
-	fake.NewServiceBindingServiceStub = stub
+func (fake *FakeInquisitor) GetManySpacesByGuidCalls(stub func(...string) (query.SpaceMap, error)) {
+	fake.getManySpacesByGuidMutex.Lock()
+	defer fake.getManySpacesByGuidMutex.Unlock()
+	fake.GetManySpacesByGuidStub = stub
 }
 
-func (fake *FakeInquisitor) NewServiceBindingServiceReturns(result1 *query.ServiceBindingService) {
-	fake.newServiceBindingServiceMutex.Lock()
-	defer fake.newServiceBindingServiceMutex.Unlock()
-	fake.NewServiceBindingServiceStub = nil
-	fake.newServiceBindingServiceReturns = struct {
-		result1 *query.ServiceBindingService
-	}{result1}
+func (fake *FakeInquisitor) GetManySpacesByGuidArgsForCall(i int) []string {
+	fake.getManySpacesByGuidMutex.RLock()
+	defer fake.getManySpacesByGuidMutex.RUnlock()
+	argsForCall := fake.getManySpacesByGuidArgsForCall[i]
+	return argsForCall.arg1
 }
 
-func (fake *FakeInquisitor) NewServiceBindingServiceReturnsOnCall(i int, result1 *query.ServiceBindingService) {
-	fake.newServiceBindingServiceMutex.Lock()
-	defer fake.newServiceBindingServiceMutex.Unlock()
-	fake.NewServiceBindingServiceStub = nil
-	if fake.newServiceBindingServiceReturnsOnCall == nil {
-		fake.newServiceBindingServiceReturnsOnCall = make(map[int]struct {
-			result1 *query.ServiceBindingService
+func (fake *FakeInquisitor) GetManySpacesByGuidReturns(result1 query.SpaceMap, result2 error) {
+	fake.getManySpacesByGuidMutex.Lock()
+	defer fake.getManySpacesByGuidMutex.Unlock()
+	fake.GetManySpacesByGuidStub = nil
+	fake.getManySpacesByGuidReturns = struct {
+		result1 query.SpaceMap
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetManySpacesByGuidReturnsOnCall(i int, result1 query.SpaceMap, result2 error) {
+	fake.getManySpacesByGuidMutex.Lock()
+	defer fake.getManySpacesByGuidMutex.Unlock()
+	fake.GetManySpacesByGuidStub = nil
+	if fake.getManySpacesByGuidReturnsOnCall == nil {
+		fake.getManySpacesByGuidReturnsOnCall = make(map[int]struct {
+			result1 query.SpaceMap
+			result2 error
 		})
 	}
-	fake.newServiceBindingServiceReturnsOnCall[i] = struct {
-		result1 *query.ServiceBindingService
-	}{result1}
+	fake.getManySpacesByGuidReturnsOnCall[i] = struct {
+		result1 query.SpaceMap
+		result2 error
+	}{result1, result2}
 }
 
-func (fake *FakeInquisitor) NewServiceInstanceService() *query.ServiceInstanceService {
-	fake.newServiceInstanceServiceMutex.Lock()
-	ret, specificReturn := fake.newServiceInstanceServiceReturnsOnCall[len(fake.newServiceInstanceServiceArgsForCall)]
-	fake.newServiceInstanceServiceArgsForCall = append(fake.newServiceInstanceServiceArgsForCall, struct {
-	}{})
-	fake.recordInvocation("NewServiceInstanceService", []interface{}{})
-	fake.newServiceInstanceServiceMutex.Unlock()
-	if fake.NewServiceInstanceServiceStub != nil {
-		return fake.NewServiceInstanceServiceStub()
+func (fake *FakeInquisitor) GetOrgByGuid(arg1 string) (*cfclient.Org, error) {
+	fake.getOrgByGuidMutex.Lock()
+	ret, specificReturn := fake.getOrgByGuidReturnsOnCall[len(fake.getOrgByGuidArgsForCall)]
+	fake.getOrgByGuidArgsForCall = append(fake.getOrgByGuidArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	fake.recordInvocation("GetOrgByGuid", []interface{}{arg1})
+	fake.getOrgByGuidMutex.Unlock()
+	if fake.GetOrgByGuidStub != nil {
+		return fake.GetOrgByGuidStub(arg1)
 	}
 	if specificReturn {
-		return ret.result1
+		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.newServiceInstanceServiceReturns
-	return fakeReturns.result1
+	fakeReturns := fake.getOrgByGuidReturns
+	return fakeReturns.result1, fakeReturns.result2
 }
 
-func (fake *FakeInquisitor) NewServiceInstanceServiceCallCount() int {
-	fake.newServiceInstanceServiceMutex.RLock()
-	defer fake.newServiceInstanceServiceMutex.RUnlock()
-	return len(fake.newServiceInstanceServiceArgsForCall)
+func (fake *FakeInquisitor) GetOrgByGuidCallCount() int {
+	fake.getOrgByGuidMutex.RLock()
+	defer fake.getOrgByGuidMutex.RUnlock()
+	return len(fake.getOrgByGuidArgsForCall)
 }
 
-func (fake *FakeInquisitor) NewServiceInstanceServiceCalls(stub func() *query.ServiceInstanceService) {
-	fake.newServiceInstanceServiceMutex.Lock()
-	defer fake.newServiceInstanceServiceMutex.Unlock()
-	fake.NewServiceInstanceServiceStub = stub
+func (fake *FakeInquisitor) GetOrgByGuidCalls(stub func(string) (*cfclient.Org, error)) {
+	fake.getOrgByGuidMutex.Lock()
+	defer fake.getOrgByGuidMutex.Unlock()
+	fake.GetOrgByGuidStub = stub
 }
 
-func (fake *FakeInquisitor) NewServiceInstanceServiceReturns(result1 *query.ServiceInstanceService) {
-	fake.newServiceInstanceServiceMutex.Lock()
-	defer fake.newServiceInstanceServiceMutex.Unlock()
-	fake.NewServiceInstanceServiceStub = nil
-	fake.newServiceInstanceServiceReturns = struct {
-		result1 *query.ServiceInstanceService
-	}{result1}
+func (fake *FakeInquisitor) GetOrgByGuidArgsForCall(i int) string {
+	fake.getOrgByGuidMutex.RLock()
+	defer fake.getOrgByGuidMutex.RUnlock()
+	argsForCall := fake.getOrgByGuidArgsForCall[i]
+	return argsForCall.arg1
 }
 
-func (fake *FakeInquisitor) NewServiceInstanceServiceReturnsOnCall(i int, result1 *query.ServiceInstanceService) {
-	fake.newServiceInstanceServiceMutex.Lock()
-	defer fake.newServiceInstanceServiceMutex.Unlock()
-	fake.NewServiceInstanceServiceStub = nil
-	if fake.newServiceInstanceServiceReturnsOnCall == nil {
-		fake.newServiceInstanceServiceReturnsOnCall = make(map[int]struct {
-			result1 *query.ServiceInstanceService
+func (fake *FakeInquisitor) GetOrgByGuidReturns(result1 *cfclient.Org, result2 error) {
+	fake.getOrgByGuidMutex.Lock()
+	defer fake.getOrgByGuidMutex.Unlock()
+	fake.GetOrgByGuidStub = nil
+	fake.getOrgByGuidReturns = struct {
+		result1 *cfclient.Org
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetOrgByGuidReturnsOnCall(i int, result1 *cfclient.Org, result2 error) {
+	fake.getOrgByGuidMutex.Lock()
+	defer fake.getOrgByGuidMutex.Unlock()
+	fake.GetOrgByGuidStub = nil
+	if fake.getOrgByGuidReturnsOnCall == nil {
+		fake.getOrgByGuidReturnsOnCall = make(map[int]struct {
+			result1 *cfclient.Org
+			result2 error
 		})
 	}
-	fake.newServiceInstanceServiceReturnsOnCall[i] = struct {
-		result1 *query.ServiceInstanceService
-	}{result1}
+	fake.getOrgByGuidReturnsOnCall[i] = struct {
+		result1 *cfclient.Org
+		result2 error
+	}{result1, result2}
 }
 
-func (fake *FakeInquisitor) NewSpaceService() *query.SpaceService {
-	fake.newSpaceServiceMutex.Lock()
-	ret, specificReturn := fake.newSpaceServiceReturnsOnCall[len(fake.newSpaceServiceArgsForCall)]
-	fake.newSpaceServiceArgsForCall = append(fake.newSpaceServiceArgsForCall, struct {
+func (fake *FakeInquisitor) GetOrgMap() (query.OrgMap, error) {
+	fake.getOrgMapMutex.Lock()
+	ret, specificReturn := fake.getOrgMapReturnsOnCall[len(fake.getOrgMapArgsForCall)]
+	fake.getOrgMapArgsForCall = append(fake.getOrgMapArgsForCall, struct {
 	}{})
-	fake.recordInvocation("NewSpaceService", []interface{}{})
-	fake.newSpaceServiceMutex.Unlock()
-	if fake.NewSpaceServiceStub != nil {
-		return fake.NewSpaceServiceStub()
+	fake.recordInvocation("GetOrgMap", []interface{}{})
+	fake.getOrgMapMutex.Unlock()
+	if fake.GetOrgMapStub != nil {
+		return fake.GetOrgMapStub()
 	}
 	if specificReturn {
-		return ret.result1
+		return ret.result1, ret.result2
 	}
-	fakeReturns := fake.newSpaceServiceReturns
-	return fakeReturns.result1
+	fakeReturns := fake.getOrgMapReturns
+	return fakeReturns.result1, fakeReturns.result2
 }
 
-func (fake *FakeInquisitor) NewSpaceServiceCallCount() int {
-	fake.newSpaceServiceMutex.RLock()
-	defer fake.newSpaceServiceMutex.RUnlock()
-	return len(fake.newSpaceServiceArgsForCall)
+func (fake *FakeInquisitor) GetOrgMapCallCount() int {
+	fake.getOrgMapMutex.RLock()
+	defer fake.getOrgMapMutex.RUnlock()
+	return len(fake.getOrgMapArgsForCall)
 }
 
-func (fake *FakeInquisitor) NewSpaceServiceCalls(stub func() *query.SpaceService) {
-	fake.newSpaceServiceMutex.Lock()
-	defer fake.newSpaceServiceMutex.Unlock()
-	fake.NewSpaceServiceStub = stub
+func (fake *FakeInquisitor) GetOrgMapCalls(stub func() (query.OrgMap, error)) {
+	fake.getOrgMapMutex.Lock()
+	defer fake.getOrgMapMutex.Unlock()
+	fake.GetOrgMapStub = stub
 }
 
-func (fake *FakeInquisitor) NewSpaceServiceReturns(result1 *query.SpaceService) {
-	fake.newSpaceServiceMutex.Lock()
-	defer fake.newSpaceServiceMutex.Unlock()
-	fake.NewSpaceServiceStub = nil
-	fake.newSpaceServiceReturns = struct {
-		result1 *query.SpaceService
-	}{result1}
+func (fake *FakeInquisitor) GetOrgMapReturns(result1 query.OrgMap, result2 error) {
+	fake.getOrgMapMutex.Lock()
+	defer fake.getOrgMapMutex.Unlock()
+	fake.GetOrgMapStub = nil
+	fake.getOrgMapReturns = struct {
+		result1 query.OrgMap
+		result2 error
+	}{result1, result2}
 }
 
-func (fake *FakeInquisitor) NewSpaceServiceReturnsOnCall(i int, result1 *query.SpaceService) {
-	fake.newSpaceServiceMutex.Lock()
-	defer fake.newSpaceServiceMutex.Unlock()
-	fake.NewSpaceServiceStub = nil
-	if fake.newSpaceServiceReturnsOnCall == nil {
-		fake.newSpaceServiceReturnsOnCall = make(map[int]struct {
-			result1 *query.SpaceService
+func (fake *FakeInquisitor) GetOrgMapReturnsOnCall(i int, result1 query.OrgMap, result2 error) {
+	fake.getOrgMapMutex.Lock()
+	defer fake.getOrgMapMutex.Unlock()
+	fake.GetOrgMapStub = nil
+	if fake.getOrgMapReturnsOnCall == nil {
+		fake.getOrgMapReturnsOnCall = make(map[int]struct {
+			result1 query.OrgMap
+			result2 error
 		})
 	}
-	fake.newSpaceServiceReturnsOnCall[i] = struct {
-		result1 *query.SpaceService
-	}{result1}
+	fake.getOrgMapReturnsOnCall[i] = struct {
+		result1 query.OrgMap
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetServiceBindingByGuid(arg1 string) (*cfclient.ServiceBinding, error) {
+	fake.getServiceBindingByGuidMutex.Lock()
+	ret, specificReturn := fake.getServiceBindingByGuidReturnsOnCall[len(fake.getServiceBindingByGuidArgsForCall)]
+	fake.getServiceBindingByGuidArgsForCall = append(fake.getServiceBindingByGuidArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	fake.recordInvocation("GetServiceBindingByGuid", []interface{}{arg1})
+	fake.getServiceBindingByGuidMutex.Unlock()
+	if fake.GetServiceBindingByGuidStub != nil {
+		return fake.GetServiceBindingByGuidStub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getServiceBindingByGuidReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeInquisitor) GetServiceBindingByGuidCallCount() int {
+	fake.getServiceBindingByGuidMutex.RLock()
+	defer fake.getServiceBindingByGuidMutex.RUnlock()
+	return len(fake.getServiceBindingByGuidArgsForCall)
+}
+
+func (fake *FakeInquisitor) GetServiceBindingByGuidCalls(stub func(string) (*cfclient.ServiceBinding, error)) {
+	fake.getServiceBindingByGuidMutex.Lock()
+	defer fake.getServiceBindingByGuidMutex.Unlock()
+	fake.GetServiceBindingByGuidStub = stub
+}
+
+func (fake *FakeInquisitor) GetServiceBindingByGuidArgsForCall(i int) string {
+	fake.getServiceBindingByGuidMutex.RLock()
+	defer fake.getServiceBindingByGuidMutex.RUnlock()
+	argsForCall := fake.getServiceBindingByGuidArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeInquisitor) GetServiceBindingByGuidReturns(result1 *cfclient.ServiceBinding, result2 error) {
+	fake.getServiceBindingByGuidMutex.Lock()
+	defer fake.getServiceBindingByGuidMutex.Unlock()
+	fake.GetServiceBindingByGuidStub = nil
+	fake.getServiceBindingByGuidReturns = struct {
+		result1 *cfclient.ServiceBinding
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetServiceBindingByGuidReturnsOnCall(i int, result1 *cfclient.ServiceBinding, result2 error) {
+	fake.getServiceBindingByGuidMutex.Lock()
+	defer fake.getServiceBindingByGuidMutex.Unlock()
+	fake.GetServiceBindingByGuidStub = nil
+	if fake.getServiceBindingByGuidReturnsOnCall == nil {
+		fake.getServiceBindingByGuidReturnsOnCall = make(map[int]struct {
+			result1 *cfclient.ServiceBinding
+			result2 error
+		})
+	}
+	fake.getServiceBindingByGuidReturnsOnCall[i] = struct {
+		result1 *cfclient.ServiceBinding
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetServiceBindingMap() (query.ServiceBindingMap, error) {
+	fake.getServiceBindingMapMutex.Lock()
+	ret, specificReturn := fake.getServiceBindingMapReturnsOnCall[len(fake.getServiceBindingMapArgsForCall)]
+	fake.getServiceBindingMapArgsForCall = append(fake.getServiceBindingMapArgsForCall, struct {
+	}{})
+	fake.recordInvocation("GetServiceBindingMap", []interface{}{})
+	fake.getServiceBindingMapMutex.Unlock()
+	if fake.GetServiceBindingMapStub != nil {
+		return fake.GetServiceBindingMapStub()
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getServiceBindingMapReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeInquisitor) GetServiceBindingMapCallCount() int {
+	fake.getServiceBindingMapMutex.RLock()
+	defer fake.getServiceBindingMapMutex.RUnlock()
+	return len(fake.getServiceBindingMapArgsForCall)
+}
+
+func (fake *FakeInquisitor) GetServiceBindingMapCalls(stub func() (query.ServiceBindingMap, error)) {
+	fake.getServiceBindingMapMutex.Lock()
+	defer fake.getServiceBindingMapMutex.Unlock()
+	fake.GetServiceBindingMapStub = stub
+}
+
+func (fake *FakeInquisitor) GetServiceBindingMapReturns(result1 query.ServiceBindingMap, result2 error) {
+	fake.getServiceBindingMapMutex.Lock()
+	defer fake.getServiceBindingMapMutex.Unlock()
+	fake.GetServiceBindingMapStub = nil
+	fake.getServiceBindingMapReturns = struct {
+		result1 query.ServiceBindingMap
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetServiceBindingMapReturnsOnCall(i int, result1 query.ServiceBindingMap, result2 error) {
+	fake.getServiceBindingMapMutex.Lock()
+	defer fake.getServiceBindingMapMutex.Unlock()
+	fake.GetServiceBindingMapStub = nil
+	if fake.getServiceBindingMapReturnsOnCall == nil {
+		fake.getServiceBindingMapReturnsOnCall = make(map[int]struct {
+			result1 query.ServiceBindingMap
+			result2 error
+		})
+	}
+	fake.getServiceBindingMapReturnsOnCall[i] = struct {
+		result1 query.ServiceBindingMap
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetServiceInstanceByGuid(arg1 string) (*cfclient.ServiceInstance, error) {
+	fake.getServiceInstanceByGuidMutex.Lock()
+	ret, specificReturn := fake.getServiceInstanceByGuidReturnsOnCall[len(fake.getServiceInstanceByGuidArgsForCall)]
+	fake.getServiceInstanceByGuidArgsForCall = append(fake.getServiceInstanceByGuidArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	fake.recordInvocation("GetServiceInstanceByGuid", []interface{}{arg1})
+	fake.getServiceInstanceByGuidMutex.Unlock()
+	if fake.GetServiceInstanceByGuidStub != nil {
+		return fake.GetServiceInstanceByGuidStub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getServiceInstanceByGuidReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeInquisitor) GetServiceInstanceByGuidCallCount() int {
+	fake.getServiceInstanceByGuidMutex.RLock()
+	defer fake.getServiceInstanceByGuidMutex.RUnlock()
+	return len(fake.getServiceInstanceByGuidArgsForCall)
+}
+
+func (fake *FakeInquisitor) GetServiceInstanceByGuidCalls(stub func(string) (*cfclient.ServiceInstance, error)) {
+	fake.getServiceInstanceByGuidMutex.Lock()
+	defer fake.getServiceInstanceByGuidMutex.Unlock()
+	fake.GetServiceInstanceByGuidStub = stub
+}
+
+func (fake *FakeInquisitor) GetServiceInstanceByGuidArgsForCall(i int) string {
+	fake.getServiceInstanceByGuidMutex.RLock()
+	defer fake.getServiceInstanceByGuidMutex.RUnlock()
+	argsForCall := fake.getServiceInstanceByGuidArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeInquisitor) GetServiceInstanceByGuidReturns(result1 *cfclient.ServiceInstance, result2 error) {
+	fake.getServiceInstanceByGuidMutex.Lock()
+	defer fake.getServiceInstanceByGuidMutex.Unlock()
+	fake.GetServiceInstanceByGuidStub = nil
+	fake.getServiceInstanceByGuidReturns = struct {
+		result1 *cfclient.ServiceInstance
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetServiceInstanceByGuidReturnsOnCall(i int, result1 *cfclient.ServiceInstance, result2 error) {
+	fake.getServiceInstanceByGuidMutex.Lock()
+	defer fake.getServiceInstanceByGuidMutex.Unlock()
+	fake.GetServiceInstanceByGuidStub = nil
+	if fake.getServiceInstanceByGuidReturnsOnCall == nil {
+		fake.getServiceInstanceByGuidReturnsOnCall = make(map[int]struct {
+			result1 *cfclient.ServiceInstance
+			result2 error
+		})
+	}
+	fake.getServiceInstanceByGuidReturnsOnCall[i] = struct {
+		result1 *cfclient.ServiceInstance
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetServiceInstanceMap() (query.ServiceInstanceMap, error) {
+	fake.getServiceInstanceMapMutex.Lock()
+	ret, specificReturn := fake.getServiceInstanceMapReturnsOnCall[len(fake.getServiceInstanceMapArgsForCall)]
+	fake.getServiceInstanceMapArgsForCall = append(fake.getServiceInstanceMapArgsForCall, struct {
+	}{})
+	fake.recordInvocation("GetServiceInstanceMap", []interface{}{})
+	fake.getServiceInstanceMapMutex.Unlock()
+	if fake.GetServiceInstanceMapStub != nil {
+		return fake.GetServiceInstanceMapStub()
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getServiceInstanceMapReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeInquisitor) GetServiceInstanceMapCallCount() int {
+	fake.getServiceInstanceMapMutex.RLock()
+	defer fake.getServiceInstanceMapMutex.RUnlock()
+	return len(fake.getServiceInstanceMapArgsForCall)
+}
+
+func (fake *FakeInquisitor) GetServiceInstanceMapCalls(stub func() (query.ServiceInstanceMap, error)) {
+	fake.getServiceInstanceMapMutex.Lock()
+	defer fake.getServiceInstanceMapMutex.Unlock()
+	fake.GetServiceInstanceMapStub = stub
+}
+
+func (fake *FakeInquisitor) GetServiceInstanceMapReturns(result1 query.ServiceInstanceMap, result2 error) {
+	fake.getServiceInstanceMapMutex.Lock()
+	defer fake.getServiceInstanceMapMutex.Unlock()
+	fake.GetServiceInstanceMapStub = nil
+	fake.getServiceInstanceMapReturns = struct {
+		result1 query.ServiceInstanceMap
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetServiceInstanceMapReturnsOnCall(i int, result1 query.ServiceInstanceMap, result2 error) {
+	fake.getServiceInstanceMapMutex.Lock()
+	defer fake.getServiceInstanceMapMutex.Unlock()
+	fake.GetServiceInstanceMapStub = nil
+	if fake.getServiceInstanceMapReturnsOnCall == nil {
+		fake.getServiceInstanceMapReturnsOnCall = make(map[int]struct {
+			result1 query.ServiceInstanceMap
+			result2 error
+		})
+	}
+	fake.getServiceInstanceMapReturnsOnCall[i] = struct {
+		result1 query.ServiceInstanceMap
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetSpaceByGuid(arg1 string) (*cfclient.Space, error) {
+	fake.getSpaceByGuidMutex.Lock()
+	ret, specificReturn := fake.getSpaceByGuidReturnsOnCall[len(fake.getSpaceByGuidArgsForCall)]
+	fake.getSpaceByGuidArgsForCall = append(fake.getSpaceByGuidArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	fake.recordInvocation("GetSpaceByGuid", []interface{}{arg1})
+	fake.getSpaceByGuidMutex.Unlock()
+	if fake.GetSpaceByGuidStub != nil {
+		return fake.GetSpaceByGuidStub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getSpaceByGuidReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeInquisitor) GetSpaceByGuidCallCount() int {
+	fake.getSpaceByGuidMutex.RLock()
+	defer fake.getSpaceByGuidMutex.RUnlock()
+	return len(fake.getSpaceByGuidArgsForCall)
+}
+
+func (fake *FakeInquisitor) GetSpaceByGuidCalls(stub func(string) (*cfclient.Space, error)) {
+	fake.getSpaceByGuidMutex.Lock()
+	defer fake.getSpaceByGuidMutex.Unlock()
+	fake.GetSpaceByGuidStub = stub
+}
+
+func (fake *FakeInquisitor) GetSpaceByGuidArgsForCall(i int) string {
+	fake.getSpaceByGuidMutex.RLock()
+	defer fake.getSpaceByGuidMutex.RUnlock()
+	argsForCall := fake.getSpaceByGuidArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeInquisitor) GetSpaceByGuidReturns(result1 *cfclient.Space, result2 error) {
+	fake.getSpaceByGuidMutex.Lock()
+	defer fake.getSpaceByGuidMutex.Unlock()
+	fake.GetSpaceByGuidStub = nil
+	fake.getSpaceByGuidReturns = struct {
+		result1 *cfclient.Space
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetSpaceByGuidReturnsOnCall(i int, result1 *cfclient.Space, result2 error) {
+	fake.getSpaceByGuidMutex.Lock()
+	defer fake.getSpaceByGuidMutex.Unlock()
+	fake.GetSpaceByGuidStub = nil
+	if fake.getSpaceByGuidReturnsOnCall == nil {
+		fake.getSpaceByGuidReturnsOnCall = make(map[int]struct {
+			result1 *cfclient.Space
+			result2 error
+		})
+	}
+	fake.getSpaceByGuidReturnsOnCall[i] = struct {
+		result1 *cfclient.Space
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetSpaceMap() (query.SpaceMap, error) {
+	fake.getSpaceMapMutex.Lock()
+	ret, specificReturn := fake.getSpaceMapReturnsOnCall[len(fake.getSpaceMapArgsForCall)]
+	fake.getSpaceMapArgsForCall = append(fake.getSpaceMapArgsForCall, struct {
+	}{})
+	fake.recordInvocation("GetSpaceMap", []interface{}{})
+	fake.getSpaceMapMutex.Unlock()
+	if fake.GetSpaceMapStub != nil {
+		return fake.GetSpaceMapStub()
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getSpaceMapReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeInquisitor) GetSpaceMapCallCount() int {
+	fake.getSpaceMapMutex.RLock()
+	defer fake.getSpaceMapMutex.RUnlock()
+	return len(fake.getSpaceMapArgsForCall)
+}
+
+func (fake *FakeInquisitor) GetSpaceMapCalls(stub func() (query.SpaceMap, error)) {
+	fake.getSpaceMapMutex.Lock()
+	defer fake.getSpaceMapMutex.Unlock()
+	fake.GetSpaceMapStub = stub
+}
+
+func (fake *FakeInquisitor) GetSpaceMapReturns(result1 query.SpaceMap, result2 error) {
+	fake.getSpaceMapMutex.Lock()
+	defer fake.getSpaceMapMutex.Unlock()
+	fake.GetSpaceMapStub = nil
+	fake.getSpaceMapReturns = struct {
+		result1 query.SpaceMap
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetSpaceMapReturnsOnCall(i int, result1 query.SpaceMap, result2 error) {
+	fake.getSpaceMapMutex.Lock()
+	defer fake.getSpaceMapMutex.Unlock()
+	fake.GetSpaceMapStub = nil
+	if fake.getSpaceMapReturnsOnCall == nil {
+		fake.getSpaceMapReturnsOnCall = make(map[int]struct {
+			result1 query.SpaceMap
+			result2 error
+		})
+	}
+	fake.getSpaceMapReturnsOnCall[i] = struct {
+		result1 query.SpaceMap
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *FakeInquisitor) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
-	fake.getAppServiceMutex.RLock()
-	defer fake.getAppServiceMutex.RUnlock()
-	fake.getOrgServiceMutex.RLock()
-	defer fake.getOrgServiceMutex.RUnlock()
-	fake.getServiceMutex.RLock()
-	defer fake.getServiceMutex.RUnlock()
-	fake.getServiceBindingServiceMutex.RLock()
-	defer fake.getServiceBindingServiceMutex.RUnlock()
-	fake.getServiceInstanceServiceMutex.RLock()
-	defer fake.getServiceInstanceServiceMutex.RUnlock()
-	fake.getSpaceServiceMutex.RLock()
-	defer fake.getSpaceServiceMutex.RUnlock()
-	fake.newAppServiceMutex.RLock()
-	defer fake.newAppServiceMutex.RUnlock()
-	fake.newOrgServiceMutex.RLock()
-	defer fake.newOrgServiceMutex.RUnlock()
-	fake.newServiceBindingServiceMutex.RLock()
-	defer fake.newServiceBindingServiceMutex.RUnlock()
-	fake.newServiceInstanceServiceMutex.RLock()
-	defer fake.newServiceInstanceServiceMutex.RUnlock()
-	fake.newSpaceServiceMutex.RLock()
-	defer fake.newSpaceServiceMutex.RUnlock()
+	fake.getAllAppsMutex.RLock()
+	defer fake.getAllAppsMutex.RUnlock()
+	fake.getAllOrgsMutex.RLock()
+	defer fake.getAllOrgsMutex.RUnlock()
+	fake.getAllServiceBindingsMutex.RLock()
+	defer fake.getAllServiceBindingsMutex.RUnlock()
+	fake.getAllServiceInstancesMutex.RLock()
+	defer fake.getAllServiceInstancesMutex.RUnlock()
+	fake.getAllSpacesMutex.RLock()
+	defer fake.getAllSpacesMutex.RUnlock()
+	fake.getAppByGuidMutex.RLock()
+	defer fake.getAppByGuidMutex.RUnlock()
+	fake.getAppMapMutex.RLock()
+	defer fake.getAppMapMutex.RUnlock()
+	fake.getManyAppsByGuidMutex.RLock()
+	defer fake.getManyAppsByGuidMutex.RUnlock()
+	fake.getManyOrgsByGuidMutex.RLock()
+	defer fake.getManyOrgsByGuidMutex.RUnlock()
+	fake.getManyServiceBindingsByGuidMutex.RLock()
+	defer fake.getManyServiceBindingsByGuidMutex.RUnlock()
+	fake.getManyServiceInstancesByGuidMutex.RLock()
+	defer fake.getManyServiceInstancesByGuidMutex.RUnlock()
+	fake.getManySpacesByGuidMutex.RLock()
+	defer fake.getManySpacesByGuidMutex.RUnlock()
+	fake.getOrgByGuidMutex.RLock()
+	defer fake.getOrgByGuidMutex.RUnlock()
+	fake.getOrgMapMutex.RLock()
+	defer fake.getOrgMapMutex.RUnlock()
+	fake.getServiceBindingByGuidMutex.RLock()
+	defer fake.getServiceBindingByGuidMutex.RUnlock()
+	fake.getServiceBindingMapMutex.RLock()
+	defer fake.getServiceBindingMapMutex.RUnlock()
+	fake.getServiceInstanceByGuidMutex.RLock()
+	defer fake.getServiceInstanceByGuidMutex.RUnlock()
+	fake.getServiceInstanceMapMutex.RLock()
+	defer fake.getServiceInstanceMapMutex.RUnlock()
+	fake.getSpaceByGuidMutex.RLock()
+	defer fake.getSpaceByGuidMutex.RUnlock()
+	fake.getSpaceMapMutex.RLock()
+	defer fake.getSpaceMapMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value
