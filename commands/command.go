@@ -34,7 +34,7 @@ type Command interface {
 
 	Execute([]string) error
 
-	Run(*Options, *query.Inquisitor) (interface{}, error)
+	Run(*Options, query.Inquisitor) (interface{}, error)
 }
 
 type CommandDefaults struct {}

@@ -180,11 +180,11 @@ func (s *AppService) GetAllApps() (Apps, error) {
 	return sis, nil
 }
 
-func (i *Inquisitor) NewAppService() *AppService {
+func (i *inquisitor) NewAppService() *AppService {
 	return NewAppService(i.CFClient)
 }
 
-func (i *Inquisitor) GetAppService() *AppService {
+func (i *inquisitor) GetAppService() *AppService {
 	class := &AppService{}
 	service := i.GetService(class.Key())
 

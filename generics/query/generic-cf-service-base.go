@@ -179,11 +179,11 @@ func (s *ItemService) GetAllItems() (Items, error) {
 	return sis, nil
 }
 
-func (i *Inquisitor) NewItemService() *ItemService {
+func (i *inquisitor) NewItemService() *ItemService {
 	return NewItemService(i.CFClient)
 }
 
-func (i *Inquisitor) GetItemService() *ItemService {
+func (i *inquisitor) GetItemService() *ItemService {
 	class := &ItemService{}
 	service := i.GetService(class.Key())
 

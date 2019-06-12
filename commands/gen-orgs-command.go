@@ -20,7 +20,7 @@ func (c *OrgsCommand) Execute([]string) error {
 	return workerFactory.Go(c)
 }
 
-func (c *OrgsCommand) Run(o *Options, i *query.Inquisitor) (interface{}, error) {
+func (c *OrgsCommand) Run(o *Options, i query.Inquisitor) (interface{}, error) {
 	service := i.GetOrgService()
 
 	a, err := service.GetAllOrgs()

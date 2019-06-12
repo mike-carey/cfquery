@@ -15,7 +15,7 @@ var _ = Describe("Space Queries", func() {
 
 	var (
 		fakeClient *fakes.FakeCFClient
-		inquisitor *Inquisitor
+		inquisitor Inquisitor
 		spaces Spaces
 	)
 

@@ -3,12 +3,12 @@ package query_test
 import (
 	"reflect"
 
-	"github.com/mike-carey/cfquery/cf/fakes"
-
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
 	. "github.com/mike-carey/cfquery/query"
+
+	fakes "github.com/mike-carey/cfquery/cf/fakes"
 )
 
 type FooService struct {}
@@ -17,7 +17,7 @@ var _ = Describe("Inquisitor", func() {
 
 	var (
 		fakeClient *fakes.FakeCFClient
-		inquisitor *Inquisitor
+		inquisitor Inquisitor
 	)
 
 	BeforeEach(func() {

@@ -51,6 +51,7 @@ function patch() {
     sed -i.bak 's/Cfclient//g' $file
 
     if [[ $inject_test_imports == true ]]; then
+      echo "Injecting test imports into $file"
       for import in '. "github.com/onsi/ginkgo"' '. "github.com/onsi/gomega"' '. "'"$pkg"'"'; do
         sed -i.bak 's|\(import (\)|\1\
 '$'\t'"$import"'|g' $file

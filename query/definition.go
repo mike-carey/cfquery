@@ -47,3 +47,6 @@ package query
 
 //go:generate ../generics/patch.sh -- gen-*.go
 //go:generate ../generics/patch.sh --inject-test-imports -- gen-*_test.go
+
+//go:generate ./generate-interface.sh --pkg query --interface Inquisitor --out gen-inquisitor.go --ignore "*_test.go" -- inquisitor inquisitor.go gen-*.go
+//go:generate counterfeiter -o fakes/fake_inquisitor.go gen-inquisitor.go Inquisitor

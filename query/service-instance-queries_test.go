@@ -15,7 +15,7 @@ var _ = Describe("Service Instance Queries", func() {
 
 	var (
 		fakeClient *fakes.FakeCFClient
-		inquisitor *Inquisitor
+		inquisitor Inquisitor
 		serviceInstances ServiceInstances
 		spaces SpaceMap
 	)

@@ -6,24 +6,23 @@ import (
 
 	. "github.com/mike-carey/cfquery/commands"
 
-	fakes "github.com/mike-carey/cfquery/commands/fakes"
-
-	"github.com/mike-carey/cfquery/query"
+	cmdfakes "github.com/mike-carey/cfquery/commands/fakes"
+	queryfakes "github.com/mike-carey/cfquery/query/fakes"
 )
 
 var _ = Describe("Worker", func() {
 
 	var (
-		fakeCommand *fakes.FakeCommand
+		fakeCommand *cmdfakes.FakeCommand
 		options *Options
-		inquisitor *query.Inquisitor
+		inquisitor *queryfakes.FakeInquisitor
 		worker *Worker
 	)
 
 	BeforeEach(func() {
-		fakeCommand = new(fakes.FakeCommand)
+		fakeCommand = new(cmdfakes.FakeCommand)
 		options = &Options{}
-		inquisitor = &query.Inquisitor{}
+		inquisitor = new(queryfakes.FakeInquisitor)
 		worker = &Worker{
 			Command: fakeCommand,
 			Options: options,

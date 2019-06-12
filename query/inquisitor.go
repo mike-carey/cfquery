@@ -14,29 +14,29 @@ type Service interface {
 	ServiceName() string
 }
 
-type Inquisitor struct {
+type inquisitor struct {
 	CFClient cf.CFClient
 	Services map[string]Service
 	mutex       *sync.Mutex
 }
 
-func NewInquisitor(cfClient cf.CFClient) *Inquisitor {
-	return &Inquisitor{
+func NewInquisitor(cfClient cf.CFClient) Inquisitor {
+	return &inquisitor{
 		CFClient: cfClient,
 		Services: make(map[string]Service, 0),
 		mutex: &sync.Mutex{},
 	}
 }
 
-func (i *Inquisitor) lock() {
+func (i *inquisitor) lock() {
 	i.mutex.Lock()
 }
 
-func (i *Inquisitor) unlock() {
+func (i *inquisitor) unlock() {
 	i.mutex.Unlock()
 }
 
-func (i *Inquisitor) GetService(name string) Service {
+func (i *inquisitor) GetService(name string) Service {
 	if service, ok := i.Services[name]; ok {
 		return service
 	}

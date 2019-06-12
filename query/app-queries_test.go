@@ -15,7 +15,7 @@ var _ = Describe("App Queries", func() {
 
 	var (
 		fakeClient *fakes.FakeCFClient
-		inquisitor *Inquisitor
+		inquisitor Inquisitor
 		apps Apps
 		spaces SpaceMap
 	)

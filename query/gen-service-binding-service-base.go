@@ -180,11 +180,11 @@ func (s *ServiceBindingService) GetAllServiceBindings() (ServiceBindings, error)
 	return sis, nil
 }
 
-func (i *Inquisitor) NewServiceBindingService() *ServiceBindingService {
+func (i *inquisitor) NewServiceBindingService() *ServiceBindingService {
 	return NewServiceBindingService(i.CFClient)
 }
 
-func (i *Inquisitor) GetServiceBindingService() *ServiceBindingService {
+func (i *inquisitor) GetServiceBindingService() *ServiceBindingService {
 	class := &ServiceBindingService{}
 	service := i.GetService(class.Key())
 

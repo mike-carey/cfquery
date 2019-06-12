@@ -17,7 +17,7 @@ import (
 type Worker struct {
 	Command Command
 	Options *Options
-	Inquisitor *query.Inquisitor
+	Inquisitor query.Inquisitor
 }
 
 func (w *Worker) Validate() error {

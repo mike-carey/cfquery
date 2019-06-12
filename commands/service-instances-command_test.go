@@ -18,7 +18,7 @@ var _ = Describe("AppsCommand", func() {
 
 	var (
 		fakeClient *fakes.FakeCFClient
-		inquisitor *query.Inquisitor
+		inquisitor query.Inquisitor
 
 		serviceInstances []cfclient.ServiceInstance
 		// apps []cfclient.App

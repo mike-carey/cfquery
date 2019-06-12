@@ -20,7 +20,7 @@ func (c *SpacesCommand) Execute([]string) error {
 	return workerFactory.Go(c)
 }
 
-func (c *SpacesCommand) Run(o *Options, i *query.Inquisitor) (interface{}, error) {
+func (c *SpacesCommand) Run(o *Options, i query.Inquisitor) (interface{}, error) {
 	service := i.GetSpaceService()
 
 	a, err := service.GetAllSpaces()
