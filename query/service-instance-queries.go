@@ -1,7 +1,7 @@
 package query
 
 import (
-	cfclient "github.com/cloudfoundry-community/go-cfclient"
+	"github.com/cloudfoundry-community/go-cfclient"
 )
 
 func (g ServiceInstances) GroupBySpace(_ Inquisitor) (ServiceInstanceGroup, error) {

@@ -28,4 +28,9 @@ type Inquisitor interface {
 	GetSpaceByGuid(guid string) (*cfclient.Space, error)
 	GetManySpacesByGuid(guids ...string) (SpaceMap, error)
 	GetAllSpaces() (Spaces, error)
+	GetStackMap() (StackMap, error)
+	GetStackByGuid(guid string) (*cfclient.Stack, error)
+	GetManyStacksByGuid(guids ...string) (StackMap, error)
+	GetAllStacks() (Stacks, error)
+	GetStackByName(name string) (cfclient.Stack, error)
 }

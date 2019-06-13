@@ -45,8 +45,20 @@ package query
 //go:generate genny -in=../generics/query/generic-cf-service-base.go -out=gen-service-instance-service-base.go -pkg query gen "Item=cfclient.ServiceInstance"
 //go:generate genny -in=../generics/query/generic-cf-service-base_test.go -out=gen-service-instance-service-base_test.go -pkg query_test gen "Item=cfclient.ServiceInstance"
 
-//go:generate ../generics/patch.sh -- gen-*.go
+//**
+// Stack
+//*
+//go:generate genny -in=../generics/query/generic-types.go -out=gen-stack-types.go -pkg query gen "Item=cfclient.Stack"
+//go:generate genny -in=../generics/query/generic-group-by.go -out=gen-stack-group-by.go -pkg query gen "Item=cfclient.Stack"
+//go:generate genny -in=../generics/query/generic-filter-by.go -out=gen-stack-filter-by.go -pkg query gen "Item=cfclient.Stack"
+//go:generate genny -in=../generics/query/generic-cf-service-base.go -out=gen-stack-service-base.go -pkg query gen "Item=cfclient.Stack"
+//go:generate genny -in=../generics/query/generic-cf-service-base_test.go -out=gen-stack-service-base_test.go -pkg query_test gen "Item=cfclient.Stack"
+
+//go:generate ../generics/patch.sh --ignore gen-inquisitor.go -- gen-*.go
 //go:generate ../generics/patch.sh --inject-test-imports -- gen-*_test.go
 
-//go:generate ./generate-interface.sh --pkg query --interface Inquisitor --out gen-inquisitor.go --ignore "*_test.go" -- inquisitor inquisitor.go gen-*.go
+// TODO: Remove this workaround once merged: https://github.com/cloudfoundry-community/go-cfclient/pull/234
+//go:generate ./workaround-stack.sh gen-stack-service-base.go
+
+//go:generate ./generate-interface.sh --pkg query --interface Inquisitor --out gen-inquisitor.go --ignore "*_test.go" -- inquisitor inquisitor.go *.go
 //go:generate counterfeiter -o fakes/fake_inquisitor.go gen-inquisitor.go Inquisitor

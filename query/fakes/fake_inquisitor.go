@@ -69,6 +69,18 @@ type FakeInquisitor struct {
 		result1 query.Spaces
 		result2 error
 	}
+	GetAllStacksStub        func() (query.Stacks, error)
+	getAllStacksMutex       sync.RWMutex
+	getAllStacksArgsForCall []struct {
+	}
+	getAllStacksReturns struct {
+		result1 query.Stacks
+		result2 error
+	}
+	getAllStacksReturnsOnCall map[int]struct {
+		result1 query.Stacks
+		result2 error
+	}
 	GetAppByGuidStub        func(string) (*cfclient.App, error)
 	getAppByGuidMutex       sync.RWMutex
 	getAppByGuidArgsForCall []struct {
@@ -157,6 +169,19 @@ type FakeInquisitor struct {
 	}
 	getManySpacesByGuidReturnsOnCall map[int]struct {
 		result1 query.SpaceMap
+		result2 error
+	}
+	GetManyStacksByGuidStub        func(...string) (query.StackMap, error)
+	getManyStacksByGuidMutex       sync.RWMutex
+	getManyStacksByGuidArgsForCall []struct {
+		arg1 []string
+	}
+	getManyStacksByGuidReturns struct {
+		result1 query.StackMap
+		result2 error
+	}
+	getManyStacksByGuidReturnsOnCall map[int]struct {
+		result1 query.StackMap
 		result2 error
 	}
 	GetOrgByGuidStub        func(string) (*cfclient.Org, error)
@@ -257,6 +282,44 @@ type FakeInquisitor struct {
 	}
 	getSpaceMapReturnsOnCall map[int]struct {
 		result1 query.SpaceMap
+		result2 error
+	}
+	GetStackByGuidStub        func(string) (*cfclient.Stack, error)
+	getStackByGuidMutex       sync.RWMutex
+	getStackByGuidArgsForCall []struct {
+		arg1 string
+	}
+	getStackByGuidReturns struct {
+		result1 *cfclient.Stack
+		result2 error
+	}
+	getStackByGuidReturnsOnCall map[int]struct {
+		result1 *cfclient.Stack
+		result2 error
+	}
+	GetStackByNameStub        func(string) (cfclient.Stack, error)
+	getStackByNameMutex       sync.RWMutex
+	getStackByNameArgsForCall []struct {
+		arg1 string
+	}
+	getStackByNameReturns struct {
+		result1 cfclient.Stack
+		result2 error
+	}
+	getStackByNameReturnsOnCall map[int]struct {
+		result1 cfclient.Stack
+		result2 error
+	}
+	GetStackMapStub        func() (query.StackMap, error)
+	getStackMapMutex       sync.RWMutex
+	getStackMapArgsForCall []struct {
+	}
+	getStackMapReturns struct {
+		result1 query.StackMap
+		result2 error
+	}
+	getStackMapReturnsOnCall map[int]struct {
+		result1 query.StackMap
 		result2 error
 	}
 	invocations      map[string][][]interface{}
@@ -534,6 +597,61 @@ func (fake *FakeInquisitor) GetAllSpacesReturnsOnCall(i int, result1 query.Space
 	}
 	fake.getAllSpacesReturnsOnCall[i] = struct {
 		result1 query.Spaces
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetAllStacks() (query.Stacks, error) {
+	fake.getAllStacksMutex.Lock()
+	ret, specificReturn := fake.getAllStacksReturnsOnCall[len(fake.getAllStacksArgsForCall)]
+	fake.getAllStacksArgsForCall = append(fake.getAllStacksArgsForCall, struct {
+	}{})
+	fake.recordInvocation("GetAllStacks", []interface{}{})
+	fake.getAllStacksMutex.Unlock()
+	if fake.GetAllStacksStub != nil {
+		return fake.GetAllStacksStub()
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getAllStacksReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeInquisitor) GetAllStacksCallCount() int {
+	fake.getAllStacksMutex.RLock()
+	defer fake.getAllStacksMutex.RUnlock()
+	return len(fake.getAllStacksArgsForCall)
+}
+
+func (fake *FakeInquisitor) GetAllStacksCalls(stub func() (query.Stacks, error)) {
+	fake.getAllStacksMutex.Lock()
+	defer fake.getAllStacksMutex.Unlock()
+	fake.GetAllStacksStub = stub
+}
+
+func (fake *FakeInquisitor) GetAllStacksReturns(result1 query.Stacks, result2 error) {
+	fake.getAllStacksMutex.Lock()
+	defer fake.getAllStacksMutex.Unlock()
+	fake.GetAllStacksStub = nil
+	fake.getAllStacksReturns = struct {
+		result1 query.Stacks
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetAllStacksReturnsOnCall(i int, result1 query.Stacks, result2 error) {
+	fake.getAllStacksMutex.Lock()
+	defer fake.getAllStacksMutex.Unlock()
+	fake.GetAllStacksStub = nil
+	if fake.getAllStacksReturnsOnCall == nil {
+		fake.getAllStacksReturnsOnCall = make(map[int]struct {
+			result1 query.Stacks
+			result2 error
+		})
+	}
+	fake.getAllStacksReturnsOnCall[i] = struct {
+		result1 query.Stacks
 		result2 error
 	}{result1, result2}
 }
@@ -967,6 +1085,69 @@ func (fake *FakeInquisitor) GetManySpacesByGuidReturnsOnCall(i int, result1 quer
 	}
 	fake.getManySpacesByGuidReturnsOnCall[i] = struct {
 		result1 query.SpaceMap
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetManyStacksByGuid(arg1 ...string) (query.StackMap, error) {
+	fake.getManyStacksByGuidMutex.Lock()
+	ret, specificReturn := fake.getManyStacksByGuidReturnsOnCall[len(fake.getManyStacksByGuidArgsForCall)]
+	fake.getManyStacksByGuidArgsForCall = append(fake.getManyStacksByGuidArgsForCall, struct {
+		arg1 []string
+	}{arg1})
+	fake.recordInvocation("GetManyStacksByGuid", []interface{}{arg1})
+	fake.getManyStacksByGuidMutex.Unlock()
+	if fake.GetManyStacksByGuidStub != nil {
+		return fake.GetManyStacksByGuidStub(arg1...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getManyStacksByGuidReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeInquisitor) GetManyStacksByGuidCallCount() int {
+	fake.getManyStacksByGuidMutex.RLock()
+	defer fake.getManyStacksByGuidMutex.RUnlock()
+	return len(fake.getManyStacksByGuidArgsForCall)
+}
+
+func (fake *FakeInquisitor) GetManyStacksByGuidCalls(stub func(...string) (query.StackMap, error)) {
+	fake.getManyStacksByGuidMutex.Lock()
+	defer fake.getManyStacksByGuidMutex.Unlock()
+	fake.GetManyStacksByGuidStub = stub
+}
+
+func (fake *FakeInquisitor) GetManyStacksByGuidArgsForCall(i int) []string {
+	fake.getManyStacksByGuidMutex.RLock()
+	defer fake.getManyStacksByGuidMutex.RUnlock()
+	argsForCall := fake.getManyStacksByGuidArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeInquisitor) GetManyStacksByGuidReturns(result1 query.StackMap, result2 error) {
+	fake.getManyStacksByGuidMutex.Lock()
+	defer fake.getManyStacksByGuidMutex.Unlock()
+	fake.GetManyStacksByGuidStub = nil
+	fake.getManyStacksByGuidReturns = struct {
+		result1 query.StackMap
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetManyStacksByGuidReturnsOnCall(i int, result1 query.StackMap, result2 error) {
+	fake.getManyStacksByGuidMutex.Lock()
+	defer fake.getManyStacksByGuidMutex.Unlock()
+	fake.GetManyStacksByGuidStub = nil
+	if fake.getManyStacksByGuidReturnsOnCall == nil {
+		fake.getManyStacksByGuidReturnsOnCall = make(map[int]struct {
+			result1 query.StackMap
+			result2 error
+		})
+	}
+	fake.getManyStacksByGuidReturnsOnCall[i] = struct {
+		result1 query.StackMap
 		result2 error
 	}{result1, result2}
 }
@@ -1443,6 +1624,187 @@ func (fake *FakeInquisitor) GetSpaceMapReturnsOnCall(i int, result1 query.SpaceM
 	}{result1, result2}
 }
 
+func (fake *FakeInquisitor) GetStackByGuid(arg1 string) (*cfclient.Stack, error) {
+	fake.getStackByGuidMutex.Lock()
+	ret, specificReturn := fake.getStackByGuidReturnsOnCall[len(fake.getStackByGuidArgsForCall)]
+	fake.getStackByGuidArgsForCall = append(fake.getStackByGuidArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	fake.recordInvocation("GetStackByGuid", []interface{}{arg1})
+	fake.getStackByGuidMutex.Unlock()
+	if fake.GetStackByGuidStub != nil {
+		return fake.GetStackByGuidStub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getStackByGuidReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeInquisitor) GetStackByGuidCallCount() int {
+	fake.getStackByGuidMutex.RLock()
+	defer fake.getStackByGuidMutex.RUnlock()
+	return len(fake.getStackByGuidArgsForCall)
+}
+
+func (fake *FakeInquisitor) GetStackByGuidCalls(stub func(string) (*cfclient.Stack, error)) {
+	fake.getStackByGuidMutex.Lock()
+	defer fake.getStackByGuidMutex.Unlock()
+	fake.GetStackByGuidStub = stub
+}
+
+func (fake *FakeInquisitor) GetStackByGuidArgsForCall(i int) string {
+	fake.getStackByGuidMutex.RLock()
+	defer fake.getStackByGuidMutex.RUnlock()
+	argsForCall := fake.getStackByGuidArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeInquisitor) GetStackByGuidReturns(result1 *cfclient.Stack, result2 error) {
+	fake.getStackByGuidMutex.Lock()
+	defer fake.getStackByGuidMutex.Unlock()
+	fake.GetStackByGuidStub = nil
+	fake.getStackByGuidReturns = struct {
+		result1 *cfclient.Stack
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetStackByGuidReturnsOnCall(i int, result1 *cfclient.Stack, result2 error) {
+	fake.getStackByGuidMutex.Lock()
+	defer fake.getStackByGuidMutex.Unlock()
+	fake.GetStackByGuidStub = nil
+	if fake.getStackByGuidReturnsOnCall == nil {
+		fake.getStackByGuidReturnsOnCall = make(map[int]struct {
+			result1 *cfclient.Stack
+			result2 error
+		})
+	}
+	fake.getStackByGuidReturnsOnCall[i] = struct {
+		result1 *cfclient.Stack
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetStackByName(arg1 string) (cfclient.Stack, error) {
+	fake.getStackByNameMutex.Lock()
+	ret, specificReturn := fake.getStackByNameReturnsOnCall[len(fake.getStackByNameArgsForCall)]
+	fake.getStackByNameArgsForCall = append(fake.getStackByNameArgsForCall, struct {
+		arg1 string
+	}{arg1})
+	fake.recordInvocation("GetStackByName", []interface{}{arg1})
+	fake.getStackByNameMutex.Unlock()
+	if fake.GetStackByNameStub != nil {
+		return fake.GetStackByNameStub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getStackByNameReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeInquisitor) GetStackByNameCallCount() int {
+	fake.getStackByNameMutex.RLock()
+	defer fake.getStackByNameMutex.RUnlock()
+	return len(fake.getStackByNameArgsForCall)
+}
+
+func (fake *FakeInquisitor) GetStackByNameCalls(stub func(string) (cfclient.Stack, error)) {
+	fake.getStackByNameMutex.Lock()
+	defer fake.getStackByNameMutex.Unlock()
+	fake.GetStackByNameStub = stub
+}
+
+func (fake *FakeInquisitor) GetStackByNameArgsForCall(i int) string {
+	fake.getStackByNameMutex.RLock()
+	defer fake.getStackByNameMutex.RUnlock()
+	argsForCall := fake.getStackByNameArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeInquisitor) GetStackByNameReturns(result1 cfclient.Stack, result2 error) {
+	fake.getStackByNameMutex.Lock()
+	defer fake.getStackByNameMutex.Unlock()
+	fake.GetStackByNameStub = nil
+	fake.getStackByNameReturns = struct {
+		result1 cfclient.Stack
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetStackByNameReturnsOnCall(i int, result1 cfclient.Stack, result2 error) {
+	fake.getStackByNameMutex.Lock()
+	defer fake.getStackByNameMutex.Unlock()
+	fake.GetStackByNameStub = nil
+	if fake.getStackByNameReturnsOnCall == nil {
+		fake.getStackByNameReturnsOnCall = make(map[int]struct {
+			result1 cfclient.Stack
+			result2 error
+		})
+	}
+	fake.getStackByNameReturnsOnCall[i] = struct {
+		result1 cfclient.Stack
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetStackMap() (query.StackMap, error) {
+	fake.getStackMapMutex.Lock()
+	ret, specificReturn := fake.getStackMapReturnsOnCall[len(fake.getStackMapArgsForCall)]
+	fake.getStackMapArgsForCall = append(fake.getStackMapArgsForCall, struct {
+	}{})
+	fake.recordInvocation("GetStackMap", []interface{}{})
+	fake.getStackMapMutex.Unlock()
+	if fake.GetStackMapStub != nil {
+		return fake.GetStackMapStub()
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getStackMapReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeInquisitor) GetStackMapCallCount() int {
+	fake.getStackMapMutex.RLock()
+	defer fake.getStackMapMutex.RUnlock()
+	return len(fake.getStackMapArgsForCall)
+}
+
+func (fake *FakeInquisitor) GetStackMapCalls(stub func() (query.StackMap, error)) {
+	fake.getStackMapMutex.Lock()
+	defer fake.getStackMapMutex.Unlock()
+	fake.GetStackMapStub = stub
+}
+
+func (fake *FakeInquisitor) GetStackMapReturns(result1 query.StackMap, result2 error) {
+	fake.getStackMapMutex.Lock()
+	defer fake.getStackMapMutex.Unlock()
+	fake.GetStackMapStub = nil
+	fake.getStackMapReturns = struct {
+		result1 query.StackMap
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeInquisitor) GetStackMapReturnsOnCall(i int, result1 query.StackMap, result2 error) {
+	fake.getStackMapMutex.Lock()
+	defer fake.getStackMapMutex.Unlock()
+	fake.GetStackMapStub = nil
+	if fake.getStackMapReturnsOnCall == nil {
+		fake.getStackMapReturnsOnCall = make(map[int]struct {
+			result1 query.StackMap
+			result2 error
+		})
+	}
+	fake.getStackMapReturnsOnCall[i] = struct {
+		result1 query.StackMap
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeInquisitor) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
@@ -1456,6 +1818,8 @@ func (fake *FakeInquisitor) Invocations() map[string][][]interface{} {
 	defer fake.getAllServiceInstancesMutex.RUnlock()
 	fake.getAllSpacesMutex.RLock()
 	defer fake.getAllSpacesMutex.RUnlock()
+	fake.getAllStacksMutex.RLock()
+	defer fake.getAllStacksMutex.RUnlock()
 	fake.getAppByGuidMutex.RLock()
 	defer fake.getAppByGuidMutex.RUnlock()
 	fake.getAppMapMutex.RLock()
@@ -1470,6 +1834,8 @@ func (fake *FakeInquisitor) Invocations() map[string][][]interface{} {
 	defer fake.getManyServiceInstancesByGuidMutex.RUnlock()
 	fake.getManySpacesByGuidMutex.RLock()
 	defer fake.getManySpacesByGuidMutex.RUnlock()
+	fake.getManyStacksByGuidMutex.RLock()
+	defer fake.getManyStacksByGuidMutex.RUnlock()
 	fake.getOrgByGuidMutex.RLock()
 	defer fake.getOrgByGuidMutex.RUnlock()
 	fake.getOrgMapMutex.RLock()
@@ -1486,6 +1852,12 @@ func (fake *FakeInquisitor) Invocations() map[string][][]interface{} {
 	defer fake.getSpaceByGuidMutex.RUnlock()
 	fake.getSpaceMapMutex.RLock()
 	defer fake.getSpaceMapMutex.RUnlock()
+	fake.getStackByGuidMutex.RLock()
+	defer fake.getStackByGuidMutex.RUnlock()
+	fake.getStackByNameMutex.RLock()
+	defer fake.getStackByNameMutex.RUnlock()
+	fake.getStackMapMutex.RLock()
+	defer fake.getStackMapMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

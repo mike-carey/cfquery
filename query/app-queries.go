@@ -1,8 +1,21 @@
 package query
 
 import (
-	cfclient "github.com/cloudfoundry-community/go-cfclient"
+	"github.com/cloudfoundry-community/go-cfclient"
 )
+
+func (g Apps) FilterByStackName(i Inquisitor, stackName string) (Apps, error) {
+	stack, err := i.GetStackByName(stackName)
+	if err != nil {
+		return nil, err
+	}
+
+	stackGuid := stack.Guid
+
+	return AppFilterBy(g, func(app cfclient.App) (bool, error) {
+		return app.StackGuid == stackGuid, nil
+	})
+}
 
 func (g Apps) GroupBySpace(_ Inquisitor) (AppGroup, error) {
 	return AppGroupBy(g, func(app cfclient.App) (string, error) {
